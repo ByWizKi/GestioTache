@@ -9,7 +9,7 @@ Tache::Tache(QObject *parent)
 }
 
 
-Tache::Tache(const unsigned int& id,
+Tache::Tache(const int& id,
              const QString& nom,
              const Importance& importance,
              const QDateTime& dateDeb,
@@ -34,7 +34,7 @@ Tache::~Tache()
     qInfo()<<"Tache detruite";
 }
 
-const unsigned int Tache::getId()
+const int Tache::getId()
 {
     return this->idTache;
 }
@@ -106,8 +106,53 @@ const bool Tache::setDate(const QDateTime& newDate, const bool dateDeb)
     return true;
 }
 
-const bool Tache::chargeTache(const QString& nomFichier)const{return true;}
-const bool Tache::sauveTache(const QString& nomFichier)const{return true;}
+void Tache::chargeTache(const QJsonObject& nomFichier)
+{
+    if(nomFichier.contains("idTache") && nomFichier["idTache"].isDouble())
+    {
+        this->idTache = nomFichier["idTache"].toInt();
+    }
+    if(nomFichier.contains("nomTache") && nomFichier["nomTache"].isString())
+    {
+        this->nomTache = nomFichier["nomTache"].toString();
+    }
+
+    if(nomFichier.contains("importanceTache") && nomFichier["importanceTache"].isDouble())
+    {
+        this->importanceTache = Importance(nomFichier["importanceTache"].toInt());
+    }
+
+    if (nomFichier.contains("dateDebutTache") && nomFichier["dateDebutTache"].isString())
+    {
+        QDateTime dateDeb = dateDeb.fromString(nomFichier["dateDebutTache"].toString());
+        this->dateDebutTache = dateDeb;
+    }
+
+    if (nomFichier.contains("dateFinTache") && nomFichier["dateFinTache"].isString())
+    {
+        QDateTime dateFin = dateFin.fromString(nomFichier["dateFinTache"].toString());
+        this->dateFinTache = dateFin;
+    }
+
+}
+void Tache::sauveTache(const QString& nomFichier)const
+{
+    QFile fichier(nomFichier);
+    if(!fichier.open(QIODeviceBase::WriteOnly| QIODeviceBase::NewOnly))
+    {
+        qCritical()<<"ouverture du fichier impossible";
+    }
+
+    QJsonObject monJson;
+    monJson["idTache"] = this->idTache;
+    monJson["nomTache"] = this->nomTache;
+    monJson["importanceTache"] = this->importanceTache;
+    monJson["dateDebutTache"] = (this->dateDebutTache).toString();
+    monJson["dateFinTache"] = (this->dateFinTache).toString();
+
+    QJsonValue monValeurJson {monJson};
+
+}
 
 void Tache::afficherTache()
 {
@@ -158,6 +203,7 @@ void Tache::testRegression()
     tache1.setDate(newDate);
     Q_ASSERT(tache1.getDate() == "le 14/03/2023 à 13:50:00");
     Q_ASSERT(tache1.getDate() != tache1.getDate(false));
+
 
     tache1.afficherTache();
     tache1.~Tache();
