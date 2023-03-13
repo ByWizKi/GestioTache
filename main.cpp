@@ -1,9 +1,11 @@
 #include <QCoreApplication>
+#include "tache.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    qInfo()<<"hello";
+    Tache test;
+    test.testRegression();
 
     return a.exec();
 }

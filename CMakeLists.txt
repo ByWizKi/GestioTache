@@ -14,6 +14,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
 add_executable(GestioTache
   main.cpp
+  tache.h
+  tache.cpp
+  appgestiotache.h
+  appgestiotache.cpp
 )
 target_link_libraries(GestioTache Qt${QT_VERSION_MAJOR}::Core)
 
