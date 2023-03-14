@@ -34,7 +34,7 @@ Tache::~Tache()
     qInfo()<<"Tache detruite";
 }
 
-const int Tache::getId()
+const int Tache::getId() const
 {
     return this->idTache;
 }
@@ -77,6 +77,22 @@ const bool Tache::setImportance(const Importance& newImportance)
     return true;
 }
 
+const bool Tache::setImportanceText(const QString& newImportance)
+{
+    Q_ASSERT(newImportance != "");
+    if(newImportance == "NILL"){this->importanceTache = NILL;}
+    else if (newImportance == "peuImportant"){this->importanceTache = peuImportant;}
+    else if (newImportance == "Important"){this->importanceTache = Important;}
+    else if (newImportance == "Urgent"){this->importanceTache = Urgent;}
+    else
+    {
+        qCritical()<<"l'importance saisie n'existe pas";
+        return false;
+    }
+
+    return true;
+}
+
 const QString Tache::getDate(bool dateDeb)const
 {
     if(dateDeb == true)
@@ -85,6 +101,7 @@ const QString Tache::getDate(bool dateDeb)const
     }
     else{return (this->dateFinTache).toString("le dd/MM/yyyy à hh:mm:ss");}
 }
+
 
 const bool Tache::setDate(const QDateTime& newDate, const bool dateDeb)
 {
@@ -106,51 +123,53 @@ const bool Tache::setDate(const QDateTime& newDate, const bool dateDeb)
     return true;
 }
 
-void Tache::chargeTache(const QJsonObject& nomFichier)
+const bool Tache::chargeTache(const QString& chemin)
 {
-    if(nomFichier.contains("idTache") && nomFichier["idTache"].isDouble())
+    QFile fichierJSON (chemin);
+    if(!fichierJSON.open(QIODevice::ReadOnly))
     {
-        this->idTache = nomFichier["idTache"].toInt();
-    }
-    if(nomFichier.contains("nomTache") && nomFichier["nomTache"].isString())
-    {
-        this->nomTache = nomFichier["nomTache"].toString();
+        qCritical()<< "impossible d'ouvir le fichier";
+        qCritical()<< fichierJSON.errorString();
     }
 
-    if(nomFichier.contains("importanceTache") && nomFichier["importanceTache"].isDouble())
-    {
-        this->importanceTache = Importance(nomFichier["importanceTache"].toInt());
-    }
+    QByteArray monObjet = fichierJSON.readAll();
+    fichierJSON.close();
 
-    if (nomFichier.contains("dateDebutTache") && nomFichier["dateDebutTache"].isString())
-    {
-        QDateTime dateDeb = dateDeb.fromString(nomFichier["dateDebutTache"].toString());
-        this->dateDebutTache = dateDeb;
-    }
+    QJsonDocument document = QJsonDocument::fromJson(monObjet);
+    this->idTache = document["idTache"].toInt();
+    this->nomTache = document["nomTache"].toString();
+    this->setImportanceText(document["importanceTache"].toString());
+    QDateTime dateDeb = dateDeb.fromString(document["dateDebutTache"].toString());
+    QDateTime dateFin = dateFin.fromString(document["dateFinTache"].toString());
+    this->dateDebutTache = dateDeb;
+    this->dateFinTache = dateFin;
 
-    if (nomFichier.contains("dateFinTache") && nomFichier["dateFinTache"].isString())
-    {
-        QDateTime dateFin = dateFin.fromString(nomFichier["dateFinTache"].toString());
-        this->dateFinTache = dateFin;
-    }
+    return true;
 
 }
-void Tache::sauveTache(const QString& nomFichier)const
+const bool Tache::sauveTache(const QString& chemin)
 {
-    QFile fichier(nomFichier);
-    if(!fichier.open(QIODeviceBase::WriteOnly| QIODeviceBase::NewOnly))
+    QJsonDocument documentJSON;
+    QJsonObject objetJSON = documentJSON.object();
+
+
+    objetJSON.insert("idTache", QJsonValue::fromVariant(this->getId()));
+    objetJSON.insert("nomTache", QJsonValue::fromVariant(this->getNom()));
+    objetJSON.insert("importanceTache", QJsonValue::fromVariant(this->getImportance()));
+    objetJSON.insert("dateDebutTache", QJsonValue::fromVariant(this->dateDebutTache.toString()));
+    objetJSON.insert("dateFinTache", QJsonValue::fromVariant(this->dateFinTache.toString()));
+    documentJSON.setObject(objetJSON);
+
+    QFile fichierJSON(chemin);
+
+    if (!fichierJSON.open(QFile::WriteOnly | QIODevice::Text))
     {
-        qCritical()<<"ouverture du fichier impossible";
+       qCritical() << "impossible d'ouvrir le fichier";
+       qCritical() << fichierJSON.errorString();
     }
-
-    QJsonObject monJson;
-    monJson["idTache"] = this->idTache;
-    monJson["nomTache"] = this->nomTache;
-    monJson["importanceTache"] = this->importanceTache;
-    monJson["dateDebutTache"] = (this->dateDebutTache).toString();
-    monJson["dateFinTache"] = (this->dateFinTache).toString();
-
-    QJsonValue monValeurJson {monJson};
+    fichierJSON.write(documentJSON.toJson());
+    fichierJSON.close();
+    return true;
 
 }
 
@@ -175,7 +194,7 @@ void Tache::testRegression()
     QTime timeFin {15, 20, 00};
     QDateTime dateTimeFin{dateFin, timeFin};
 
-    Tache tache1 {12133, "Aller au coiffeur", Important, dateTimeDeb, dateTimeFin};
+    Tache tache1 {12123, "Aller au coiffeur", Important, dateTimeDeb, dateTimeFin};
 
     unsigned int testId = tache1.getId();
     Q_ASSERT(tache1.idTache == testId);
@@ -204,7 +223,13 @@ void Tache::testRegression()
     Q_ASSERT(tache1.getDate() == "le 14/03/2023 à 13:50:00");
     Q_ASSERT(tache1.getDate() != tache1.getDate(false));
 
-
+    tache1.sauveTache("test.json");
+    Tache tache2;
+    tache2.chargeTache("test.json");
     tache1.afficherTache();
+    qInfo() << "\nma deuxieme tache\n";
+    tache2.afficherTache();
+    tache2.sauveTache("test2.json");
     tache1.~Tache();
+    tache2.~Tache();
 }
