@@ -16,6 +16,8 @@ add_executable(GestioTache
   main.cpp
   tache.h
   tache.cpp
+  appgestiotachetexte.cpp
+  appgestiotachetexte.h
   appgestiotache.h
   appgestiotache.cpp
 )
