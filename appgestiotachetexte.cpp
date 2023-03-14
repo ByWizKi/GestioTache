@@ -18,11 +18,10 @@ void AppGestioTacheTexte::terminal()
     QString line;
     while (stream.readLineInto(&line))
     {
-
-        if ( line == "l")
-        {
-            qInfo("yo");
-        }
+//\       if(line == "hello")
+//        {
+//            qInfo()<<"world";
+//        }
     }
 }
 

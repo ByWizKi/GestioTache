@@ -164,13 +164,13 @@ const bool Tache::sauveTache()
     fichierJSON.close();
     
     QFile listTache("listTache.txt");
-      if (!listTache.open(QFile::WriteOnly | QIODevice::Text))
+      if (!listTache.open(QFile::WriteOnly | QIODeviceBase::Append))
     {
        qCritical() << "impossible d'ouvrir le fichier";
        qCritical() << listTache.errorString();
     }
     QTextStream out(&listTache);
-    out << this->getId << "\n";
+    out << this->getId() <<".json" << "\n";
     listTache.close();
     return true;
 
@@ -227,8 +227,7 @@ void Tache::testRegression()
     Q_ASSERT(tache1.getDate() != tache1.getDate(false));
 
     tache1.sauveTache();
-    Tache tache2;
-    tache2.chargeTache(QString::number(tache1.getId())+".json");
+    Tache tache2 {12222, "Aller au coiffeur", Important, dateTimeDeb, dateTimeFin};
     tache1.afficherTache();
     qInfo() << "\nma deuxieme tache\n";
     tache2.afficherTache();
