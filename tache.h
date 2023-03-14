@@ -15,6 +15,8 @@
 
 enum Importance {NILL= 0, peuImportant = 1, Important = 2, Urgent = 3};
 
+int aleatoireId();
+
 class Tache : public QObject
 {
     Q_OBJECT
@@ -56,7 +58,7 @@ public:
 
     const bool chargeTache(const QString& chemin);
 
-    const bool sauveTache(const QString& chemin);
+    const bool sauveTache();
 
     void afficherTache();
 

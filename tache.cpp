@@ -3,8 +3,6 @@
 Tache::Tache(QObject *parent)
     : QObject{parent}
 {
-    this->idTache = 0;
-    this->nomTache = "Pas de tache";
     qInfo()<<"nouvelle tache vide creer";
 }
 
@@ -26,12 +24,7 @@ Tache::Tache(const int& id,
 
 Tache::~Tache()
 {
-    this->idTache = 0;
-    this->nomTache.~QString();
-    this->importanceTache = NILL;
-    this->dateDebutTache.~QDateTime();
-    this->dateFinTache.~QDateTime();
-    qInfo()<<"Tache detruite";
+    this->deleteLater();
 }
 
 const int Tache::getId() const
@@ -147,7 +140,7 @@ const bool Tache::chargeTache(const QString& chemin)
     return true;
 
 }
-const bool Tache::sauveTache(const QString& chemin)
+const bool Tache::sauveTache()
 {
     QJsonDocument documentJSON;
     QJsonObject objetJSON = documentJSON.object();
@@ -160,7 +153,7 @@ const bool Tache::sauveTache(const QString& chemin)
     objetJSON.insert("dateFinTache", QJsonValue::fromVariant(this->dateFinTache.toString()));
     documentJSON.setObject(objetJSON);
 
-    QFile fichierJSON(chemin);
+    QFile fichierJSON(QString::number(this->getId())+".json");
 
     if (!fichierJSON.open(QFile::WriteOnly | QIODevice::Text))
     {
@@ -223,13 +216,18 @@ void Tache::testRegression()
     Q_ASSERT(tache1.getDate() == "le 14/03/2023 à 13:50:00");
     Q_ASSERT(tache1.getDate() != tache1.getDate(false));
 
-    tache1.sauveTache("test.json");
+    tache1.sauveTache();
     Tache tache2;
-    tache2.chargeTache("test.json");
+    tache2.chargeTache(QString::number(tache1.getId())+".json");
     tache1.afficherTache();
     qInfo() << "\nma deuxieme tache\n";
     tache2.afficherTache();
-    tache2.sauveTache("test2.json");
-    tache1.~Tache();
-    tache2.~Tache();
+    tache2.sauveTache();
+//    tache1.~Tache();
+//    tache2.~Tache();
 }
+
+//int aleatoireId()
+//{
+
+//}
