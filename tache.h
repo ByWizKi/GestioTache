@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QDateTime>
+<<<<<<< HEAD
 #include <QDate>
 #include <QVariant>
 #include <QVariantMap>
@@ -12,6 +13,11 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+=======
+#include <QJsonObject>
+#include <QFile>
+#include <QJsonDocument>
+>>>>>>> d832800 (ok)
 
 enum Importance {NILL= 0, peuImportant = 1, Important = 2, Urgent = 3};
 
@@ -21,7 +27,7 @@ class Tache : public QObject
 {
     Q_OBJECT
 private:
-    unsigned int idTache;
+    int idTache;
     QString nomTache;
     Importance importanceTache;
     QDateTime dateDebutTache;
@@ -38,7 +44,11 @@ public:
 
     ~Tache();
 
+<<<<<<< HEAD
     const int getId() const;
+=======
+    const  int getId();
+>>>>>>> d832800 (ok)
 
     const QString getNom() const;
 
@@ -56,9 +66,15 @@ public:
 
     const bool setDate(const QDateTime& newDate, const bool dateDeb = true);
 
+<<<<<<< HEAD
     const bool chargeTache(const QString& chemin);
 
     const bool sauveTache();
+=======
+    void chargeTache(const QJsonObject& nomFichier);
+
+    void sauveTache(const QString& nomFichier)const;
+>>>>>>> d832800 (ok)
 
     void afficherTache();
 
