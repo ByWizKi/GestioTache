@@ -141,7 +141,7 @@ const bool Tache::chargeTache(const QString& chemin)
 
 }
 const bool Tache::sauveTache()
-{
+{   
     QJsonDocument documentJSON;
     QJsonObject objetJSON = documentJSON.object();
 
@@ -162,6 +162,16 @@ const bool Tache::sauveTache()
     }
     fichierJSON.write(documentJSON.toJson());
     fichierJSON.close();
+    
+    QFile listTache("listTache.txt");
+      if (!listTache.open(QFile::WriteOnly | QIODevice::Text))
+    {
+       qCritical() << "impossible d'ouvrir le fichier";
+       qCritical() << listTache.errorString();
+    }
+    QTextStream out(&listTache);
+    out << this->getId << "\n";
+    listTache.close();
     return true;
 
 }
