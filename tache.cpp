@@ -22,6 +22,19 @@ Tache::Tache(const int& id,
     qInfo()<< "nouvelle tache creer";
 }
 
+Tache::Tache(const QString& nom,
+             const QString& importance,
+             const QString& dateDeb,
+             const QString& dateFin)
+{
+    this->idTache = aleatoireId();
+    this->nomTache = nom;
+    this->setImportanceText(importance);
+    this->setDateTexte(dateDeb, true);
+    this->setDateTexte(dateFin, false);
+}
+
+
 Tache::~Tache()
 {
     this->deleteLater();
@@ -95,7 +108,6 @@ const QString Tache::getDate(bool dateDeb)const
     else{return (this->dateFinTache).toString("le dd/MM/yyyy à hh:mm:ss");}
 }
 
-
 const bool Tache::setDate(const QDateTime& newDate, const bool dateDeb)
 {
     QDateTime oldDate;
@@ -113,6 +125,27 @@ const bool Tache::setDate(const QDateTime& newDate, const bool dateDeb)
         Q_ASSERT(oldDate != (this->dateFinTache));
         Q_ASSERT(this->dateDebutTache != this->dateFinTache);
     }
+    return true;
+}
+
+const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb)
+{
+    QDateTime oldDate;
+    if(dateDeb == true)
+    {
+        oldDate = this->dateDebutTache;
+        this->dateDebutTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
+        Q_ASSERT(oldDate != (this->dateDebutTache));
+        Q_ASSERT(this->dateDebutTache != this->dateFinTache);
+    }
+    else
+    {
+        oldDate = this->dateFinTache;
+        this->dateFinTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
+        Q_ASSERT(oldDate != (this->dateFinTache));
+        Q_ASSERT(this->dateDebutTache != this->dateFinTache);
+    }
+
     return true;
 }
 
@@ -140,6 +173,7 @@ const bool Tache::chargeTache(const QString& chemin)
     return true;
 
 }
+
 const bool Tache::sauveTache()
 {   
     QJsonDocument documentJSON;
@@ -186,7 +220,6 @@ void Tache::afficherTache()
 
 }
 
-
 void Tache::testRegression()
 {
     QDate dateDeb {2023, 03, 12};
@@ -199,7 +232,7 @@ void Tache::testRegression()
 
     Tache tache1 {12123, "Aller au coiffeur", Important, dateTimeDeb, dateTimeFin};
 
-    unsigned int testId = tache1.getId();
+    int testId = tache1.getId();
     Q_ASSERT(tache1.idTache == testId);
 
     QString name = tache1.getNom();
@@ -227,16 +260,37 @@ void Tache::testRegression()
     Q_ASSERT(tache1.getDate() != tache1.getDate(false));
 
     tache1.sauveTache();
-    Tache tache2 {12222, "Aller au coiffeur", Important, dateTimeDeb, dateTimeFin};
+    Tache tache2 {"Aller au coiffeur", "Important", "12 03 2023 14 30", "12 03 2023 15 00"};
     tache1.afficherTache();
     qInfo() << "\nma deuxieme tache\n";
     tache2.afficherTache();
     tache2.sauveTache();
-//    tache1.~Tache();
-//    tache2.~Tache();
+
 }
 
-//int aleatoireId()
-//{
+int aleatoireId()
+{
 
-//}
+    bool verification = true;
+    QFile fichierListeTache ("listTache.txt");
+    if(!fichierListeTache.open(QIODevice::ReadOnly | QIODevice::Append))
+    {
+        qCritical()<< "impossible d'ouvir le fichier";
+        qCritical()<< fichierListeTache.errorString();
+    }
+
+    QString listeTache = fichierListeTache.readAll();
+    int randomId;
+
+    do
+    {
+        randomId = QRandomGenerator::global()->bounded(10000, 99999);
+       if(!listeTache.contains(QString::number(randomId)))
+       {
+           verification = false;
+           return randomId;
+       }
+    }
+    while(verification);
+    return randomId;
+}

@@ -2,6 +2,7 @@
 #define APPGESTIOTACHETEXTE_H
 #include "tache.h"
 #include <QTextStream>
+#include <QThread>
 
 QVector<Tache> chargeTouteTache();
 
@@ -16,13 +17,11 @@ public:
     AppGestioTacheTexte();
     ~AppGestioTacheTexte();
     void terminal();
-    QString afficherTouteTache();
-    void creerTache(QString& nom,
-                    Importance& importanceTache,
-                    QDateTime& dateDeb,
-                    QDateTime& dateFin);
-    void modifierTache(const int& idTache);
+    void afficherTouteTache();
+    void creerTache();
+    void modifierTache();
     void supprimerTache();
+    void aideTerminal();
 
 
 };
