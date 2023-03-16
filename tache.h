@@ -35,6 +35,8 @@ private:
 public:
     explicit Tache(QObject *parent = nullptr);
 
+    explicit Tache(const Tache &);
+
     Tache(const int& id,
           const QString& nom,
           const Importance& importance,

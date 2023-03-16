@@ -5,6 +5,7 @@
 #include <QThread>
 
 QVector<Tache> chargeTouteTache();
+bool sauveTouteTache(const QVector<Tache> &tabTache);
 
 
 class AppGestioTacheTexte

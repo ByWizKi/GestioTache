@@ -6,6 +6,10 @@ Tache::Tache(QObject *parent)
     qInfo()<<"nouvelle tache vide creer";
 }
 
+Tache::Tache(const Tache& t)
+{
+
+};
 
 Tache::Tache(const int& id,
              const QString& nom,
