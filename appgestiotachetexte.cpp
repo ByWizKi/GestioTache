@@ -15,17 +15,18 @@ AppGestioTacheTexte::~AppGestioTacheTexte()
 void AppGestioTacheTexte::terminal()
 {
     bool enMarche = true;
+    this->listTache = chargeTouteTache();
     QTextStream entre(stdin);
     QString action;
     while (enMarche)
     {
-        this->listTache = chargeTouteTache();
+
         qInfo() << "Entrez une action ('help pour l'ensemble des actions') >> ";
         entre >> action;
         action = action.toUpper();
         if (action == "HELP")
         {
-            qInfo()<<"help !!";
+            this->aideTerminal();
         }
 
         else if (action == "A" || action == "AFFICHER")
@@ -36,12 +37,20 @@ void AppGestioTacheTexte::terminal()
         else if (action == "M" || action == "MODIFIER")
         {
             this->modifierTache();
+            this->listTache = chargeTouteTache();
 
+        }
+
+        else if (action == "C" || action == "CREER")
+        {
+            this->creerTache();
+            this->listTache = chargeTouteTache();
         }
 
         else if (action == "S" || action == "SUPPRIMER")
         {
             this->supprimerTache();
+            this->listTache = chargeTouteTache();
         }
 
         else if (action == "Q" || action == "QUITTER")
@@ -49,8 +58,9 @@ void AppGestioTacheTexte::terminal()
             enMarche = false;
             qInfo() << "terminal fermer !!";
         }
-    }
 
+        else{qInfo() << "demande invalide";}
+    }
 }
 
 void AppGestioTacheTexte::afficherTouteTache()
@@ -72,6 +82,7 @@ void AppGestioTacheTexte::creerTache()
     qInfo() << "Entrez l'importance de votre nouvelle tache"
             << "vous avez 3 choix 'peuImportant' \n 'Important \n 'Urgent'\n"
             << ">> ";
+
     QTextStream demandeImportance (stdin);
     QString importance;
     demandeImportance >> importance;
@@ -79,6 +90,7 @@ void AppGestioTacheTexte::creerTache()
     qInfo() << "Entrez la date de commencement de votre tache\n"
             << "e.g '12 03 2023 12 23' cela correspond a 'le 12 mars 2023 a 12h23'\n"
             << ">> ";
+
     QTextStream demandeDateDeb (stdin);
     QString dateDeb;
     demandeDateDeb >> dateDeb;
@@ -117,7 +129,6 @@ void AppGestioTacheTexte::modifierTache()
             << ">> ";
     demandeNom >> newNom;
 
-
     QTextStream demandeImportance(stdin);
     QString newImportance;
     qInfo() << "Si vous voulez modifier l'importance de la tache"
@@ -128,8 +139,6 @@ void AppGestioTacheTexte::modifierTache()
     demandeImportance>>newImportance;
     Q_ASSERT(newImportance == "peuImportant" || newImportance == "Important" || newImportance == "Urgent");
 
-
-
     QTextStream demandeDateDeb (stdin);
     QString newDateDeb;
     qInfo() << "Si vous voulez modifier la date de debut de la tache"
@@ -138,7 +147,6 @@ void AppGestioTacheTexte::modifierTache()
             <<"\nsinon ecrivez 'ok'\n"
             <<">> ";
     demandeDateDeb >> newDateDeb;
-
 
     QTextStream demandeDateFin (stdin);
     QString newDateFin;
@@ -198,7 +206,13 @@ void AppGestioTacheTexte::supprimerTache()
 
 void AppGestioTacheTexte::aideTerminal()
 {
-
+    qInfo() << "Dans notre application vous pouvez acceder a 4 actions sur vos tache.\n"
+            << "- le mot cle 'afficher' ou 'a' permet d'afficher toutes les taches que vous posseder.\n"
+            << "- le mot cle 'creer' ou 'c' permet de creer une nouvelle tache.\n"
+            << "- le mot cle 'modifier' ou 'm' permet de modifier une tache.\n"
+            << "- le mot cle 'supprimer' ou 's' permet de supprimer une tache.\n"
+            << "Lorsque votre mot cle est valide il ne vous reste plus qu'a suivre les instructions\n"
+            << "pour effectuer votre action.";
 }
 
 QVector<Tache> chargeTouteTache(){
@@ -217,9 +231,11 @@ QVector<Tache> chargeTouteTache(){
     }
     fichier.close();
     QVector <Tache> listeTache;
-
-    //    Tache tache;
-    //    tache.chargeTache(idTab[0]);
-    //    listeTache.append(tache);
+    Tache tache1;
+    tache1.chargeTache(idTab[0]);
+    listeTache.append(tache1);
+    listeTache[0].afficherTache();
     return listeTache;
 }
+
+bool sauveTouteTache(const QVector<Tache> &tabTache){return true;}

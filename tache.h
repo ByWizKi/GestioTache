@@ -22,9 +22,9 @@ enum Importance {NILL= 0, peuImportant = 1, Important = 2, Urgent = 3};
 
 int aleatoireId();
 
-class Tache : public QObject
+class Tache
 {
-    Q_OBJECT
+
 private:
     int idTache;
     QString nomTache;
@@ -33,9 +33,10 @@ private:
     QDateTime dateFinTache;
 
 public:
-    explicit Tache(QObject *parent = nullptr);
 
-    explicit Tache(const Tache &);
+    Tache(const Tache &);
+
+    Tache();
 
     Tache(const int& id,
           const QString& nom,

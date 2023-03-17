@@ -1,15 +1,11 @@
 #include "tache.h"
 
-Tache::Tache(QObject *parent)
-    : QObject{parent}
+Tache::Tache()
 {
     qInfo()<<"nouvelle tache vide creer";
 }
 
-Tache::Tache(const Tache& t)
-{
-
-};
+Tache::Tache(const Tache& t){};
 
 Tache::Tache(const int& id,
              const QString& nom,
@@ -41,7 +37,7 @@ Tache::Tache(const QString& nom,
 
 Tache::~Tache()
 {
-    this->deleteLater();
+
 }
 
 const int Tache::getId() const
@@ -158,7 +154,7 @@ const bool Tache::chargeTache(const QString& chemin)
     QFile fichierJSON (chemin);
     if(!fichierJSON.open(QIODevice::ReadOnly))
     {
-        qCritical()<< "impossible d'ouvir le fichier";
+        qCritical()<< "impossible d'ouvrir le fichier";
         qCritical()<< fichierJSON.errorString();
     }
 
