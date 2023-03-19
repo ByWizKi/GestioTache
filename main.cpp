@@ -12,10 +12,10 @@ int main(int argc, char *argv[])
 {
 
     QCoreApplication a(argc, argv);
-
-//    Tache test {"allez chez le coiffeur", "Important", "12 03 2023 12 00", "12 03 2023 12 30"};
-//    test.sauveTache();
-//    test.~Tache();
+//    Tache test2;
+//    test2.chargeTache("63600.json");
+//    test2.afficherTache();
+//    test2.~Tache();
 
     AppGestioTacheTexte app;
     app.terminal();

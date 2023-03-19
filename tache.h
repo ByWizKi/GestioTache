@@ -74,7 +74,7 @@ public:
 
     const bool chargeTache(const QString& chemin);
 
-    const bool sauveTache();
+    const bool sauveTache() const;
 
     void chargeTache(const QJsonObject& nomFichier);
 

@@ -1,7 +1,5 @@
 #include "appgestiotachetexte.h"
 
-
-
 AppGestioTacheTexte::AppGestioTacheTexte()
 {
 
@@ -20,7 +18,6 @@ void AppGestioTacheTexte::terminal()
     QString action;
     while (enMarche)
     {
-
         qInfo() << "Entrez une action ('help pour l'ensemble des actions') >> ";
         entre >> action;
         action = action.toUpper();
@@ -231,11 +228,19 @@ QVector<Tache> chargeTouteTache(){
     }
     fichier.close();
     QVector <Tache> listeTache;
-    Tache tache1;
-    tache1.chargeTache(idTab[0]);
-    listeTache.append(tache1);
-    listeTache[0].afficherTache();
+//    Tache tache1;
+//    tache1.chargeTache("63600.json");
+//    listeTache.append(tache1);
     return listeTache;
 }
 
-bool sauveTouteTache(const QVector<Tache> &tabTache){return true;}
+bool sauveTouteTache(const QVector<Tache> &tabTache)
+{
+    for(int i = 0; i < tabTache.length(); i++)
+    {
+        tabTache[i].sauveTache();
+    }
+
+    return true;
+
+}

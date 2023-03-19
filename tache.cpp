@@ -2,6 +2,7 @@
 
 Tache::Tache()
 {
+
     qInfo()<<"nouvelle tache vide creer";
 }
 
@@ -174,7 +175,7 @@ const bool Tache::chargeTache(const QString& chemin)
 
 }
 
-const bool Tache::sauveTache()
+const bool Tache::sauveTache() const
 {   
     QJsonDocument documentJSON;
     QJsonObject objetJSON = documentJSON.object();
