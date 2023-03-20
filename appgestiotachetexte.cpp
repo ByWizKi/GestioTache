@@ -212,7 +212,7 @@ void AppGestioTacheTexte::aideTerminal()
             << "pour effectuer votre action.";
 }
 
-QVector<Tache> chargeTouteTache(){
+QList<Tache> chargeTouteTache(){
     QVector<QString> idTab;
     QFile fichier("listTache.txt");
     if(fichier.open(QIODevice::ReadOnly))
@@ -227,7 +227,7 @@ QVector<Tache> chargeTouteTache(){
         }
     }
     fichier.close();
-    QVector<Tache> listTache;
+    QList<Tache> listTache;
     Tache tache1;
     tache1.chargeTache(idTab[0]);
     listTache.append(tache1);

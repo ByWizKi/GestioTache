@@ -14,6 +14,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
 add_executable(GestioTache
   main.cpp
+  test.cpp
   tache.h
   tache.cpp
   appgestiotachetexte.cpp

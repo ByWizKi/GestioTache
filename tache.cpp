@@ -2,7 +2,6 @@
 
 Tache::Tache()
 {
-
     qInfo()<<"nouvelle tache vide creer";
 }
 
@@ -38,7 +37,12 @@ Tache::Tache(const QString& nom,
 
 Tache::~Tache()
 {
-
+    this->idTache = 0;
+    this->nomTache.~QString();
+    this->importanceTache = NILL;
+    this->dateDebutTache.~QDateTime();
+    this->dateFinTache.~QDateTime();
+    qInfo() << "Tache Detruite";
 }
 
 const int Tache::getId() const
@@ -136,12 +140,13 @@ const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb)
     {
         oldDate = this->dateDebutTache;
         this->dateDebutTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
-
+        Q_ASSERT(oldDate != this->dateDebutTache);
     }
     else
     {
         oldDate = this->dateFinTache;
         this->dateFinTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
+        Q_ASSERT(oldDate != this->dateFinTache);
     }
 
     return true;
@@ -176,7 +181,6 @@ const bool Tache::sauveTache() const
 {   
     QJsonDocument documentJSON;
     QJsonObject objetJSON = documentJSON.object();
-
 
     objetJSON.insert("idTache", QJsonValue::fromVariant(this->getId()));
     objetJSON.insert("nomTache", QJsonValue::fromVariant(this->getNom()));
@@ -263,6 +267,11 @@ void Tache::testRegression()
     qInfo() << "\nma deuxieme tache\n";
     tache2.afficherTache();
     tache2.sauveTache();
+
+    Tache tache3;
+    tache3.chargeTache(QString::number(tache2.getId())+".json");
+    qInfo() << "\nma troisieme tache\n";
+    tache3.afficherTache();
 
 }
 
