@@ -136,15 +136,12 @@ const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb)
     {
         oldDate = this->dateDebutTache;
         this->dateDebutTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
-        Q_ASSERT(oldDate != (this->dateDebutTache));
-        Q_ASSERT(this->dateDebutTache != this->dateFinTache);
+
     }
     else
     {
         oldDate = this->dateFinTache;
         this->dateFinTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
-        Q_ASSERT(oldDate != (this->dateFinTache));
-        Q_ASSERT(this->dateDebutTache != this->dateFinTache);
     }
 
     return true;

@@ -227,11 +227,11 @@ QVector<Tache> chargeTouteTache(){
         }
     }
     fichier.close();
-    QVector <Tache> listeTache;
-//    Tache tache1;
-//    tache1.chargeTache("63600.json");
-//    listeTache.append(tache1);
-    return listeTache;
+    QVector<Tache> listTache;
+    Tache tache1;
+    tache1.chargeTache(idTab[0]);
+    listTache.append(tache1);
+    return listTache;
 }
 
 bool sauveTouteTache(const QVector<Tache> &tabTache)

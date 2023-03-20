@@ -12,7 +12,7 @@ class AppGestioTacheTexte
 {
 
 private:
-    QVector<Tache> listTache = chargeTouteTache();
+    QVector<Tache> listTache;
 
 public:
     AppGestioTacheTexte();
