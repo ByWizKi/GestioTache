@@ -1,11 +1,22 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
 
+#include <QMainWindow>
 
-class AppGestioTache
+namespace Ui {
+class AppGestioTache;
+}
+
+class AppGestioTache : public QMainWindow
 {
+    Q_OBJECT
+
 public:
-    AppGestioTache();
+    explicit AppGestioTache(QWidget *parent = nullptr);
+    ~AppGestioTache();
+
+private:
+    Ui::AppGestioTache *ui;
 };
 
-#endif // APPGESTIOTACHE_H
+#endif //APPGESTIOTACHE_H

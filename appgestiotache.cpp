@@ -1,11 +1,14 @@
 #include "appgestiotache.h"
-<<<<<<< HEAD
-=======
-#include "QtCore/qobject.h"
 #include "ui_appgestiotache.h"
->>>>>>> 0fa7646 (application texte terminer)
 
-AppGestioTache::AppGestioTache()
+AppGestioTache::AppGestioTache(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::AppGestioTache)
 {
+    ui->setupUi(this);
+}
 
+AppGestioTache::~AppGestioTache()
+{
+    delete ui;
 }
