@@ -15,6 +15,8 @@ public:
     explicit AppGestioTache(QWidget *parent = nullptr);
     ~AppGestioTache();
 
+    void init();
+
 private:
     Ui::AppGestioTache *ui;
 };
