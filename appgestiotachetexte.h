@@ -4,15 +4,15 @@
 #include <QTextStream>
 #include <QThread>
 
-QList<Tache> chargeTouteTache();
-bool sauveTouteTache(const QList<Tache> &tabTache);
+QList<Tache*> chargeTouteTache();
+bool sauveTouteTache(const QList<Tache*> &tabTache);
 
 
 class AppGestioTacheTexte
 {
 
 private:
-    QList<Tache> listTache;
+    QList<Tache*> listTache;
 
 public:
     AppGestioTacheTexte();

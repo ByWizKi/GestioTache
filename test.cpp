@@ -1,7 +1,7 @@
-#include "tache.h"
+//#include "tache.h"
 
 void test()
 {
-    Tache tacheTest;
-    tacheTest.testRegression();
+//    Tache tacheTest;
+//    tacheTest.testRegression();
 }

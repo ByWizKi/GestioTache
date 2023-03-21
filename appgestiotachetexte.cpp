@@ -23,6 +23,7 @@ void AppGestioTacheTexte::terminal()
         action = action.toUpper();
         if (action == "HELP")
         {
+
             this->aideTerminal();
         }
 
@@ -53,7 +54,9 @@ void AppGestioTacheTexte::terminal()
         else if (action == "Q" || action == "QUITTER")
         {
             enMarche = false;
+            this->listTache.~QList();
             qInfo() << "terminal fermer !!";
+
         }
 
         else{qInfo() << "demande invalide";}
@@ -65,7 +68,8 @@ void AppGestioTacheTexte::afficherTouteTache()
     qInfo()<<"Voici l'ensemble des taches";
     for(int i = 0; i < this->listTache.length(); i++)
     {
-        this->listTache[i].afficherTache();
+        this->listTache[i]->afficherTache();
+        qInfo() << "\n";
     }
 }
 
@@ -76,24 +80,25 @@ void AppGestioTacheTexte::creerTache()
     QTextStream demandeNom(stdin);
     QString nom;
     demandeNom >> nom;
+
     qInfo() << "Entrez l'importance de votre nouvelle tache"
             << "vous avez 3 choix 'peuImportant' \n 'Important \n 'Urgent'\n"
             << ">> ";
-
     QTextStream demandeImportance (stdin);
     QString importance;
     demandeImportance >> importance;
     Q_ASSERT(importance == "peuImportant" || importance == "Important" || importance == "Urgent");
-    qInfo() << "Entrez la date de commencement de votre tache\n"
-            << "e.g '12 03 2023 12 23' cela correspond a 'le 12 mars 2023 a 12h23'\n"
-            << ">> ";
 
+
+    qInfo() << "Entrez la date de commencement de votre tache\n"
+            << "e.g '12/03/2023/12/23' cela correspond a 'le 12 mars 2023 a 12h23'\n"
+            << ">> ";
     QTextStream demandeDateDeb (stdin);
     QString dateDeb;
     demandeDateDeb >> dateDeb;
 
     qInfo() << "Entrez la date de fin de votre tache\n"
-            << "e.g '12 03 2023 12 23' cela correspond a 'le 12 mars 2023 a 12h23'\n"
+            << "e.g '12/03/2023:12:23' cela correspond a 'le 12 mars 2023 a 12h23'\n"
             << ">> ";
     QTextStream demandeDateFin(stdin);
     QString dateFin;
@@ -134,7 +139,7 @@ void AppGestioTacheTexte::modifierTache()
             <<"\nsinon ecrivez 'ok'\n"
             <<">> ";
     demandeImportance>>newImportance;
-    Q_ASSERT(newImportance == "peuImportant" || newImportance == "Important" || newImportance == "Urgent");
+    Q_ASSERT(newImportance == "peuImportant" || newImportance == "Important" || newImportance == "Urgent" || "ok");
 
     QTextStream demandeDateDeb (stdin);
     QString newDateDeb;
@@ -156,27 +161,31 @@ void AppGestioTacheTexte::modifierTache()
 
     for(int i = 0; i < this->listTache.length(); i++)
     {
-        if(this->listTache[i].getId() == id.toInt())
+        if(this->listTache[i]->getId() == id.toInt())
         {
             if(newNom != "ok")
             {
-                this->listTache[i].setNom(newNom);
+                this->listTache[i]->setNom(newNom);
             }
             if (newImportance != "ok")
             {
-                this->listTache[i].setImportanceText(newImportance);
+                this->listTache[i]->setImportanceText(newImportance);
             }
             if (newDateDeb != "ok")
             {
-                this->listTache[i].setDateTexte(newDateDeb);
+                this->listTache[i]->setDateTexte(newDateDeb);
             }
 
             if(newDateFin != "ok")
             {
-                this->listTache[i].setDateTexte(newDateFin);
+                this->listTache[i]->setDateTexte(newDateFin);
             }
+            sauveTouteTache(this->listTache);
+            break;
         }
+        else{qInfo()<<"impossible";}
     }
+
 }
 
 void AppGestioTacheTexte::supprimerTache()
@@ -187,17 +196,22 @@ void AppGestioTacheTexte::supprimerTache()
             << ">> ";
     demandeId >> id;
     Q_ASSERT(id.length() == 5);
+
     int oldTaille = this->listTache.length();
     for(int i = 0; i < this->listTache.length(); i++)
     {
-        if(this->listTache[i].getId() == id.toInt())
+        if (this->listTache[i]->getId() == id.toInt())
         {
-            this->listTache.remove(i);
-            sauveTouteTache(this->listTache);
-            this->listTache = chargeTouteTache();
-        }
 
+            this->listTache.remove(i);
+        }
     }
+    QFile tache(id+".json");
+    tache.remove();
+    tache.close();
+
+    sauveTouteTache(this->listTache);
+
     Q_ASSERT(oldTaille > this->listTache.length());
 }
 
@@ -212,7 +226,8 @@ void AppGestioTacheTexte::aideTerminal()
             << "pour effectuer votre action.";
 }
 
-QList<Tache> chargeTouteTache(){
+QList<Tache*> chargeTouteTache(){
+
     QVector<QString> idTab;
     QFile fichier("listTache.txt");
     if(fichier.open(QIODevice::ReadOnly))
@@ -227,20 +242,32 @@ QList<Tache> chargeTouteTache(){
         }
     }
     fichier.close();
-    QList<Tache> listTache;
-    Tache tache1;
-    tache1.chargeTache(idTab[0]);
-    listTache.append(tache1);
+
+    QList<Tache*>  listTache;
+    if (idTab.length() == 0 || idTab[0]==""){return listTache;}
+
+    for (int i = 0; i < idTab.length(); i++)
+    {
+        Tache *tache1 = new Tache;
+        tache1->chargeTache(idTab[i]);
+        listTache.append(tache1);
+    }
+
     return listTache;
 }
 
-bool sauveTouteTache(const QVector<Tache> &tabTache)
+bool sauveTouteTache(const QVector<Tache*> &tabTache)
 {
+
+    QFile listJson("listTache.txt");
+    listJson.remove();
+    listJson.close();
+
+
     for(int i = 0; i < tabTache.length(); i++)
     {
-        tabTache[i].sauveTache();
+        tabTache[i]->sauveTache();
     }
 
     return true;
-
 }

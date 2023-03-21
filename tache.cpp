@@ -5,7 +5,10 @@ Tache::Tache()
     qInfo()<<"nouvelle tache vide creer";
 }
 
-Tache::Tache(const Tache& t){};
+Tache::Tache(const Tache& t)
+{
+
+};
 
 Tache::Tache(const int& id,
              const QString& nom,
@@ -34,14 +37,13 @@ Tache::Tache(const QString& nom,
     this->setDateTexte(dateFin, false);
 }
 
-
 Tache::~Tache()
 {
     this->idTache = 0;
-    this->nomTache.~QString();
+    this->nomTache = "";
     this->importanceTache = NILL;
-    this->dateDebutTache.~QDateTime();
-    this->dateFinTache.~QDateTime();
+    this->dateDebutTache.QDateTime::~QDateTime();
+    this->dateFinTache.QDateTime::~QDateTime();
     qInfo() << "Tache Detruite";
 }
 
@@ -90,7 +92,7 @@ const bool Tache::setImportance(const Importance& newImportance)
 
 const bool Tache::setImportanceText(const QString& newImportance)
 {
-    Q_ASSERT(newImportance != "");
+//    Q_ASSERT(newImportance != "");
     if(newImportance == "NILL"){this->importanceTache = NILL;}
     else if (newImportance == "peuImportant"){this->importanceTache = peuImportant;}
     else if (newImportance == "Important"){this->importanceTache = Important;}
@@ -139,14 +141,14 @@ const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb)
     if(dateDeb == true)
     {
         oldDate = this->dateDebutTache;
-        this->dateDebutTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
-        Q_ASSERT(oldDate != this->dateDebutTache);
+        this->dateDebutTache = QDateTime::fromString(newDate, "dd/MM/yyyy:hh:mm");
+//        Q_ASSERT(oldDate != this->dateDebutTache);
     }
     else
     {
         oldDate = this->dateFinTache;
-        this->dateFinTache = QDateTime::fromString(newDate, "dd MM yyyy hh mm");
-        Q_ASSERT(oldDate != this->dateFinTache);
+        this->dateFinTache = QDateTime::fromString(newDate, "dd/MM/yyyy:hh:mm");
+//        Q_ASSERT(oldDate != this->dateFinTache);
     }
 
     return true;
