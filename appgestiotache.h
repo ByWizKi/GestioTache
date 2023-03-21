@@ -7,18 +7,23 @@ namespace Ui {
 class AppGestioTache;
 }
 
-class AppGestioTache : public QMainWindow
-{
-    Q_OBJECT
+class AppGestioTache : public QMainWindow {
+  Q_OBJECT
 
 public:
-    explicit AppGestioTache(QWidget *parent = nullptr);
-    ~AppGestioTache();
+  explicit AppGestioTache(QWidget *parent = nullptr);
+  ~AppGestioTache();
 
-    void init();
+  void AccueilWin();
+  void CreationTacheWin();
+  void SuppresionTacheWin();
+  void ModificationTacheWin();
+
+protected:
+  QMenu *menu;
 
 private:
-    Ui::AppGestioTache *ui;
+  Ui::AppGestioTache *ui;
 };
 
-#endif //APPGESTIOTACHE_H
+#endif // APPGESTIOTACHE_H

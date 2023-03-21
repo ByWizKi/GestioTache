@@ -4,27 +4,23 @@
 #include <QTextStream>
 #include <QThread>
 
-QList<Tache*> chargeTouteTache();
-bool sauveTouteTache(const QList<Tache*> &tabTache);
+QList<Tache *> chargeTouteTache();
+bool sauveTouteTache(const QList<Tache *> &tabTache);
 
-
-class AppGestioTacheTexte
-{
+class AppGestioTacheTexte {
 
 private:
-    QList<Tache*> listTache;
+  QList<Tache *> listTache;
 
 public:
-    AppGestioTacheTexte();
-    ~AppGestioTacheTexte();
-    void terminal();
-    void afficherTouteTache();
-    void creerTache();
-    void modifierTache();
-    void supprimerTache();
-    void aideTerminal();
-
-
+  AppGestioTacheTexte();
+  ~AppGestioTacheTexte();
+  void terminal();
+  void afficherTouteTache();
+  void creerTache();
+  void modifierTache();
+  void supprimerTache();
+  void aideTerminal();
 };
 
 #endif // APPGESTIOTACHETEXTE_H
