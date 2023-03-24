@@ -22,7 +22,7 @@ set(PROJECT_SOURCES
     HeaderFiles/appgestiotachetexte.h
     SourceFiles/appgestiotache.cpp
     HeaderFiles/appgestiotache.h
-    appgestiotache.ui
+    SourceFiles/appgestiotache.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -3,10 +3,10 @@
 #include <QString>
 #include <QList>
 #include <QVector>
-//#include "tache.h"
-//#include "appgestiotachetexte.h"
+//#include "HeaderFiles/tache.h"
+//#include "HeaderFiles/appgestiotachetexte.h"
 #include "QtWidgets/qapplication.h"
-#include "appgestiotache.h"
+#include "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/HeaderFiles/appgestiotache.h"
 
 int main(int argc, char *argv[]) {
 

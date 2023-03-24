@@ -1,4 +1,4 @@
-#include "appgestiotachetexte.h"
+#include "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/HeaderFiles/appgestiotachetexte.h"
 
 AppGestioTacheTexte::AppGestioTacheTexte() {}
 

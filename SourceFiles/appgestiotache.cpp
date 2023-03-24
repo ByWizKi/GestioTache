@@ -1,6 +1,6 @@
-#include "appgestiotache.h"
-#include "qmenubar.h"
+#include "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/HeaderFiles/appgestiotache.h"
 #include "ui_appgestiotache.h"
+#include <QMenuBar>
 
 AppGestioTache::AppGestioTache(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::AppGestioTache) {
@@ -16,13 +16,13 @@ void AppGestioTache::AccueilWin()
 
     this->setWindowTitle("GestioTache");
 
-    QPalette couleurFondMenu = QPalette();
-    couleurFondMenu.setColor(QPalette::Window, "#F8CF7F");
+//    QPalette couleurFondMenu = QPalette();
+//    couleurFondMenu.setColor(QPalette::Window, "#F8CF7F");
 
-    menu = menuBar()->addMenu("Accueil");
-    menu = menuBar()->addMenu("Créer");
-    menu = menuBar()->addMenu("Modifier");
-    menu = menuBar()->addMenu("Supprimer");
+//    menu = menuBar()->addMenu("Accueil");
+//    menu = menuBar()->addMenu("Créer");
+//    menu = menuBar()->addMenu("Modifier");
+//    menu = menuBar()->addMenu("Supprimer");
 
 
     QPalette couleurFond = QPalette();
