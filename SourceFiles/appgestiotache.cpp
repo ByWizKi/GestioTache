@@ -16,15 +16,13 @@ void AppGestioTache::AccueilWin()
 
     this->setWindowTitle("GestioTache");
 
-//    QPalette couleurFondMenu = QPalette();
-//    couleurFondMenu.setColor(QPalette::Window, "#F8CF7F");
+    QPalette couleurFondMenu = QPalette();
+    couleurFondMenu.setColor(QPalette::Window, "#F8CF7F");
 
-//    menu = menuBar()->addMenu("Accueil");
-//    menu = menuBar()->addMenu("Créer");
-//    menu = menuBar()->addMenu("Modifier");
-//    menu = menuBar()->addMenu("Supprimer");
-//    menu->setAutoFillBackground(true);
-//    menu->setPalette(couleurFondMenu);
+    menu = menuBar()->addMenu("Accueil");
+    menu = menuBar()->addMenu("Créer");
+    menu = menuBar()->addMenu("Modifier");
+    menu = menuBar()->addMenu("Supprimer");
 
 
     QPalette couleurFond = QPalette();

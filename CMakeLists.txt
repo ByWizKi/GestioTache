@@ -13,14 +13,15 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-    main.cpp
-    test.cpp
-    tache.h
-    tache.cpp
-    appgestiotachetexte.cpp
-    appgestiotachetexte.h
-    appgestiotache.cpp
-    appgestiotache.h
+
+    SourceFiles/main.cpp
+    SourceFiles/test.cpp
+    HeaderFiles/tache.h
+    SourceFiles/tache.cpp
+    SourceFiles/appgestiotachetexte.cpp
+    HeaderFiles/appgestiotachetexte.h
+    SourceFiles/appgestiotache.cpp
+    HeaderFiles/appgestiotache.h
     appgestiotache.ui
 )
 
