@@ -4,9 +4,6 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 
-namespace Ui {
-class AppGestioTache;
-}
 
 class AppGestioTache : public QMainWindow
 {

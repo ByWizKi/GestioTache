@@ -1,4 +1,4 @@
-#include "/home/enzoadmin/Desktop/GestioTache/HeaderFiles/appgestiotache.h"
+#include "../HeaderFiles/appgestiotache.h"
 #include <QPushButton>
 #include<QLabel>
 
