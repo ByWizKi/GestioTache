@@ -1,6 +1,6 @@
 #ifndef APPGESTIOTACHETEXTE_H
 #define APPGESTIOTACHETEXTE_H
-#include "tache.h"
+#include "../../tacheObjet/headerFiles/tache.h"
 #include <QTextStream>
 #include <QThread>
 

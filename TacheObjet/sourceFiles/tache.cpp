@@ -1,4 +1,4 @@
-#include "/home/enzoadmin/Desktop/GestioTache/HeaderFiles/tache.h"
+#include "../headerFiles/tache.h"
 
 Tache::Tache() { qInfo() << "nouvelle tache vide creer"; }
 

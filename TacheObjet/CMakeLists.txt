@@ -1,5 +1,7 @@
-add_library(Tache STATIC
-    tache.cpp
+add_library(tache SHARED
+
+    sourceFiles/tache.cpp
+    headerFiles/tache.h
 )
-target_link_libraries(Tache PRIVATE Qt6::Core)
-target_include_directories(Tache INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(tache PRIVATE Qt6::Core)
+target_include_directories(tache PUBLIC ${CMAKE_INCLUDE_CURRENT_DIR})

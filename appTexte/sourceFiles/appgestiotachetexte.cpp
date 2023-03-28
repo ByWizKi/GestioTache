@@ -1,5 +1,4 @@
-#include "../HeaderFiles/appgestiotachetexte.h"
-
+#include "../headerFiles/appgestiotachetexte.h"
 AppGestioTacheTexte::AppGestioTacheTexte() {}
 
 AppGestioTacheTexte::~AppGestioTacheTexte() {}

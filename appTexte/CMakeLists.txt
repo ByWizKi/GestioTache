@@ -1,6 +1,8 @@
-add_library(GestioTacheAppTexte STATIC
-    appgestiotachetexte.cpp
+add_library(GestioTacheAppTexte SHARED
+    sourceFiles/appgestiotachetexte.cpp
+    headerFiles/appgestiotachetexte.h
 )
 
-target_link_libraries(GestioTacheAppTexte PRIVATE Qt6::Core)
-target_include_directories(GestioTacheAppTexte INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(GestioTacheAppTexte PRIVATE tache Qt6::Core)
+target_include_directories(GestioTacheAppTexte INTERFACE ${CMAKE_INCLUDE_CURRENT_DIR})

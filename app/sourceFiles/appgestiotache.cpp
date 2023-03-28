@@ -1,10 +1,8 @@
-#include "../HeaderFiles/appgestiotache.h"
+#include "../headerFiles/appgestiotache.h"
 #include <QPushButton>
-#include<QLabel>
-
+#include <QLabel>
 
 AppGestioTache::AppGestioTache(QWidget *parent){
-
 
     setStyleSheet("background-color : #3F4346");
 
@@ -12,15 +10,12 @@ AppGestioTache::AppGestioTache(QWidget *parent){
     QLabel *logoDroite = new QLabel(this);
 
     QImage logo("logo.png");
-    QImage logo1("logo.png");
-
 
     logoGauche->setPixmap(QPixmap::fromImage(logo).scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
-    logoDroite->setPixmap(QPixmap::fromImage(logo1).scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+    logoDroite->setPixmap(QPixmap::fromImage(logo).scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
 
     logoGauche->setStyleSheet("margin-left: 10px; margin-top:27px; position: absolute");
     logoDroite->setStyleSheet("margin-left: 1180px; margin-top:27px; position: absolute");
-
 
     logoGauche->adjustSize();
     logoDroite->adjustSize();
@@ -28,10 +23,7 @@ AppGestioTache::AppGestioTache(QWidget *parent){
     setWindowTitle(tr("GestioTache"));
     setMinimumSize(1280,832);
     setMaximumSize(1280, 832);
-
 }
-
-
 
 AppGestioTache::~AppGestioTache() {}
 
