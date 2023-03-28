@@ -22,12 +22,15 @@ public:
 
 protected:
     void creationMenu();
+    void creationHead();
+    void affichageTache();
 
 private:
-    QHBoxLayout *menu;
-
-
-
+    QMenu *menuSauve;
+    QMenu *menuQuitter;
+    QHBoxLayout *head;
+    QAction *sauveAction;
+    QAction *quitterAction;
 };
 
 #endif // APPGESTIOTACHE_H
