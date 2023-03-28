@@ -1,29 +1,33 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
-
+#include <QMenuBar>
+#include <QHBoxLayout>
 #include <QMainWindow>
 
 namespace Ui {
 class AppGestioTache;
 }
 
-class AppGestioTache : public QMainWindow {
-  Q_OBJECT
+class AppGestioTache : public QMainWindow
+{
+
+    Q_OBJECT
 
 public:
-  explicit AppGestioTache(QWidget *parent = nullptr);
+  AppGestioTache(QWidget *parent = nullptr);
   ~AppGestioTache();
 
-  void AccueilWin();
-  void CreationTacheWin();
-  void SuppresionTacheWin();
-  void ModificationTacheWin();
+  void accueilAffichage();
+
 
 protected:
-  QMenu *menu;
+    void creationMenu();
 
 private:
-  Ui::AppGestioTache *ui;
+    QHBoxLayout *menu;
+
+
+
 };
 
 #endif // APPGESTIOTACHE_H

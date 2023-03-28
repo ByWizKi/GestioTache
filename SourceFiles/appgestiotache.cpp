@@ -1,51 +1,44 @@
-#include "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/HeaderFiles/appgestiotache.h"
-#include "ui_appgestiotache.h"
-#include <QMenuBar>
+#include "/home/enzoadmin/Desktop/GestioTache/HeaderFiles/appgestiotache.h"
+#include <QPushButton>
+#include<QLabel>
 
-AppGestioTache::AppGestioTache(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::AppGestioTache) {
-  ui->setupUi(this);
+AppGestioTache::AppGestioTache(QWidget *parent){
+
+
+    setStyleSheet("background-color : #3F4346");
+
+
+    setWindowTitle(tr("GestioTache"));
+    setMinimumSize(700,700);
+
 }
 
-AppGestioTache::~AppGestioTache() { delete ui; }
 
-void AppGestioTache::AccueilWin()
+
+AppGestioTache::~AppGestioTache() {}
+
+void AppGestioTache::creationMenu()
 {
-    this->setWindowIcon(QIcon("logo.png"));
+    QLabel *accueil = new QLabel{"Accueil"};
+    QLabel *creer = new QLabel{"Creer"};
+    QLabel *supprimer = new QLabel{"Supprimer"};
+
+    menu = new QHBoxLayout(this);
+    menu->addWidget(accueil);
+    menu->addWidget(creer);
+    menu->addWidget(supprimer);
 
 
-    this->setWindowTitle("GestioTache");
 
-//    QPalette couleurFondMenu = QPalette();
-//    couleurFondMenu.setColor(QPalette::Window, "#F8CF7F");
-
-//    menu = menuBar()->addMenu("Accueil");
-//    menu = menuBar()->addMenu("Créer");
-//    menu = menuBar()->addMenu("Modifier");
-//    menu = menuBar()->addMenu("Supprimer");
-
-
-    QPalette couleurFond = QPalette();
-    couleurFond.setColor(QPalette::Window, "#3F4346");
-    this->setAutoFillBackground(true);
-    this->setPalette(couleurFond);
-
-    this->show();
 }
 
-void AppGestioTache::CreationTacheWin()
+void AppGestioTache::accueilAffichage()
 {
-
+    creationMenu();
+    show();
 }
 
-void AppGestioTache::SuppresionTacheWin()
-{
 
-}
 
-void AppGestioTache::ModificationTacheWin()
-{
-
-}
 
 

@@ -2,13 +2,22 @@
 <ui version="4.0">
  <class>AppGestioTache</class>
  <widget class="QMainWindow" name="AppGestioTache">
+  <property name="enabled">
+   <bool>false</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>902</width>
-    <height>532</height>
+    <width>68</width>
+    <height>552</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>68</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -19,12 +28,33 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="applications-office"/>
+   <iconset theme="applications-office">
+    <normaloff>.</normaloff>.</iconset>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout"/>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>245</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Accueil</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

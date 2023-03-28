@@ -6,7 +6,7 @@
 //#include "HeaderFiles/tache.h"
 //#include "HeaderFiles/appgestiotachetexte.h"
 #include "QtWidgets/qapplication.h"
-#include "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/HeaderFiles/appgestiotache.h"
+#include "/home/enzoadmin/Desktop/GestioTache/HeaderFiles/appgestiotache.h"
 
 int main(int argc, char *argv[]) {
 
@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
   //    appTexte.terminal();
 
   AppGestioTache app;
-  app.AccueilWin();
-
+  app.accueilAffichage();
   return a.exec();
 }

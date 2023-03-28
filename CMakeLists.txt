@@ -13,16 +13,15 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-
-    SourceFiles/main.cpp
-    SourceFiles/test.cpp
-    HeaderFiles/tache.h
-    SourceFiles/tache.cpp
-    SourceFiles/appgestiotachetexte.cpp
-    HeaderFiles/appgestiotachetexte.h
-    SourceFiles/appgestiotache.cpp
-    HeaderFiles/appgestiotache.h
-    SourceFiles/appgestiotache.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderFiles/tache.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/tache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/appgestiotachetexte.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderFiles/appgestiotachetexte.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/appgestiotache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderFiles/appgestiotache.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SourceFiles/appgestiotache.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
