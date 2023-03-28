@@ -25,7 +25,8 @@ protected:
 private:
     QMenu *menuSauve;
     QMenu *menuQuitter;
-    QHBoxLayout *head;
+    QMenu *menuHelp;
+
     QAction *sauveAction;
     QAction *quitterAction;
 };

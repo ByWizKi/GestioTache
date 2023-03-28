@@ -17,13 +17,11 @@ add_executable(GestioTacheApp
 )
 
 qt_add_resources(GestioTacheApp "dataFiles"
-    PREFIX "dataFiles"
-    FILES dataFiles/logo.png
-)
+    PREFIX "/"
+    FILES dataFiles/logo.png)
 
 target_link_libraries(GestioTacheApp PRIVATE tache GestioTacheAppTexte Qt6::Widgets)
 
 set_target_properties(GestioTacheApp PROPERTIES
     WIN32_EXECUTABLE ON
-    MACOSX_BUNDLE ON
-)
+    MACOSX_BUNDLE ON)
