@@ -12,6 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
 add_subdirectory(app)
-add_subdirectory(tacheObjet)
 add_subdirectory(appTexte)
+add_subdirectory(tacheObjet)
+
 

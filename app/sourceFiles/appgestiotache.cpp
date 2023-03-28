@@ -9,7 +9,7 @@ AppGestioTache::AppGestioTache(QWidget *parent){
     QLabel *logoGauche = new QLabel(this);
     QLabel *logoDroite = new QLabel(this);
 
-    QImage logo("logo.png");
+    QImage logo("/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/app/dataFiles/logo.png");
 
     logoGauche->setPixmap(QPixmap::fromImage(logo).scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
     logoDroite->setPixmap(QPixmap::fromImage(logo).scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
@@ -45,8 +45,3 @@ void AppGestioTache::accueilAffichage()
     creationMenu();
     show();
 }
-
-
-
-
-
