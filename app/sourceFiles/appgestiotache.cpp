@@ -1,4 +1,5 @@
 #include "../headerFiles/appgestiotache.h"
+#include "../../appTexte/headerFiles/appgestiotachetexte.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QSizePolicy>
@@ -6,6 +7,8 @@
 #include <QRect>
 
 AppGestioTache::AppGestioTache(QWidget *parent){
+
+    listTache = chargeTouteTache();
 
     setStyleSheet("background-color : #3F4346");
 
@@ -41,7 +44,9 @@ void AppGestioTache::creationMenu()
 //    menuSauve->addSeparator();
 //    menuQuitter->addAction(quitterAction);
 
-    menuHelp = menuBar()->addMenu("Aide");
+    menuAide = menuBar()->addMenu("Aide");
+//    menuAide->addSeparator();
+//    menuAide->addAction(helpAction);
 
 }
 
@@ -85,9 +90,53 @@ void AppGestioTache::affichageTache()
 
 }
 
+QGroupBox* AppGestioTache::createTacheItem(const Tache *tache)
+{
+    QGroupBox *groupBox = new QGroupBox();
+
+    QLabel *nomTache = new QLabel(tache->getNom());
+
+    QLabel *dateDebutTache = new QLabel(tache->getDate());
+
+    QLabel *dateFinTache = new QLabel(tache->getDate(false));
+
+    QLabel *importance = new QLabel();
+    if(tache->getImportance() == "peuImportant"){
+        importance->setPixmap(QPixmap(":/dataFiles/peuImportantIcon.png").scaled(80, 80));
+    }
+    else if (tache->getImportance() == "Important"){
+        importance->setPixmap(QPixmap(":/dataFiles/importantIcon.png").scaled(80, 80));
+    }
+    else if (tache->getImportance() == "Urgent"){
+        importance->setPixmap(QPixmap(":/dataFiles/urgentIcon.png").scaled(80, 80));
+    }
+
+    QVBoxLayout * vbox = new QVBoxLayout();
+    vbox->addWidget(nomTache);
+    vbox->addWidget(dateDebutTache);
+    vbox->addWidget(dateFinTache);
+    vbox->addWidget(importance);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+    groupBox->setStyleSheet("background-color : #AD9090");
+    return groupBox;
+
+}
+
 void AppGestioTache::accueilAffichage()
 {
     creationMenu();
+
+    auto central = new QWidget;
+
+    QGridLayout* grid = new QGridLayout;
+
+    grid->addWidget(createTacheItem(listTache[0]));
+    central->setLayout(grid);
+    central->setGeometry(400, 320, 512, 91);
+    setCentralWidget(central);
+
     creationHead();
+
     show();
 }

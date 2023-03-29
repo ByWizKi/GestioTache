@@ -255,7 +255,7 @@ QList<Tache *> chargeTouteTache() {
   return listTache;
 }
 
-bool sauveTouteTache(const QVector<Tache *> &tabTache) {
+bool sauveTouteTache(const QList<Tache *> &tabTache) {
 
   QFile listJson("listTache.txt");
   listJson.remove();

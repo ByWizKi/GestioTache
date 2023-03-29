@@ -1,6 +1,9 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
+#include "../../tacheObjet/headerFiles/tache.h"
+#include <QGroupBox>
 #include <QMenuBar>
+#include <QList>
 #include <QHBoxLayout>
 #include <QMainWindow>
 
@@ -23,12 +26,18 @@ protected:
     void affichageTache();
 
 private:
+    QList<Tache *> listTache;
+//    QList<QGroupBox *> listTacheItem;
+
+    QGroupBox* createTacheItem(const Tache* tache);
+
     QMenu *menuSauve;
     QMenu *menuQuitter;
-    QMenu *menuHelp;
+    QMenu *menuAide;
 
     QAction *sauveAction;
     QAction *quitterAction;
+    QAction *helpAction;
 };
 
 #endif // APPGESTIOTACHE_H

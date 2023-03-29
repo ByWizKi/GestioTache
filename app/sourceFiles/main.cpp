@@ -8,5 +8,6 @@ int main(int argc, char *argv[]) {
 
   AppGestioTache app;
   app.accueilAffichage();
+
   return a.exec();
 }

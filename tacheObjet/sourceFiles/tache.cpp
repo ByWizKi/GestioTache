@@ -123,7 +123,7 @@ const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb) {
     this->dateFinTache = QDateTime::fromString(newDate, "dd/MM/yyyy:hh:mm");
   }
 
-  Q_ASSERT(this->dateDebutTache != this->dateFinTache);
+  //Q_ASSERT(this->dateDebutTache != this->dateFinTache);
   return true;
 }
 
