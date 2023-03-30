@@ -1,5 +1,6 @@
 #include "../headerFiles/appgestiotache.h"
 #include "../../appTexte/headerFiles/appgestiotachetexte.h"
+#include "qscreen.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QSizePolicy>
@@ -8,27 +9,23 @@
 
 AppGestioTache::AppGestioTache(QWidget *parent){
 
+    creationMenu();
+
+    creationHead();
+
     listTache = chargeTouteTache();
 
     setStyleSheet("background-color : #3F4346");
 
-    QLabel *logoGauche = new QLabel(this);
-    QLabel *logoDroite = new QLabel(this);
-
-    logoGauche->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
-    logoDroite->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
-
-    logoGauche->setStyleSheet("margin-left: 10px; margin-top:27px; position: absolute");
-    logoDroite->setStyleSheet("margin-left: 1180px; margin-top:27px; position: absolute");
-
-    logoGauche->adjustSize();
-    logoDroite->adjustSize();
-
     setWindowIcon(QIcon(":/dataFiles/logo.png"));
 
     setWindowTitle(tr("GestioTache"));
+
+    ecran = QGuiApplication::primaryScreen();
+    int ecranTailleLargeur = ecran->size().width();
+    int ecranTailleHauteur = ecran->size().height();
     setMinimumSize(1280,832);
-    setMaximumSize(1280, 832);
+    setMaximumSize(ecranTailleLargeur, ecranTailleHauteur);
 }
 
 AppGestioTache::~AppGestioTache() {}
@@ -52,36 +49,87 @@ void AppGestioTache::creationMenu()
 
 void AppGestioTache::creationHead()
 {
-    QLabel *accueil = new QLabel(this);
+    auto central = new QWidget(this);
+
+    QHBoxLayout *layoutHead = new QHBoxLayout(central);
+
+    QHBoxLayout *layoutMenu = new QHBoxLayout(central);
+
+    QLabel *accueil = new QLabel();
     accueil->setText("Accueil");
     accueil->setFont(QFont("IBM Plex Sans"));
+    accueil->setWordWrap(true);
     accueil->setStyleSheet("background-color : #F8CF7F;"
-                           "color : #000000");
-    accueil->setGeometry(145, 33, 135, 78);
+                           "border-bottom-left-radius: 10px;"
+                           "border-bottom-right-radius: 10px;"
+                           "color : #000000;"
+                           "text-align : center;"
 
+                           );
+    accueil->setGeometry(0, 0, 135, 52);
 
-    QLabel *creer = new QLabel(this);
+    QLabel *creer = new QLabel();
     creer->setText("Créer");
     creer->setFont(QFont("IBM Plex Sans"));
+    creer->setWordWrap(true);
+
     creer->setStyleSheet("background-color : #F8CF7F;"
-                         "color : #000000");
-    creer->setGeometry(416, 33, 101, 78);
+                         "border-bottom-left-radius: 10px;"
+                         "border-bottom-right-radius: 10px;"
+                         "color : #000000;"
+                         "text-align : center;"
 
+                         );
+    creer->setGeometry(0, 0, 135, 52);
 
-    QLabel *modifier = new QLabel(this);
+    QLabel *modifier = new QLabel();
     modifier->setText("Modifier");
+    modifier->setWordWrap(true);
     modifier->setFont(QFont("IBM Plex Sans"));
     modifier->setStyleSheet("background-color : #F8CF7F;"
-                            "color : #000000");
-    modifier->setGeometry(653, 33, 151, 78);
+                            "border-bottom-left-radius: 10px;"
+                            "border-bottom-right-radius: 10px;"
+                            "color : #000000;"
+                            "text-align:center;"
+                            );
+    modifier->setGeometry(0, 0, 135, 52);
 
-
-    QLabel *supprimer = new QLabel(this);
+    QLabel *supprimer = new QLabel();
     supprimer->setText("Supprimer");
+    supprimer->setWordWrap(true);
     supprimer->setFont(QFont("IBM Plex Sans"));
     supprimer->setStyleSheet("background-color : #F8CF7F;"
-                             "color : #000000");
-    supprimer->setGeometry(941, 33, 194, 78);
+                             "border-bottom-left-radius: 10px;"
+                             "border-bottom-right-radius: 10px;"
+                             "color : #000000;"
+                             "text-align : center;"
+                             );
+    supprimer->setGeometry(0, 0, 135, 52);
+
+    layoutMenu->addWidget(accueil);
+    layoutMenu->addWidget(creer);
+    layoutMenu->addWidget(modifier);
+    layoutMenu->addWidget(supprimer);
+
+    QLabel *logoGauche = new QLabel();
+    QLabel *logoDroite = new QLabel();
+
+    logoGauche->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+    logoDroite->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+
+    logoGauche->setStyleSheet("margin-left: 0.625em; margin-top:1.688em;");
+    logoDroite->setStyleSheet("margin-left: 73.75em; margin-top:1.688em;");
+
+    logoGauche->adjustSize();
+    logoDroite->adjustSize();
+
+    layoutHead->addWidget(logoGauche);
+    layoutHead->addLayout(layoutMenu);
+    layoutHead->addWidget(logoDroite);
+
+
+    central->adjustSize();
+    central->setLayout(layoutHead);
 
 }
 
@@ -90,53 +138,7 @@ void AppGestioTache::affichageTache()
 
 }
 
-QGroupBox* AppGestioTache::createTacheItem(const Tache *tache)
-{
-    QGroupBox *groupBox = new QGroupBox();
-
-    QLabel *nomTache = new QLabel(tache->getNom());
-
-    QLabel *dateDebutTache = new QLabel(tache->getDate());
-
-    QLabel *dateFinTache = new QLabel(tache->getDate(false));
-
-    QLabel *importance = new QLabel();
-    if(tache->getImportance() == "peuImportant"){
-        importance->setPixmap(QPixmap(":/dataFiles/peuImportantIcon.png").scaled(80, 80));
-    }
-    else if (tache->getImportance() == "Important"){
-        importance->setPixmap(QPixmap(":/dataFiles/importantIcon.png").scaled(80, 80));
-    }
-    else if (tache->getImportance() == "Urgent"){
-        importance->setPixmap(QPixmap(":/dataFiles/urgentIcon.png").scaled(80, 80));
-    }
-
-    QVBoxLayout * vbox = new QVBoxLayout();
-    vbox->addWidget(nomTache);
-    vbox->addWidget(dateDebutTache);
-    vbox->addWidget(dateFinTache);
-    vbox->addWidget(importance);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
-    groupBox->setStyleSheet("background-color : #AD9090");
-    return groupBox;
-
-}
-
 void AppGestioTache::accueilAffichage()
 {
-    creationMenu();
-
-    auto central = new QWidget;
-
-    QGridLayout* grid = new QGridLayout;
-
-    grid->addWidget(createTacheItem(listTache[0]));
-    central->setLayout(grid);
-    central->setGeometry(400, 320, 512, 91);
-    setCentralWidget(central);
-
-    creationHead();
-
     show();
 }

@@ -1,11 +1,13 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
 #include "../../tacheObjet/headerFiles/tache.h"
+#include <QGuiApplication>
 #include <QGroupBox>
 #include <QMenuBar>
 #include <QList>
 #include <QHBoxLayout>
 #include <QMainWindow>
+#include <QPainter>
 
 
 class AppGestioTache : public QMainWindow
@@ -19,17 +21,16 @@ public:
 
   void accueilAffichage();
 
-
 protected:
     void creationMenu();
     void creationHead();
     void affichageTache();
 
 private:
+    QScreen *ecran;
+
     QList<Tache *> listTache;
 //    QList<QGroupBox *> listTacheItem;
-
-    QGroupBox* createTacheItem(const Tache* tache);
 
     QMenu *menuSauve;
     QMenu *menuQuitter;
