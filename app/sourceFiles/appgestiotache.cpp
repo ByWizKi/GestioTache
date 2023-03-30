@@ -1,13 +1,8 @@
 #include "../headerFiles/appgestiotache.h"
-#include "../../appTexte/headerFiles/appgestiotachetexte.h"
-#include "qscreen.h"
-#include <QPushButton>
-#include <QLabel>
-#include <QSizePolicy>
-#include <QFont>
-#include <QRect>
 
 AppGestioTache::AppGestioTache(QWidget *parent){
+
+    creationActionMenu();
 
     creationMenu();
 
@@ -34,77 +29,105 @@ void AppGestioTache::creationMenu()
 {
 
     menuSauve = menuBar()->addMenu("Sauvegarder");
-//    menuSauve->addSeparator();
-//    menuSauve->addAction(sauveAction);
+    menuSauve->addAction(sauveAction);
 
     menuQuitter = menuBar()->addMenu("Quitter");
-//    menuSauve->addSeparator();
-//    menuQuitter->addAction(quitterAction);
+    menuQuitter->addAction(quitterAction);
 
     menuAide = menuBar()->addMenu("Aide");
-//    menuAide->addSeparator();
-//    menuAide->addAction(helpAction);
+    menuAide->addAction(helpAction);
 
+}
+
+void AppGestioTache::creationActionMenu()
+{
+    sauveAction = new QAction("Sauver");
+    sauveAction->setShortcut(QKeySequence("Ctrl+s"));
+    connect(sauveAction, SIGNAL(triggered()), this, SLOT(sauverTacheSlot()));
+
+
+    quitterAction = new QAction("Quitter");
+    quitterAction->setShortcut(QKeySequence("Ctrl+q"));
+    connect(quitterAction, SIGNAL(triggered()), this, SLOT(quitterAppSlot()));
+
+    helpAction = new QAction("Aide");
+    helpAction->setShortcut(QKeySequence("F1"));
+    connect(helpAction, SIGNAL(triggered()), this, SLOT(aideSlot()));
 }
 
 void AppGestioTache::creationHead()
 {
-    auto central = new QWidget(this);
+    head = new QWidget(this);
 
-    QHBoxLayout *layoutHead = new QHBoxLayout(central);
+    QHBoxLayout *layoutHead = new QHBoxLayout(head);
 
-    QHBoxLayout *layoutMenu = new QHBoxLayout(central);
+    QHBoxLayout *layoutMenu = new QHBoxLayout(head);
 
-    QLabel *accueil = new QLabel();
+    QPushButton *accueil = new QPushButton();
     accueil->setText("Accueil");
     accueil->setFont(QFont("IBM Plex Sans"));
-    accueil->setWordWrap(true);
+    accueil->setCursor(Qt::PointingHandCursor);
     accueil->setStyleSheet("background-color : #F8CF7F;"
-                           "border-bottom-left-radius: 10px;"
-                           "border-bottom-right-radius: 10px;"
-                           "color : #000000;"
-                           "text-align : center;"
+                           "margin-left : 84 px;"
+                           "margin-right : 75px;"
+                             "padding : 3px;"
+                             "height  : 52px;"
+                             "color : #000000;"
+                             "font-style : normal;"
+                             "font-weight : 500;"
+                             "font-size : 40px;"
+                             "line-height  :52px;"
+                             "border-radius : 10px;");
+    connect(accueil, SIGNAL(clicked()), this, SLOT(accueilAffichageSlot()));
 
-                           );
-    accueil->setGeometry(0, 0, 135, 52);
-
-    QLabel *creer = new QLabel();
+    QPushButton *creer = new QPushButton();
     creer->setText("Créer");
     creer->setFont(QFont("IBM Plex Sans"));
-    creer->setWordWrap(true);
-
+    creer->setCursor(Qt::PointingHandCursor);
     creer->setStyleSheet("background-color : #F8CF7F;"
-                         "border-bottom-left-radius: 10px;"
-                         "border-bottom-right-radius: 10px;"
-                         "color : #000000;"
-                         "text-align : center;"
-
-                         );
-    creer->setGeometry(0, 0, 135, 52);
-
-    QLabel *modifier = new QLabel();
-    modifier->setText("Modifier");
-    modifier->setWordWrap(true);
-    modifier->setFont(QFont("IBM Plex Sans"));
-    modifier->setStyleSheet("background-color : #F8CF7F;"
-                            "border-bottom-left-radius: 10px;"
-                            "border-bottom-right-radius: 10px;"
-                            "color : #000000;"
-                            "text-align:center;"
-                            );
-    modifier->setGeometry(0, 0, 135, 52);
-
-    QLabel *supprimer = new QLabel();
-    supprimer->setText("Supprimer");
-    supprimer->setWordWrap(true);
-    supprimer->setFont(QFont("IBM Plex Sans"));
-    supprimer->setStyleSheet("background-color : #F8CF7F;"
-                             "border-bottom-left-radius: 10px;"
-                             "border-bottom-right-radius: 10px;"
+                         "margin-right : 75px;"
+                             "padding : 3px;"
+                             "height  : 52px;"
                              "color : #000000;"
-                             "text-align : center;"
-                             );
-    supprimer->setGeometry(0, 0, 135, 52);
+                             "font-style : normal;"
+                             "font-weight : 500;"
+                             "font-size : 40px;"
+                             "line-height  :52px;"
+                             "border-radius : 10px;");
+    connect(creer, SIGNAL(clicked()), this, SLOT(creerAffichageSlot()));
+
+    QPushButton *modifier = new QPushButton();
+    modifier->setText("Modifier");
+    modifier->setFont(QFont("IBM Plex Sans"));
+    modifier->setCursor(Qt::PointingHandCursor);
+    modifier->setStyleSheet("background-color : #F8CF7F;"
+                            "margin-right : 75px;"
+                             "padding : 3px;"
+                             "height  : 52px;"
+                             "color : #000000;"
+                             "font-style : normal;"
+                             "font-weight : 500;"
+                             "font-size : 40px;"
+                             "line-height  :52px;"
+                             "border-radius : 10px;");
+    connect(modifier, SIGNAL(clicked()), this, SLOT(modifierAffichageSlot()));
+
+
+    QPushButton *supprimer = new QPushButton();
+    supprimer->setText("Supprimer");
+    supprimer->setFont(QFont("IBM Plex Sans"));
+    supprimer->setCursor(Qt::PointingHandCursor);
+    supprimer->setStyleSheet("background-color : #F8CF7F;"
+                             "margin-right : 84 px;"
+                             "padding : 3px;"
+                             "height  : 52px;"
+                             "color : #000000;"
+                             "font-style : normal;"
+                             "font-weight : 500;"
+                             "font-size : 40px;"
+                             "line-height  :52px;"
+                             "border-radius : 10px;");
+    connect(supprimer, SIGNAL(clicked()), this, SLOT(supprimerAffichageSlot()));
 
     layoutMenu->addWidget(accueil);
     layoutMenu->addWidget(creer);
@@ -117,9 +140,6 @@ void AppGestioTache::creationHead()
     logoGauche->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
     logoDroite->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
 
-    logoGauche->setStyleSheet("margin-left: 0.625em; margin-top:1.688em;");
-    logoDroite->setStyleSheet("margin-left: 73.75em; margin-top:1.688em;");
-
     logoGauche->adjustSize();
     logoDroite->adjustSize();
 
@@ -127,10 +147,12 @@ void AppGestioTache::creationHead()
     layoutHead->addLayout(layoutMenu);
     layoutHead->addWidget(logoDroite);
 
+    head->adjustSize();
+    head->move(10, 27);
 
-    central->adjustSize();
-    central->setLayout(layoutHead);
+}
 
+void centreHead(QWidget* widget){
 }
 
 void AppGestioTache::affichageTache()
@@ -138,7 +160,67 @@ void AppGestioTache::affichageTache()
 
 }
 
+void AppGestioTache::accueilAffichageSlot()
+{
+    accueilAffichage();
+
+}
+
+void AppGestioTache::creerAffichageSlot()
+{
+    creerAffichage();
+
+}
+
+void AppGestioTache::modifierAffichageSlot()
+{
+    modifierAffichage();
+}
+
+void AppGestioTache::supprimerAffichageSlot()
+{
+    supprimerAffichage();
+}
+
+void AppGestioTache::sauverTacheSlot()
+{
+    sauveTouteTache(listTache);
+}
+
+void AppGestioTache::quitterAppSlot()
+{
+    sauveTouteTache(listTache);
+    this->close();
+}
+
+void AppGestioTache::aideSlot()
+{
+    aideAffichage();
+}
+
 void AppGestioTache::accueilAffichage()
 {
     show();
 }
+
+void AppGestioTache::creerAffichage()
+{
+
+}
+
+void AppGestioTache::modifierAffichage()
+{
+
+}
+
+void AppGestioTache::supprimerAffichage()
+{
+
+}
+
+void AppGestioTache::aideAffichage()
+{
+
+}
+
+
