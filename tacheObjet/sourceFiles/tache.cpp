@@ -91,9 +91,9 @@ const bool Tache::setImportanceText(const QString &newImportance) {
 
 const QString Tache::getDate(bool dateDeb) const {
   if (dateDeb == true) {
-    return (this->dateDebutTache).toString("le dd/MM/yyyy à hh:mm:ss");
+    return (this->dateDebutTache).toString("'Date Début Tache : 'dd/MM/yyyy à hh:mm:ss");
   } else {
-    return (this->dateFinTache).toString("le dd/MM/yyyy à hh:mm:ss");
+    return (this->dateFinTache).toString("'Date Fin Tache : 'dd/MM/yyyy à hh:mm:ss");
   }
 }
 

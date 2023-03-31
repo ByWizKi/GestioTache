@@ -1,8 +1,9 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
+
 #include "../../tacheObjet/headerFiles/tache.h"
 #include "../../appTexte/headerFiles/appgestiotachetexte.h"
-#include "qscreen.h"
+#include <QScreen>
 #include <QGuiApplication>
 #include <QGroupBox>
 #include <QMenuBar>
@@ -16,66 +17,66 @@
 #include <QFont>
 #include <QRect>
 #include <QApplication>
-
+#include <QScrollArea>
+#include <QGraphicsDropShadowEffect>
 
 class AppGestioTache : public QMainWindow
 {
-
     Q_OBJECT
 
 public:
-  AppGestioTache(QWidget *parent = nullptr);
-  ~AppGestioTache();
+    AppGestioTache(QWidget *parent = nullptr);
+    ~AppGestioTache();
 
-  void accueilAffichage();
-  void creerAffichage();
-  void modifierAffichage();
-  void supprimerAffichage();
-  void aideAffichage();
+    void afficherAccueil();
+    void afficherCreation();
+    void afficherModification();
+    void afficherSuppression();
+    void afficherAide();
 
 protected:
 
-
 private:
-    QScreen *ecran;
+    QScreen *m_ecran;
+    QWidget *m_head;
+    QList<Tache *> m_listTache;
 
-    QWidget *head;
+    QMenu *m_menuSauve;
+    QMenu *m_menuQuitter;
+    QMenu *m_menuAide;
 
-    QList<Tache *> listTache;
 
+    QScrollArea *m_scrollTache;
 
-    QMenu *menuSauve;
-    QMenu *menuQuitter;
-    QMenu *menuAide;
+    QWidget *m_widgetTache;
+    QVBoxLayout *main_Layout;
+    QVBoxLayout *label_Laytout;
+    QHBoxLayout *label_Laytout2;
+    QLabel *m_nomTache;
+    QLabel *m_dateDebTache;
+    QLabel *m_dateFinTache;
+    QLabel *m_importance;
 
     void centreHead(QWidget* widget);
 
-    QAction *sauveAction;
-    QAction *quitterAction;
-    QAction *helpAction;
+    QAction *m_sauveAction;
+    QAction *m_quitterAction;
+    QAction *m_helpAction;
 
-    void creationMenu();
-    void creationActionMenu();
-    void creationHead();
+    void creerMenu();
+    void creerActionsMenu();
+    void creerHead();
 
-    void affichageTache();
+    void afficherTache(const Tache* tache);
 
 private slots:
-
-    void accueilAffichageSlot();
-
-    void creerAffichageSlot();
-
-    void modifierAffichageSlot();
-
-    void supprimerAffichageSlot();
-
-    void sauverTacheSlot();
-
-    void quitterAppSlot();
-
-    void aideSlot();
-
+    void afficherAccueilSlot();
+    void afficherCreationSlot();
+    void afficherModificationSlot();
+    void afficherSuppressionSlot();
+    void sauvegarderTacheSlot();
+    void quitterApplicationSlot();
+    void afficherAideSlot();
 };
 
 #endif // APPGESTIOTACHE_H

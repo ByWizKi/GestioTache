@@ -2,66 +2,109 @@
 
 AppGestioTache::AppGestioTache(QWidget *parent){
 
-    creationActionMenu();
+    creerActionsMenu();
 
-    creationMenu();
+    creerMenu();
 
-    creationHead();
+    creerHead();
 
-    listTache = chargeTouteTache();
-
+    m_listTache = chargeTouteTache();
+    afficherTache(m_listTache[0]);
     setStyleSheet("background-color : #3F4346");
 
     setWindowIcon(QIcon(":/dataFiles/logo.png"));
 
     setWindowTitle(tr("GestioTache"));
 
-    ecran = QGuiApplication::primaryScreen();
-    int ecranTailleLargeur = ecran->size().width();
-    int ecranTailleHauteur = ecran->size().height();
+    m_ecran = QGuiApplication::primaryScreen();
+    int ecranTailleLargeur = m_ecran->size().width();
+    int ecranTailleHauteur = m_ecran->size().height();
     setMinimumSize(1280,832);
     setMaximumSize(ecranTailleLargeur, ecranTailleHauteur);
 }
 
 AppGestioTache::~AppGestioTache() {}
 
-void AppGestioTache::creationMenu()
+void AppGestioTache::afficherAccueil()
 {
+    afficherTache(m_listTache[0]);
+    m_scrollTache = new QScrollArea(this);
+    m_scrollTache->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    m_scrollTache->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_scrollTache->setMinimumSize(QSize(m_widgetTache->width()+100, m_widgetTache->height()*2));
+    m_scrollTache->setWidget(m_widgetTache);
+    m_scrollTache->move(30, 150);
 
-    menuSauve = menuBar()->addMenu("Sauvegarder");
-    menuSauve->addAction(sauveAction);
+    show();
+}
 
-    menuQuitter = menuBar()->addMenu("Quitter");
-    menuQuitter->addAction(quitterAction);
-
-    menuAide = menuBar()->addMenu("Aide");
-    menuAide->addAction(helpAction);
+void AppGestioTache::afficherCreation()
+{
 
 }
 
-void AppGestioTache::creationActionMenu()
+void AppGestioTache::afficherModification()
 {
-    sauveAction = new QAction("Sauver");
-    sauveAction->setShortcut(QKeySequence("Ctrl+s"));
-    connect(sauveAction, SIGNAL(triggered()), this, SLOT(sauverTacheSlot()));
 
-
-    quitterAction = new QAction("Quitter");
-    quitterAction->setShortcut(QKeySequence("Ctrl+q"));
-    connect(quitterAction, SIGNAL(triggered()), this, SLOT(quitterAppSlot()));
-
-    helpAction = new QAction("Aide");
-    helpAction->setShortcut(QKeySequence("F1"));
-    connect(helpAction, SIGNAL(triggered()), this, SLOT(aideSlot()));
 }
 
-void AppGestioTache::creationHead()
+void AppGestioTache::afficherSuppression()
 {
-    head = new QWidget(this);
 
-    QHBoxLayout *layoutHead = new QHBoxLayout(head);
+}
 
-    QHBoxLayout *layoutMenu = new QHBoxLayout(head);
+void AppGestioTache::afficherAide()
+{
+
+}
+
+void AppGestioTache::centreHead(QWidget *widget)
+{
+
+}
+
+void AppGestioTache::creerMenu()
+{
+
+    m_menuSauve = menuBar()->addMenu("Sauvegarder");
+    m_menuSauve->addAction(m_sauveAction);
+
+    m_menuQuitter = menuBar()->addMenu("Quitter");
+    m_menuQuitter->addAction(m_quitterAction);
+
+    m_menuAide = menuBar()->addMenu("Aide");
+    m_menuAide->addAction(m_helpAction);
+
+}
+
+void AppGestioTache::creerActionsMenu()
+{
+    m_sauveAction = new QAction("Sauver");
+    m_sauveAction->setShortcut(QKeySequence("Ctrl+s"));
+    connect(m_sauveAction, SIGNAL(triggered()), this, SLOT(sauvegarderTacheSlot()));
+
+
+    m_quitterAction = new QAction("Quitter");
+    m_quitterAction->setShortcut(QKeySequence("Ctrl+q"));
+    connect(m_quitterAction, SIGNAL(triggered()), this, SLOT(quitterApplicationSlot()));
+
+    m_helpAction = new QAction("Aide");
+    m_helpAction->setShortcut(QKeySequence("F1"));
+    connect(m_helpAction, SIGNAL(triggered()), this, SLOT(afficherAideSlot()));
+}
+
+void AppGestioTache::creerHead()
+{
+    m_head = new QWidget(this);
+
+    QHBoxLayout *layoutHead = new QHBoxLayout(m_head);
+
+    QHBoxLayout *layoutMenu = new QHBoxLayout(m_head);
+
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+    shadow->setBlurRadius(20);
+    shadow->setOffset(3);
+    shadow->setColor(QColor(0, 0, 0, 150));
 
     QPushButton *accueil = new QPushButton();
     accueil->setText("Accueil");
@@ -78,7 +121,8 @@ void AppGestioTache::creationHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-    connect(accueil, SIGNAL(clicked()), this, SLOT(accueilAffichageSlot()));
+    accueil->setGraphicsEffect(shadow);
+    connect(accueil, SIGNAL(clicked()), this, SLOT(afficherAccueilSlot()));
 
     QPushButton *creer = new QPushButton();
     creer->setText("Créer");
@@ -94,7 +138,7 @@ void AppGestioTache::creationHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-    connect(creer, SIGNAL(clicked()), this, SLOT(creerAffichageSlot()));
+    connect(creer, SIGNAL(clicked()), this, SLOT(afficherCreationSlot()));
 
     QPushButton *modifier = new QPushButton();
     modifier->setText("Modifier");
@@ -110,7 +154,7 @@ void AppGestioTache::creationHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-    connect(modifier, SIGNAL(clicked()), this, SLOT(modifierAffichageSlot()));
+    connect(modifier, SIGNAL(clicked()), this, SLOT(afficherModificationSlot()));
 
 
     QPushButton *supprimer = new QPushButton();
@@ -118,7 +162,7 @@ void AppGestioTache::creationHead()
     supprimer->setFont(QFont("IBM Plex Sans"));
     supprimer->setCursor(Qt::PointingHandCursor);
     supprimer->setStyleSheet("background-color : #F8CF7F;"
-                             "margin-right : 84 px;"
+                             "margin-right : 84px;"
                              "padding : 3px;"
                              "height  : 52px;"
                              "color : #000000;"
@@ -127,7 +171,11 @@ void AppGestioTache::creationHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-    connect(supprimer, SIGNAL(clicked()), this, SLOT(supprimerAffichageSlot()));
+
+    connect(supprimer, SIGNAL(clicked()), this, SLOT(afficherSuppressionSlot()));
+
+    accueil->setGraphicsEffect(shadow);
+
 
     layoutMenu->addWidget(accueil);
     layoutMenu->addWidget(creer);
@@ -147,80 +195,130 @@ void AppGestioTache::creationHead()
     layoutHead->addLayout(layoutMenu);
     layoutHead->addWidget(logoDroite);
 
-    head->adjustSize();
-    head->move(10, 27);
+    m_head->adjustSize();
+    m_head->move(10, 27);
 
 }
 
-void centreHead(QWidget* widget){
-}
-
-void AppGestioTache::affichageTache()
+void AppGestioTache::afficherTache(const Tache* tache)
 {
+    m_nomTache = new QLabel(tache->getNom());
+    m_dateDebTache = new QLabel(tache->getDate(true));
+    m_dateFinTache = new QLabel(tache->getDate(false));
+
+    QString importanceS = tache->getImportance();
+    m_importance = new QLabel();
+    if (importanceS == "peuImportant"){
+        m_importance->setPixmap(QPixmap(":/dataFiles/peuImportantIcon.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+    }
+    else if (importanceS == "Important"){
+        m_importance->setPixmap(QPixmap(":/dataFiles/importantIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+    }
+    else if (importanceS == "Urgent"){
+        m_importance->setPixmap(QPixmap(":/dataFiles/urgentIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+    }
+    else{
+        m_importance->setPixmap(QPixmap(":/dataFiles/noneIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+    }
+
+    m_widgetTache = new QWidget();
+
+    main_Layout = new QVBoxLayout(m_widgetTache);
+    label_Laytout = new QVBoxLayout(m_widgetTache);
+    label_Laytout2 = new QHBoxLayout(m_widgetTache);
+
+    m_nomTache->setStyleSheet("font-family: 'IBM Plex Mono';"
+                              "font-style: normal;"
+                              "font-weight: 600;"
+                              "font-size: 13px;"
+                              "line-height: 17px;"
+                              "letter-spacing : 3px;"
+                              "color: #FFFFFF;");
+
+    m_dateDebTache->setStyleSheet("font-family: 'IBM Plex Mono';"
+                                  "font-style: normal;"
+                                  "font-weight: 600;"
+                                  "font-size: 13px;"
+                                  "line-height: 17px;"
+                                  "letter-spacing: 3px;"
+                                  "color: #FFFFFF;");
+    label_Laytout->addWidget(m_dateDebTache);
+    label_Laytout->setAlignment(m_dateDebTache, Qt::AlignLeft);
+
+    m_dateFinTache->setStyleSheet("font-family: 'IBM Plex Mono';"
+                                  "font-style: normal;"
+                                  "font-weight: 600;"
+                                  "font-size: 13px;"
+                                  "line-height: 17px;"
+                                  "letter-spacing: 3px;"
+                                  "color: #FFFFFF;");
+    label_Laytout->addWidget(m_dateFinTache);
+    label_Laytout->setAlignment(m_dateFinTache, Qt::AlignLeft);
+
+
+    label_Laytout2->addLayout(label_Laytout);
+    label_Laytout2->setAlignment(label_Laytout, Qt::AlignLeft);
+
+    m_importance->setStyleSheet("margin-bottom : 10px;");
+    label_Laytout2->addWidget(m_importance);
+    label_Laytout2->setAlignment(m_importance, Qt::AlignRight);
+
+
+
+    main_Layout->addWidget(m_nomTache);
+    main_Layout->setAlignment(m_nomTache, Qt::AlignCenter);
+
+    main_Layout->addLayout(label_Laytout2);
+
+    m_widgetTache->setLayout(main_Layout);
+    m_widgetTache->setFixedSize(QSize(600, 110));
+    m_widgetTache->setStyleSheet("background-color : #AD9090;"
+                                 "border-radius : 20px;"
+                                );
+
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+    shadow->setBlurRadius(20);
+    shadow->setOffset(3);
+    shadow->setColor(QColor(0, 0, 0, 150));
+
+    m_widgetTache->setGraphicsEffect(shadow);
+
 
 }
 
-void AppGestioTache::accueilAffichageSlot()
+void AppGestioTache::afficherAccueilSlot()
 {
-    accueilAffichage();
+    afficherAccueil();
 
 }
 
-void AppGestioTache::creerAffichageSlot()
+void AppGestioTache::afficherCreationSlot()
 {
-    creerAffichage();
-
+    afficherCreation();
 }
 
-void AppGestioTache::modifierAffichageSlot()
+void AppGestioTache::afficherModificationSlot()
 {
-    modifierAffichage();
+    afficherModification();
 }
 
-void AppGestioTache::supprimerAffichageSlot()
+void AppGestioTache::afficherSuppressionSlot()
 {
-    supprimerAffichage();
+    afficherSuppression();
 }
 
-void AppGestioTache::sauverTacheSlot()
+void AppGestioTache::sauvegarderTacheSlot()
 {
-    sauveTouteTache(listTache);
+    sauveTouteTache(m_listTache);
 }
 
-void AppGestioTache::quitterAppSlot()
+void AppGestioTache::quitterApplicationSlot()
 {
-    sauveTouteTache(listTache);
+    sauveTouteTache(m_listTache);
     this->close();
 }
 
-void AppGestioTache::aideSlot()
+void AppGestioTache::afficherAideSlot()
 {
-    aideAffichage();
+    afficherAide();
 }
-
-void AppGestioTache::accueilAffichage()
-{
-    show();
-}
-
-void AppGestioTache::creerAffichage()
-{
-
-}
-
-void AppGestioTache::modifierAffichage()
-{
-
-}
-
-void AppGestioTache::supprimerAffichage()
-{
-
-}
-
-void AppGestioTache::aideAffichage()
-{
-
-}
-
-

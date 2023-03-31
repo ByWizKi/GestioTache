@@ -19,9 +19,10 @@ add_executable(GestioTacheApp
 qt_add_resources(GestioTacheApp "dataFiles"
     PREFIX "/"
     FILES dataFiles/logo.png
-          dataFiles/importantIcon.png
-          dataFiles/peuImportantIcon.png
-          dataFiles/urgentIcon.png)
+        dataFiles/importantIcon.png
+        dataFiles/peuImportantIcon.png
+        dataFiles/urgentIcon.png
+        dataFiles/noneIcon.png)
 
 target_link_libraries(GestioTacheApp PRIVATE tache GestioTacheAppTexte Qt6::Widgets)
 

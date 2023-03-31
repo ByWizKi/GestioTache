@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
   AppGestioTache app;
-  app.accueilAffichage();
+  app.afficherAccueil();
 
   return a.exec();
 }
