@@ -1,39 +1,89 @@
 #include "../headerFiles/appgestiotache.h"
 
 AppGestioTache::AppGestioTache(QWidget *parent){
-
     creerActionsMenu();
-
     creerMenu();
-
     creerHead();
 
     m_listTache = chargeTouteTache();
-    afficherTache(m_listTache[0]);
+    if (!m_listTache.isEmpty()) {
+        afficherTache(m_listTache[0]);
+    }
     setStyleSheet("background-color : #3F4346");
 
     setWindowIcon(QIcon(":/dataFiles/logo.png"));
-
     setWindowTitle(tr("GestioTache"));
 
     m_ecran = QGuiApplication::primaryScreen();
     int ecranTailleLargeur = m_ecran->size().width();
     int ecranTailleHauteur = m_ecran->size().height();
-    setMinimumSize(1280,832);
+    setMinimumSize(1280, 832);
     setMaximumSize(ecranTailleLargeur, ecranTailleHauteur);
+
 }
 
 AppGestioTache::~AppGestioTache() {}
 
 void AppGestioTache::afficherAccueil()
 {
-    afficherTache(m_listTache[0]);
-    m_scrollTache = new QScrollArea(this);
+    QWidget * m_mainWidgetAccueil = new QWidget(this);
+    QVBoxLayout *m_mainLayout = new QVBoxLayout(m_mainWidgetAccueil);
+
+    QWidget *m_widgetTaches = new QWidget();
+    QVBoxLayout *layoutTache = new QVBoxLayout(m_widgetTaches);
+
+    QWidget *widgetConteneur = new QWidget();
+    QVBoxLayout *layoutVertical = new QVBoxLayout(widgetConteneur);
+
+    QScrollArea *m_scrollTache = new QScrollArea();
+    m_scrollTache->setFrameStyle(QFrame::NoFrame);
     m_scrollTache->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     m_scrollTache->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_scrollTache->setMinimumSize(QSize(m_widgetTache->width()+100, m_widgetTache->height()*2));
-    m_scrollTache->setWidget(m_widgetTache);
-    m_scrollTache->move(30, 150);
+    m_scrollTache->setWidgetResizable(true);
+
+    QLabel *titrePage = new QLabel("Accueil");
+    titrePage->setStyleSheet("font-family: 'IBM Plex Mono';"
+                             "font-style: normal;"
+                             "font-weight: 600;"
+                             "font-size: 64px;"
+                             "line-height: 83px;"
+                             "color: #FFFFFF;");
+
+
+    QLabel *titreWidget = new QLabel("Vos Taches");
+    titreWidget->setStyleSheet("font-family: 'IBM Plex Mono';"
+                               "font-style: normal;"
+                               "font-weight: 600;"
+                               "font-size: 48px;"
+                               "line-height: 62px;"
+                               "text-align: center;"
+                               "color: #000000");
+
+    for(int i = 0; i < m_listTache.length(); i++){
+       layoutVertical->addWidget(afficherTache(m_listTache[i]));
+    }
+
+    m_scrollTache->setWidget(widgetConteneur);
+    m_scrollTache->setFixedSize(QSize(632, 332));
+
+    layoutTache->addWidget(titreWidget);
+    layoutTache->setAlignment(titreWidget, Qt::AlignCenter);
+    layoutTache->addWidget(m_scrollTache);
+    layoutTache->setAlignment(m_scrollTache, Qt::AlignCenter);
+
+
+    m_mainLayout->addWidget(titrePage);
+    m_mainLayout->setAlignment(titrePage, Qt::AlignCenter);
+    m_mainLayout->addWidget(m_widgetTaches);
+    m_mainLayout->setAlignment(m_widgetTaches, Qt::AlignCenter);
+
+    m_widgetTaches->setFixedSize(QSize(756, 523));
+    m_widgetTaches->setStyleSheet("background-color : #F8CF7F ;"
+                                       "border-radius : 50px;");
+
+    m_mainWidgetAccueil->setFixedSize(QSize(800,644));
+    m_mainWidgetAccueil->move(262, 146);
+//    setCentralWidget(m_mainWidgetAccueil);
 
     show();
 }
@@ -54,11 +104,6 @@ void AppGestioTache::afficherSuppression()
 }
 
 void AppGestioTache::afficherAide()
-{
-
-}
-
-void AppGestioTache::centreHead(QWidget *widget)
 {
 
 }
@@ -101,11 +146,6 @@ void AppGestioTache::creerHead()
 
     QHBoxLayout *layoutMenu = new QHBoxLayout(m_head);
 
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
-    shadow->setBlurRadius(20);
-    shadow->setOffset(3);
-    shadow->setColor(QColor(0, 0, 0, 150));
-
     QPushButton *accueil = new QPushButton();
     accueil->setText("Accueil");
     accueil->setFont(QFont("IBM Plex Sans"));
@@ -121,7 +161,11 @@ void AppGestioTache::creerHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-    accueil->setGraphicsEffect(shadow);
+    QGraphicsDropShadowEffect *shadowAccueil = new QGraphicsDropShadowEffect(accueil);
+    shadowAccueil->setBlurRadius(20);
+    shadowAccueil->setOffset(3);
+    shadowAccueil->setColor(QColor(0, 0, 0, 150));
+    accueil->setGraphicsEffect(shadowAccueil);
     connect(accueil, SIGNAL(clicked()), this, SLOT(afficherAccueilSlot()));
 
     QPushButton *creer = new QPushButton();
@@ -138,6 +182,11 @@ void AppGestioTache::creerHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
+    QGraphicsDropShadowEffect *shadowCreer = new QGraphicsDropShadowEffect(creer);
+    shadowCreer->setBlurRadius(20);
+    shadowCreer->setOffset(3);
+    shadowCreer->setColor(QColor(0, 0, 0, 150));
+    creer->setGraphicsEffect(shadowCreer);
     connect(creer, SIGNAL(clicked()), this, SLOT(afficherCreationSlot()));
 
     QPushButton *modifier = new QPushButton();
@@ -154,6 +203,11 @@ void AppGestioTache::creerHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
+    QGraphicsDropShadowEffect *shadowModifier = new QGraphicsDropShadowEffect(modifier);
+    shadowModifier->setBlurRadius(20);
+    shadowModifier->setOffset(3);
+    shadowModifier->setColor(QColor(0, 0, 0, 150));
+    modifier->setGraphicsEffect(shadowModifier);
     connect(modifier, SIGNAL(clicked()), this, SLOT(afficherModificationSlot()));
 
 
@@ -171,11 +225,12 @@ void AppGestioTache::creerHead()
                              "font-size : 40px;"
                              "line-height  :52px;"
                              "border-radius : 10px;");
-
+    QGraphicsDropShadowEffect *shadowSupprimer = new QGraphicsDropShadowEffect(supprimer);
+    shadowSupprimer->setBlurRadius(20);
+    shadowSupprimer->setOffset(3);
+    shadowSupprimer->setColor(QColor(0, 0, 0, 150));
+    supprimer->setGraphicsEffect(shadowSupprimer);
     connect(supprimer, SIGNAL(clicked()), this, SLOT(afficherSuppressionSlot()));
-
-    accueil->setGraphicsEffect(shadow);
-
 
     layoutMenu->addWidget(accueil);
     layoutMenu->addWidget(creer);
@@ -200,11 +255,13 @@ void AppGestioTache::creerHead()
 
 }
 
-void AppGestioTache::afficherTache(const Tache* tache)
+QWidget* AppGestioTache::afficherTache(const Tache* tache)
 {
-    m_nomTache = new QLabel(tache->getNom());
-    m_dateDebTache = new QLabel(tache->getDate(true));
-    m_dateFinTache = new QLabel(tache->getDate(false));
+    QWidget *m_widgetTache = new QWidget();
+    QLabel *m_nomTache = new QLabel(tache->getNom());
+    QLabel *m_dateDebTache = new QLabel(tache->getDate(true));
+    QLabel *m_dateFinTache = new QLabel(tache->getDate(false));
+    QLabel *m_importance;
 
     QString importanceS = tache->getImportance();
     m_importance = new QLabel();
@@ -220,8 +277,6 @@ void AppGestioTache::afficherTache(const Tache* tache)
     else{
         m_importance->setPixmap(QPixmap(":/dataFiles/noneIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
     }
-
-    m_widgetTache = new QWidget();
 
     main_Layout = new QVBoxLayout(m_widgetTache);
     label_Laytout = new QVBoxLayout(m_widgetTache);
@@ -276,14 +331,14 @@ void AppGestioTache::afficherTache(const Tache* tache)
                                  "border-radius : 20px;"
                                 );
 
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(m_widgetTache);
     shadow->setBlurRadius(20);
     shadow->setOffset(3);
     shadow->setColor(QColor(0, 0, 0, 150));
 
     m_widgetTache->setGraphicsEffect(shadow);
 
-
+    return m_widgetTache;
 }
 
 void AppGestioTache::afficherAccueilSlot()

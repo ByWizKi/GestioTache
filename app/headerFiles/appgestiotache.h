@@ -18,6 +18,7 @@
 #include <QRect>
 #include <QApplication>
 #include <QScrollArea>
+#include <QPainter>
 #include <QGraphicsDropShadowEffect>
 
 class AppGestioTache : public QMainWindow
@@ -45,19 +46,9 @@ private:
     QMenu *m_menuQuitter;
     QMenu *m_menuAide;
 
-
-    QScrollArea *m_scrollTache;
-
-    QWidget *m_widgetTache;
     QVBoxLayout *main_Layout;
     QVBoxLayout *label_Laytout;
     QHBoxLayout *label_Laytout2;
-    QLabel *m_nomTache;
-    QLabel *m_dateDebTache;
-    QLabel *m_dateFinTache;
-    QLabel *m_importance;
-
-    void centreHead(QWidget* widget);
 
     QAction *m_sauveAction;
     QAction *m_quitterAction;
@@ -67,7 +58,7 @@ private:
     void creerActionsMenu();
     void creerHead();
 
-    void afficherTache(const Tache* tache);
+    QWidget* afficherTache(const Tache* tache);
 
 private slots:
     void afficherAccueilSlot();
