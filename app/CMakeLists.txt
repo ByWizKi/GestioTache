@@ -18,11 +18,15 @@ add_executable(GestioTacheApp
 
 qt_add_resources(GestioTacheApp "dataFiles"
     PREFIX "/"
-    FILES dataFiles/logo.png
-        dataFiles/importantIcon.png
-        dataFiles/peuImportantIcon.png
-        dataFiles/urgentIcon.png
-        dataFiles/noneIcon.png)
+    FILES dataFiles/imageFiles/logo.png
+        dataFiles/imageFiles/importantIcon.png
+        dataFiles/imageFiles/peuImportantIcon.png
+        dataFiles/imageFiles/urgentIcon.png
+        dataFiles/imageFiles/noneIcon.png
+        dataFiles/fontFiles/IBMPlexMono-Medium.ttf
+        dataFiles/fontFiles/IBMPlexMono-Regular.ttf
+        dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf
+        dataFiles/fontFiles/IBMPlexSans-Medium.ttf)
 
 target_link_libraries(GestioTacheApp PRIVATE tache GestioTacheAppTexte Qt6::Widgets)
 

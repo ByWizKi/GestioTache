@@ -18,7 +18,8 @@
 #include <QRect>
 #include <QApplication>
 #include <QScrollArea>
-#include <QPainter>
+#include <QScrollBar>
+#include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
 
 class AppGestioTache : public QMainWindow
@@ -29,7 +30,10 @@ public:
     AppGestioTache(QWidget *parent = nullptr);
     ~AppGestioTache();
 
+
+
     void afficherAccueil();
+
     void afficherCreation();
     void afficherModification();
     void afficherSuppression();
@@ -38,17 +42,38 @@ public:
 protected:
 
 private:
-    QScreen *m_ecran;
-    QWidget *m_head;
+    QWidget *main;
+    QGridLayout *m_mainLayout;
+
+    int idFont1;
+    int idFont2;
+    int idFont3;
+    int idFont4;
+
+
+
+    QWidget *m_widgetHead;
+    QWidget *affichageHead();
+
+    QWidget *widgetAccueil();
+    QWidget *m_widgetAccueil;
+
+
+    QWidget* afficherTache(const Tache* tache);
+    QWidget *m_tacheGroupe;
+    QVBoxLayout *main_Layout;
+
+    QWidget *m_widgetCreation;
+
+    QWidget *m_widgetModification;
+
+    QWidget *m_widgetSuppression;
+
     QList<Tache *> m_listTache;
 
     QMenu *m_menuSauve;
     QMenu *m_menuQuitter;
     QMenu *m_menuAide;
-
-    QVBoxLayout *main_Layout;
-    QVBoxLayout *label_Laytout;
-    QHBoxLayout *label_Laytout2;
 
     QAction *m_sauveAction;
     QAction *m_quitterAction;
@@ -56,9 +81,6 @@ private:
 
     void creerMenu();
     void creerActionsMenu();
-    void creerHead();
-
-    QWidget* afficherTache(const Tache* tache);
 
 private slots:
     void afficherAccueilSlot();

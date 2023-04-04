@@ -1,38 +1,68 @@
 #include "../headerFiles/appgestiotache.h"
 
 AppGestioTache::AppGestioTache(QWidget *parent){
-    creerActionsMenu();
-    creerMenu();
-    creerHead();
+
+    idFont1 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexSans-Medium.ttf");
+    idFont2 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf");
+    idFont3 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-Regular.ttf");
+    idFont4 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-Medium.ttf");
 
     m_listTache = chargeTouteTache();
-    if (!m_listTache.isEmpty()) {
-        afficherTache(m_listTache[0]);
-    }
+    creerActionsMenu();
+    creerMenu();
+
+    m_mainLayout = new QGridLayout();
+
+    m_widgetHead = affichageHead();
+    m_mainLayout->addWidget(m_widgetHead, 0, 0);
+    m_mainLayout->setAlignment(m_widgetHead, Qt::AlignTop);
+
+    main = new QWidget;
+    main->setLayout(m_mainLayout);
+    setCentralWidget(main);
+
     setStyleSheet("background-color : #3F4346");
 
-    setWindowIcon(QIcon(":/dataFiles/logo.png"));
+    setWindowIcon(QIcon(":/dataFiles/imageFiles/logo.png"));
     setWindowTitle(tr("GestioTache"));
 
-    m_ecran = QGuiApplication::primaryScreen();
+    QScreen *m_ecran = QGuiApplication::primaryScreen();
     int ecranTailleLargeur = m_ecran->size().width();
     int ecranTailleHauteur = m_ecran->size().height();
     setMinimumSize(1280, 832);
     setMaximumSize(ecranTailleLargeur, ecranTailleHauteur);
+    show();
 }
 
 AppGestioTache::~AppGestioTache() {}
 
 void AppGestioTache::afficherAccueil()
 {
-    QWidget * m_mainWidgetAccueil = new QWidget(this);
-    QVBoxLayout *m_mainLayout = new QVBoxLayout(m_mainWidgetAccueil);
+
+    if(m_widgetAccueil!=NULL){m_mainLayout->removeWidget(m_widgetAccueil);}
+    if(m_widgetCreation!=NULL){m_mainLayout->removeWidget(m_widgetCreation);}
+    if(m_widgetModification!=NULL){m_mainLayout->removeWidget(m_widgetModification);}
+    if(m_widgetSuppression!=NULL){m_mainLayout->removeWidget(m_widgetSuppression);}
+    m_listTache = chargeTouteTache();
+    m_widgetAccueil = widgetAccueil();
+    m_mainLayout->addWidget(m_widgetAccueil);
+    m_mainLayout->setAlignment(m_widgetAccueil, Qt::AlignCenter);
+}
+
+QWidget *AppGestioTache::widgetAccueil()
+{
+    QString policeTitre = QFontDatabase::applicationFontFamilies(idFont2).at(0);
+
+    QWidget * m_widgetAccueilB = new QWidget();
+    QVBoxLayout *m_mainLayout = new QVBoxLayout();
 
     QWidget *m_widgetTaches = new QWidget();
-    QVBoxLayout *layoutTache = new QVBoxLayout(m_widgetTaches);
+    QVBoxLayout *layoutTache = new QVBoxLayout();
+    m_widgetTaches->setLayout(layoutTache);
 
     QWidget *widgetConteneur = new QWidget();
-    QVBoxLayout *layoutVertical = new QVBoxLayout(widgetConteneur);
+    QVBoxLayout *layoutVertical = new QVBoxLayout();
+    widgetConteneur->setLayout(layoutVertical);
 
     QScrollArea *m_scrollTache = new QScrollArea();
     m_scrollTache->setFrameStyle(QFrame::NoFrame);
@@ -41,18 +71,16 @@ void AppGestioTache::afficherAccueil()
     m_scrollTache->setWidgetResizable(true);
 
     QLabel *titrePage = new QLabel("Accueil");
-    titrePage->setStyleSheet("font-family: 'IBM Plex Mono';"
-                             "font-style: normal;"
+    titrePage->setFont(QFont(policeTitre));
+    titrePage->setStyleSheet(
+                             "font-size : 64px;"
                              "font-weight: 600;"
-                             "font-size: 64px;"
                              "line-height: 83px;"
                              "color: #FFFFFF;");
 
-
     QLabel *titreWidget = new QLabel("Vos Taches");
-    titreWidget->setStyleSheet("font-family: 'IBM Plex Mono';"
-                               "font-style: normal;"
-                               "font-weight: 600;"
+    titreWidget->setFont(QFont(policeTitre));
+    titreWidget->setStyleSheet("font-weight: 600;"
                                "font-size: 48px;"
                                "line-height: 62px;"
                                "text-align: center;"
@@ -66,25 +94,27 @@ void AppGestioTache::afficherAccueil()
     m_scrollTache->setFixedSize(QSize(632, 332));
 
     layoutTache->addWidget(titreWidget);
-    layoutTache->setAlignment(titreWidget, Qt::AlignCenter);
+    layoutTache->setAlignment(titreWidget, Qt::AlignCenter | Qt::AlignTop);
+
     layoutTache->addWidget(m_scrollTache);
     layoutTache->setAlignment(m_scrollTache, Qt::AlignCenter);
 
+    layoutTache->setContentsMargins(0, 20, 0, 80);
 
     m_mainLayout->addWidget(titrePage);
-    m_mainLayout->setAlignment(titrePage, Qt::AlignCenter);
+    m_mainLayout->setAlignment(titrePage, Qt::AlignCenter | Qt::AlignTop);
+
+
     m_mainLayout->addWidget(m_widgetTaches);
     m_mainLayout->setAlignment(m_widgetTaches, Qt::AlignCenter);
 
     m_widgetTaches->setFixedSize(QSize(756, 523));
-    m_widgetTaches->setStyleSheet("background-color : #F8CF7F ;"
+    m_widgetTaches->setStyleSheet("background-color : #F8CF7F;"
                                    "border-radius : 50px;");
 
-    m_mainWidgetAccueil->setFixedSize(QSize(800,644));
-    m_mainWidgetAccueil->move(262, 146);
-//    setCentralWidget(m_mainWidgetAccueil);
-
-    show();
+    m_widgetAccueilB->setFixedSize(QSize(800,644));
+    m_widgetAccueilB->setLayout(m_mainLayout);
+    return m_widgetAccueilB;
 }
 
 void AppGestioTache::afficherCreation()
@@ -137,22 +167,22 @@ void AppGestioTache::creerActionsMenu()
     connect(m_helpAction, SIGNAL(triggered()), this, SLOT(afficherAideSlot()));
 }
 
-void AppGestioTache::creerHead()
+QWidget *AppGestioTache::affichageHead()
 {
-    m_head = new QWidget(this);
+    QString policeMenu = QFontDatabase::applicationFontFamilies(idFont1).at(0);
 
-    QHBoxLayout *layoutHead = new QHBoxLayout(m_head);
+    QWidget *m_widgetHeadB = new QWidget();
 
-    QHBoxLayout *layoutMenu = new QHBoxLayout(m_head);
+    QHBoxLayout *m_layoutHead = new QHBoxLayout(m_widgetHeadB);
 
     QPushButton *accueil = new QPushButton();
     accueil->setText("Accueil");
-    accueil->setFont(QFont("IBM Plex Sans"));
+    accueil->setFont(QFont(policeMenu));
     accueil->setCursor(Qt::PointingHandCursor);
     accueil->setStyleSheet("background-color : #F8CF7F;"
                            "margin-left : 84 px;"
                            "margin-right : 75px;"
-                             "padding : 3px;"
+                             "padding : 4px;"
                              "height  : 52px;"
                              "color : #000000;"
                              "font-style : normal;"
@@ -169,14 +199,13 @@ void AppGestioTache::creerHead()
 
     QPushButton *creer = new QPushButton();
     creer->setText("Créer");
-    creer->setFont(QFont("IBM Plex Sans"));
+    creer->setFont(QFont(policeMenu));
     creer->setCursor(Qt::PointingHandCursor);
     creer->setStyleSheet("background-color : #F8CF7F;"
                          "margin-right : 75px;"
-                             "padding : 3px;"
+                             "padding : 4px;"
                              "height  : 52px;"
                              "color : #000000;"
-                             "font-style : normal;"
                              "font-weight : 500;"
                              "font-size : 40px;"
                              "line-height  :52px;"
@@ -190,11 +219,11 @@ void AppGestioTache::creerHead()
 
     QPushButton *modifier = new QPushButton();
     modifier->setText("Modifier");
-    modifier->setFont(QFont("IBM Plex Sans"));
+    modifier->setFont(QFont(policeMenu));
     modifier->setCursor(Qt::PointingHandCursor);
     modifier->setStyleSheet("background-color : #F8CF7F;"
                             "margin-right : 75px;"
-                             "padding : 3px;"
+                             "padding : 4px;"
                              "height  : 52px;"
                              "color : #000000;"
                              "font-style : normal;"
@@ -209,14 +238,13 @@ void AppGestioTache::creerHead()
     modifier->setGraphicsEffect(shadowModifier);
     connect(modifier, SIGNAL(clicked()), this, SLOT(afficherModificationSlot()));
 
-
     QPushButton *supprimer = new QPushButton();
     supprimer->setText("Supprimer");
-    supprimer->setFont(QFont("IBM Plex Sans"));
+    supprimer->setFont(QFont(policeMenu));
     supprimer->setCursor(Qt::PointingHandCursor);
     supprimer->setStyleSheet("background-color : #F8CF7F;"
                              "margin-right : 84px;"
-                             "padding : 3px;"
+                             "padding : 4px;"
                              "height  : 52px;"
                              "color : #000000;"
                              "font-style : normal;"
@@ -231,67 +259,69 @@ void AppGestioTache::creerHead()
     supprimer->setGraphicsEffect(shadowSupprimer);
     connect(supprimer, SIGNAL(clicked()), this, SLOT(afficherSuppressionSlot()));
 
-    layoutMenu->addWidget(accueil);
-    layoutMenu->addWidget(creer);
-    layoutMenu->addWidget(modifier);
-    layoutMenu->addWidget(supprimer);
-
     QLabel *logoGauche = new QLabel();
     QLabel *logoDroite = new QLabel();
 
-    logoGauche->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
-    logoDroite->setPixmap(QPixmap(":/dataFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+    logoGauche->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+    logoDroite->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
 
     logoGauche->adjustSize();
     logoDroite->adjustSize();
 
-    layoutHead->addWidget(logoGauche);
-    layoutHead->addLayout(layoutMenu);
-    layoutHead->addWidget(logoDroite);
+    m_layoutHead->addWidget(logoGauche);
+    m_layoutHead->addWidget(accueil);
+    m_layoutHead->addWidget(creer);
+    m_layoutHead->addWidget(modifier);
+    m_layoutHead->addWidget(supprimer);
+    m_layoutHead->addWidget(logoDroite);
 
-    m_head->adjustSize();
-    m_head->move(10, 27);
-
+    m_widgetHeadB->setLayout(m_layoutHead);
+    m_widgetHeadB->adjustSize();
+    return m_widgetHeadB;
 }
 
-QWidget* AppGestioTache::afficherTache(const Tache* tache)
+QWidget *AppGestioTache::afficherTache(const Tache* tache)
 {
-    QWidget *m_widgetTache = new QWidget();
+    QString policeTache = QFontDatabase::applicationFontFamilies(idFont2).at(0);
+
+
+    m_tacheGroupe = new QWidget;
     QLabel *m_nomTache = new QLabel(tache->getNom());
+    m_nomTache->setFont(QFont(policeTache));
     QLabel *m_dateDebTache = new QLabel(tache->getDate(true));
+    m_dateDebTache->setFont(QFont(policeTache));
     QLabel *m_dateFinTache = new QLabel(tache->getDate(false));
+    m_dateFinTache->setFont(QFont(policeTache));
     QLabel *m_importance;
+
 
     QString importanceS = tache->getImportance();
     m_importance = new QLabel();
     if (importanceS == "peuImportant"){
-        m_importance->setPixmap(QPixmap(":/dataFiles/peuImportantIcon.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
+        m_importance->setPixmap(QPixmap(":/dataFiles/imageFiles/peuImportantIcon.png").scaled(QSize(80, 80), Qt::IgnoreAspectRatio));
     }
     else if (importanceS == "Important"){
-        m_importance->setPixmap(QPixmap(":/dataFiles/importantIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+        m_importance->setPixmap(QPixmap(":/dataFiles/imageFiles/importantIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
     }
     else if (importanceS == "Urgent"){
-        m_importance->setPixmap(QPixmap(":/dataFiles/urgentIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+        m_importance->setPixmap(QPixmap(":/dataFiles/imageFiles/urgentIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
     }
     else{
-        m_importance->setPixmap(QPixmap(":/dataFiles/noneIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
+        m_importance->setPixmap(QPixmap(":/dataFiles/imageFiles/noneIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
     }
+    m_importance->setFont(QFont(policeTache));
 
-    main_Layout = new QVBoxLayout(m_widgetTache);
-    label_Laytout = new QVBoxLayout(m_widgetTache);
-    label_Laytout2 = new QHBoxLayout(m_widgetTache);
+    main_Layout = new QVBoxLayout(m_tacheGroupe);
+    QVBoxLayout *label_Laytout = new QVBoxLayout();
+    QHBoxLayout *label_Laytout2 = new QHBoxLayout();
 
-    m_nomTache->setStyleSheet("font-family: 'IBM Plex Mono';"
-                              "font-style: normal;"
-                              "font-weight: 600;"
+    m_nomTache->setStyleSheet("font-weight: 600;"
                               "font-size: 13px;"
                               "line-height: 17px;"
                               "letter-spacing : 3px;"
                               "color: #FFFFFF;");
 
-    m_dateDebTache->setStyleSheet("font-family: 'IBM Plex Mono';"
-                                  "font-style: normal;"
-                                  "font-weight: 600;"
+    m_dateDebTache->setStyleSheet("font-weight: 600;"
                                   "font-size: 13px;"
                                   "line-height: 17px;"
                                   "letter-spacing: 3px;"
@@ -299,9 +329,7 @@ QWidget* AppGestioTache::afficherTache(const Tache* tache)
     label_Laytout->addWidget(m_dateDebTache);
     label_Laytout->setAlignment(m_dateDebTache, Qt::AlignLeft);
 
-    m_dateFinTache->setStyleSheet("font-family: 'IBM Plex Mono';"
-                                  "font-style: normal;"
-                                  "font-weight: 600;"
+    m_dateFinTache->setStyleSheet("font-weight: 600;"
                                   "font-size: 13px;"
                                   "line-height: 17px;"
                                   "letter-spacing: 3px;"
@@ -324,26 +352,25 @@ QWidget* AppGestioTache::afficherTache(const Tache* tache)
 
     main_Layout->addLayout(label_Laytout2);
 
-    m_widgetTache->setLayout(main_Layout);
-    m_widgetTache->setFixedSize(QSize(600, 110));
-    m_widgetTache->setStyleSheet("background-color : #AD9090;"
+    m_tacheGroupe->setLayout(main_Layout);
+    m_tacheGroupe->setFixedSize(QSize(600, 110));
+    m_tacheGroupe->setStyleSheet("background-color : #AD9090;"
                                  "border-radius : 20px;"
                                 );
 
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(m_widgetTache);
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(m_tacheGroupe);
     shadow->setBlurRadius(20);
     shadow->setOffset(3);
     shadow->setColor(QColor(0, 0, 0, 150));
 
-    m_widgetTache->setGraphicsEffect(shadow);
+    m_tacheGroupe->setGraphicsEffect(shadow);
 
-    return m_widgetTache;
+    return m_tacheGroupe;
 }
 
 void AppGestioTache::afficherAccueilSlot()
 {
     afficherAccueil();
-
 }
 
 void AppGestioTache::afficherCreationSlot()
