@@ -91,7 +91,7 @@ void AppGestioTacheTexte::creerTache() {
   QString dateFin;
   demandeDateFin >> dateFin;
 
-  if (QDateTime::fromString(dateDeb, "dd/MM/yyyy:hh:mm") !=
+  if (QDateTime::fromString(dateDeb, "dd/MM/yyyy:hh:mm") ==
       QDateTime::fromString(dateFin, "dd/MM/yyyy:hh:mm")) {
     qInfo()
         << "les dates ne sont pas compatible veuilliez recommencez la commande";
@@ -154,7 +154,7 @@ void AppGestioTacheTexte::modifierTache() {
           << ">> ";
   demandeDateFin >> newDateFin;
 
-  if (QDateTime::fromString(newDateDeb, "dd/MM/yyyy:hh:mm") !=
+  if (QDateTime::fromString(newDateDeb, "dd/MM/yyyy:hh:mm") ==
       QDateTime::fromString(newDateFin, "dd/MM/yyyy:hh:mm")) {
     qInfo()
         << "les dates ne sont pas compatible veuilliez recommencez la commande";
@@ -173,7 +173,7 @@ void AppGestioTacheTexte::modifierTache() {
         }
 
         if (newDateFin != "ok") {
-          this->listTache[i]->setDateTexte(newDateFin);
+          this->listTache[i]->setDateTexte(newDateFin,false);
         }
         sauveTouteTache(this->listTache);
         break;

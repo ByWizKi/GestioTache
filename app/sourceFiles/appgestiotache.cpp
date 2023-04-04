@@ -19,7 +19,6 @@ AppGestioTache::AppGestioTache(QWidget *parent){
     int ecranTailleHauteur = m_ecran->size().height();
     setMinimumSize(1280, 832);
     setMaximumSize(ecranTailleLargeur, ecranTailleHauteur);
-
 }
 
 AppGestioTache::~AppGestioTache() {}
@@ -79,7 +78,7 @@ void AppGestioTache::afficherAccueil()
 
     m_widgetTaches->setFixedSize(QSize(756, 523));
     m_widgetTaches->setStyleSheet("background-color : #F8CF7F ;"
-                                       "border-radius : 50px;");
+                                   "border-radius : 50px;");
 
     m_mainWidgetAccueil->setFixedSize(QSize(800,644));
     m_mainWidgetAccueil->move(262, 146);
