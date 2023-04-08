@@ -5,6 +5,11 @@
 #include "../../appTexte/headerFiles/appgestiotachetexte.h"
 #include <QScreen>
 #include <QGuiApplication>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QDateTimeEdit>
+#include <QMessageBox>
+#include <QComboBox>
 #include <QGroupBox>
 #include <QMenuBar>
 #include <QList>
@@ -15,7 +20,6 @@
 #include <QLabel>
 #include <QSizePolicy>
 #include <QFont>
-#include <QRect>
 #include <QApplication>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -28,12 +32,11 @@ class AppGestioTache : public QMainWindow
 
 public:
     AppGestioTache(QWidget *parent = nullptr);
+
     ~AppGestioTache();
 
 
-
     void afficherAccueil();
-
     void afficherCreation();
     void afficherModification();
     void afficherSuppression();
@@ -50,24 +53,22 @@ private:
     int idFont3;
     int idFont4;
 
-
-
     QWidget *m_widgetHead;
     QWidget *affichageHead();
 
     QWidget *widgetAccueil();
-    QWidget *m_widgetAccueil;
-
+    QWidget *m_widgetAccueil = nullptr;
 
     QWidget* afficherTache(const Tache* tache);
     QWidget *m_tacheGroupe;
     QVBoxLayout *main_Layout;
 
-    QWidget *m_widgetCreation;
+    QWidget *widgetCreation();
+    QWidget *m_widgetCreation = nullptr;
 
-    QWidget *m_widgetModification;
+    QWidget *m_widgetModification = nullptr;
 
-    QWidget *m_widgetSuppression;
+    QWidget *m_widgetSuppression = nullptr;
 
     QList<Tache *> m_listTache;
 
@@ -84,11 +85,17 @@ private:
 
 private slots:
     void afficherAccueilSlot();
+
     void afficherCreationSlot();
+
     void afficherModificationSlot();
+
     void afficherSuppressionSlot();
+
     void sauvegarderTacheSlot();
+
     void quitterApplicationSlot();
+
     void afficherAideSlot();
 };
 

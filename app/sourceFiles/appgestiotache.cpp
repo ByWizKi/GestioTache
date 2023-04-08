@@ -39,10 +39,27 @@ AppGestioTache::~AppGestioTache() {}
 void AppGestioTache::afficherAccueil()
 {
 
-    if(m_widgetAccueil!=NULL){m_mainLayout->removeWidget(m_widgetAccueil);}
-    if(m_widgetCreation!=NULL){m_mainLayout->removeWidget(m_widgetCreation);}
-    if(m_widgetModification!=NULL){m_mainLayout->removeWidget(m_widgetModification);}
-    if(m_widgetSuppression!=NULL){m_mainLayout->removeWidget(m_widgetSuppression);}
+    if(m_widgetAccueil!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetAccueil);
+    }
+
+    if(m_widgetCreation!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetCreation);
+        delete m_widgetCreation;
+    }
+    if(m_widgetModification!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetModification);
+        delete m_widgetModification;
+    }
+    if(m_widgetSuppression!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetSuppression);
+        delete m_widgetSuppression;
+    }
+
     m_listTache = chargeTouteTache();
     m_widgetAccueil = widgetAccueil();
     m_mainLayout->addWidget(m_widgetAccueil);
@@ -119,7 +136,62 @@ QWidget *AppGestioTache::widgetAccueil()
 
 void AppGestioTache::afficherCreation()
 {
+    if(m_widgetAccueil!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetAccueil);
+        delete m_widgetAccueil;
+    }
 
+    if(m_widgetCreation!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetCreation);
+    }
+
+    if(m_widgetModification!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetModification);
+        delete m_widgetModification;
+    }
+
+    if(m_widgetSuppression!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetSuppression);
+        delete m_widgetSuppression;
+    }
+
+    m_widgetCreation = widgetCreation();
+    m_mainLayout->addWidget(m_widgetCreation);
+    m_mainLayout->setAlignment(m_widgetCreation, Qt::AlignCenter);
+}
+
+QWidget *AppGestioTache::widgetCreation()
+{
+
+    QWidget *m_widgetForm = new QWidget();
+    QFormLayout *m_formLayout = new QFormLayout();
+
+    QLineEdit *nomTacheEdit = new QLineEdit();
+    m_formLayout->addRow("Nom de la tache : ", nomTacheEdit);
+
+    QDateTimeEdit *dateDebTacheEdit = new QDateTimeEdit();
+    m_formLayout->addRow("Date et heure du commencement de la tache : ", dateDebTacheEdit);
+
+    QDateTimeEdit *dateFinTacheEdit = new QDateTimeEdit();
+    m_formLayout->addRow("Date et heure du la fin de la tache : ", dateFinTacheEdit);
+
+    QComboBox *importanceChoix = new QComboBox();
+    importanceChoix->addItem("Peu Important");
+    importanceChoix->addItem("Important");
+    importanceChoix->addItem("Urgent");
+    m_formLayout->addRow("Importance de la tache : ", importanceChoix);
+
+    QPushButton *envoieForm = new QPushButton("Créer");
+    m_formLayout->addWidget(envoieForm);
+
+
+    m_widgetForm->setLayout(m_formLayout);
+    m_mainLayout->setAlignment(m_widgetForm, Qt::AlignCenter);
+    return m_widgetForm;
 }
 
 void AppGestioTache::afficherModification()
