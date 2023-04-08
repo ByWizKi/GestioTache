@@ -103,7 +103,8 @@ QWidget *AppGestioTache::widgetAccueil()
                                "text-align: center;"
                                "color: #000000");
 
-    for(int i = 0; i < m_listTache.length(); i++){
+
+    for(int i = m_listTache.length()-1; i >= 0; i--){
        layoutVertical->addWidget(afficherTache(m_listTache[i]));
     }
 
@@ -173,11 +174,21 @@ QWidget *AppGestioTache::widgetCreation()
     QLineEdit *nomTacheEdit = new QLineEdit();
     m_formLayout->addRow("Nom de la tache : ", nomTacheEdit);
 
-    QDateTimeEdit *dateDebTacheEdit = new QDateTimeEdit();
-    m_formLayout->addRow("Date et heure du commencement de la tache : ", dateDebTacheEdit);
+    QDateTimeEdit *dateDebTacheEdit = new QDateTimeEdit(QDateTime::currentDateTime());
+    dateDebTacheEdit->setCalendarPopup(true);
+    m_formLayout->addRow("Date et heure de début : ", dateDebTacheEdit);
 
-    QDateTimeEdit *dateFinTacheEdit = new QDateTimeEdit();
+    QDateTimeEdit *dateFinTacheEdit = new QDateTimeEdit(QDateTime::currentDateTime().addMSecs(60000));
+    dateFinTacheEdit->setCalendarPopup(true);
+    dateFinTacheEdit->setMinimumDateTime(dateDebTacheEdit->dateTime().addMSecs(60000));
     m_formLayout->addRow("Date et heure du la fin de la tache : ", dateFinTacheEdit);
+
+    connect(dateDebTacheEdit, &QDateTimeEdit::dateTimeChanged, this, [dateDebTacheEdit, dateFinTacheEdit](){
+        if (dateDebTacheEdit->dateTime() >= dateFinTacheEdit->dateTime()) {
+            dateFinTacheEdit->setDateTime(dateDebTacheEdit->dateTime().addMSecs(60000));
+            dateFinTacheEdit->setMinimumDateTime(dateDebTacheEdit->dateTime().addMSecs(60000));
+        }
+    });
 
     QComboBox *importanceChoix = new QComboBox();
     importanceChoix->addItem("Peu Important");
@@ -187,7 +198,42 @@ QWidget *AppGestioTache::widgetCreation()
 
     QPushButton *envoieForm = new QPushButton("Créer");
     m_formLayout->addWidget(envoieForm);
+    connect(envoieForm, &QPushButton::clicked, this, [=]()
 
+    {
+        if(!nomTacheEdit->text().isEmpty()){
+            if(importanceChoix->currentText() == "Peu Important"){
+                Tache newTache {aleatoireId(), nomTacheEdit->text(), peuImportant, dateDebTacheEdit->dateTime(), dateFinTacheEdit->dateTime()};
+                newTache.sauveTache();
+                QLabel *confirmationNewTache = new QLabel("Votre Tache a ete creer !");
+                confirmationNewTache->setStyleSheet("color :blue;");
+                m_formLayout->addWidget(confirmationNewTache);
+
+            }
+            else if (importanceChoix->currentText() == "Important"){
+                Tache newTache {aleatoireId(), nomTacheEdit->text(), Important, dateDebTacheEdit->dateTime(), dateFinTacheEdit->dateTime()};
+                newTache.sauveTache();
+                QLabel *confirmationNewTache = new QLabel("Votre Tache a ete creer !");
+                confirmationNewTache->setStyleSheet("color :blue;");
+                m_formLayout->addWidget(confirmationNewTache);
+            }
+
+            else if (importanceChoix->currentText() == "Urgent"){
+                Tache newTache {aleatoireId(), nomTacheEdit->text(), Urgent, dateDebTacheEdit->dateTime(), dateFinTacheEdit->dateTime()};
+                newTache.sauveTache();
+                QLabel *confirmationNewTache = new QLabel("Votre Tache a ete creer !");
+                confirmationNewTache->setStyleSheet("color :blue;");
+                m_formLayout->addWidget(confirmationNewTache);
+            }
+        }
+        else{
+            QLabel *erreurNomTacheVide = new QLabel("*Veuillez entrez le nom de votre tache !");
+            erreurNomTacheVide->setStyleSheet("color :red;");
+            m_formLayout->addWidget(erreurNomTacheVide);
+
+        }
+
+    });
 
     m_widgetForm->setLayout(m_formLayout);
     m_mainLayout->setAlignment(m_widgetForm, Qt::AlignCenter);
@@ -201,7 +247,39 @@ void AppGestioTache::afficherModification()
 
 void AppGestioTache::afficherSuppression()
 {
+    if(m_widgetAccueil!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetAccueil);
+        delete m_widgetAccueil;
+    }
 
+    if(m_widgetCreation!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetCreation);
+        delete m_widgetCreation;
+    }
+
+    if(m_widgetModification!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetModification);
+        delete m_widgetModification;
+    }
+
+    if(m_widgetSuppression!=nullptr)
+    {
+        m_mainLayout->removeWidget(m_widgetSuppression);
+    }
+
+    m_widgetSuppression = widgetSuppression();
+    m_mainLayout->addWidget(m_widgetSuppression);
+    m_mainLayout->setAlignment(m_widgetSuppression, Qt::AlignCenter);
+}
+
+QWidget *AppGestioTache::widgetSuppression()
+{
+    QWidget *m_suppresionWidgetB = new QWidget();
+
+    return m_suppresionWidgetB;
 }
 
 void AppGestioTache::afficherAide()
@@ -355,7 +433,6 @@ QWidget *AppGestioTache::affichageHead()
 QWidget *AppGestioTache::afficherTache(const Tache* tache)
 {
     QString policeTache = QFontDatabase::applicationFontFamilies(idFont2).at(0);
-
 
     m_tacheGroupe = new QWidget;
     QLabel *m_nomTache = new QLabel(tache->getNom());

@@ -69,6 +69,7 @@ private:
     QWidget *m_widgetModification = nullptr;
 
     QWidget *m_widgetSuppression = nullptr;
+    QWidget *widgetSuppression();
 
     QList<Tache *> m_listTache;
 

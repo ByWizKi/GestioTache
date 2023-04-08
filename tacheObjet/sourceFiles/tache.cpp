@@ -2,9 +2,7 @@
 
 Tache::Tache() { qInfo() << "nouvelle tache vide creer"; }
 
-Tache::Tache(const Tache &t){
-
-};
+Tache::Tache(const Tache &t){};
 
 Tache::Tache(const int &id, const QString &nom, const Importance &importance,
              const QDateTime &dateDeb, const QDateTime &dateFin) {
@@ -26,7 +24,8 @@ Tache::Tache(const QString &nom, const QString &importance,
   this->setDateTexte(dateFin, false);
 }
 
-Tache::~Tache() {
+Tache::~Tache()
+{
   this->idTache = 0;
   this->nomTache = "";
   this->importanceTache = NILL;
@@ -51,7 +50,7 @@ const QString Tache::getImportance() const {
   case 0:
     return "NULL";
   case 1:
-    return "Peu Important";
+    return "peuImportant";
   case 2:
     return "Important";
   case 3:
@@ -91,9 +90,9 @@ const bool Tache::setImportanceText(const QString &newImportance) {
 
 const QString Tache::getDate(bool dateDeb) const {
   if (dateDeb == true) {
-    return (this->dateDebutTache).toString("'Date Début Tache : 'dd/MM/yyyy à hh:mm:ss");
+    return (this->dateDebutTache).toString("'Date Début Tache : 'dd/MM/yyyy à hh:mm");
   } else {
-    return (this->dateFinTache).toString("'Date Fin Tache : 'dd/MM/yyyy à hh:mm:ss");
+    return (this->dateFinTache).toString("'Date Fin Tache : 'dd/MM/yyyy à hh:mm");
   }
 }
 
