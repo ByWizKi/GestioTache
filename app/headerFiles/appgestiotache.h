@@ -32,43 +32,38 @@ class AppGestioTache : public QMainWindow
 
 public:
     AppGestioTache(QWidget *parent = nullptr);
-
     ~AppGestioTache();
-
-
-    void afficherAccueil();
-    void afficherCreation();
-    void afficherModification();
-    void afficherSuppression();
-    void afficherAide();
 
 protected:
 
 private:
-    QWidget *main;
-    QGridLayout *m_mainLayout;
 
-    int idFont1;
-    int idFont2;
-    int idFont3;
-    int idFont4;
+    int idFont1 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexSans-Medium.ttf");
+    int idFont2 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf");
+    int idFont3 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-Regular.ttf");
+    int idFont4 = QFontDatabase::addApplicationFont(":/dataFiles/fontFiles/IBMPlexMono-Medium.ttf");
 
-    QWidget *m_widgetHead;
-    QWidget *affichageHead();
 
+    QWidget *m_widgetCentrale;
+    QWidget *m_widgetCourant;
+    QVBoxLayout *layoutPrincipale;
+
+    QWidget *m_teteFenetre;
+    QWidget *layoutTeteFenetre();
+
+    QWidget *m_widgetAccueil;
     QWidget *widgetAccueil();
-    QWidget *m_widgetAccueil = nullptr;
 
     QWidget* afficherTache(const Tache* tache);
-    QWidget *m_tacheGroupe;
     QVBoxLayout *main_Layout;
 
     QWidget *widgetCreation();
-    QWidget *m_widgetCreation = nullptr;
+    QWidget *m_widgetCreation;
 
-    QWidget *m_widgetModification = nullptr;
+    QWidget *m_widgetModification;
+    QWidget *widgetModification();
 
-    QWidget *m_widgetSuppression = nullptr;
+    QWidget *m_widgetSuppression;
     QWidget *widgetSuppression();
 
     QList<Tache *> m_listTache;
