@@ -38,6 +38,7 @@ QWidget *AppGestioTache::widgetAccueil()
 {
     QString policeTitre = QFontDatabase::applicationFontFamilies(idFont2).at(0);
 
+
     QWidget * m_widgetAccueilB = new QWidget();
     QVBoxLayout *m_mainLayout = new QVBoxLayout();
 
@@ -57,8 +58,7 @@ QWidget *AppGestioTache::widgetAccueil()
 
     QLabel *titrePage = new QLabel("Accueil");
     titrePage->setFont(QFont(policeTitre));
-    titrePage->setStyleSheet(
-                             "font-size : 64px;"
+    titrePage->setStyleSheet("font-size : 64px;"
                              "font-weight: 600;"
                              "line-height: 83px;"
                              "color: #FFFFFF;");
@@ -73,7 +73,7 @@ QWidget *AppGestioTache::widgetAccueil()
 
 
     for(int i = m_listTache.length()-1; i >= 0; i--){
-       layoutVertical->addWidget(afficherTache(m_listTache[i]));
+        layoutVertical->addWidget(afficherTache(m_listTache[i]));
     }
 
     m_scrollTache->setWidget(widgetConteneur);
@@ -96,7 +96,7 @@ QWidget *AppGestioTache::widgetAccueil()
 
     m_widgetTaches->setFixedSize(QSize(756, 523));
     m_widgetTaches->setStyleSheet("background-color : #F8CF7F;"
-                                   "border-radius : 50px;");
+                                  "border-radius : 50px;");
 
     m_widgetAccueilB->setFixedSize(QSize(800,644));
     m_widgetAccueilB->setLayout(m_mainLayout);
@@ -105,6 +105,8 @@ QWidget *AppGestioTache::widgetAccueil()
 
 QWidget *AppGestioTache::widgetCreation()
 {
+    QString policeTexte = QFontDatabase::applicationFontFamilies(idFont4).at(0);
+
     QWidget *mainWidget = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
@@ -112,11 +114,16 @@ QWidget *AppGestioTache::widgetCreation()
     QVBoxLayout *mainLayoutForm = new QVBoxLayout();
 
     QWidget *widgetForm = new QWidget();
-    QFormLayout *layoutForm = new QFormLayout();
+    QVBoxLayout *layoutGauche = new QVBoxLayout();
+    QVBoxLayout *layoutDroite = new QVBoxLayout();
+    QHBoxLayout *layoutForm = new QHBoxLayout();
 
 
-
-    QLabel *labelNom = new QLabel("Nom de la tâche :");
+    QLabel *labelNom = new QLabel("Nom de la tâche");
+    labelNom->setFont(policeTexte);
+    labelNom->setStyleSheet("color : #FFFFFF;"
+                            "font-weight: 200;"
+                            "letter-spacing: 0.1em;");
     QLineEdit *nomTacheEdit = new QLineEdit();
     nomTacheEdit->setFixedSize(291, 44);
     nomTacheEdit->setPlaceholderText("Faire les maths !");
@@ -137,23 +144,27 @@ QWidget *AppGestioTache::widgetCreation()
     QWidget *widgetNom = new QWidget();
     widgetNom->setLayout(layoutNom);
 
-
     QLabel *labelDateDeb = new QLabel("Date début de la tache");
+    labelDateDeb->setFont(policeTexte);
+    labelDateDeb->setStyleSheet("color : #FFFFFF;"
+                                "font-weight: 200;"
+                                "letter-spacing: 0.1em;");
     QDateTimeEdit *dateDebTacheEdit = new QDateTimeEdit(QDateTime::currentDateTime());
     dateDebTacheEdit->setCalendarPopup(true);
     dateDebTacheEdit->setFixedSize(291, 44);
     dateDebTacheEdit->setStyleSheet("QDateTimeEdit {"
-                                        "border: none;"
-                                        "background-color: #AD9090;"
-                                        "border-radius: 5px;"
-                                        "padding: 5px;"
-                                        "color: white;"
-                                        "}"
+                                    "border: none;"
+                                    "background-color: #AD9090;"
+                                    "border-radius: 5px;"
+                                    "padding: 5px;"
+                                    "color: white;"
+                                    "}"
 
-                                        "QDateTimeEdit::drop-down {"
-                                        "width: 30px;"
-                                        "image: url(:/dataFiles/imageFiles/flecheSelect.png);"
-                                        "}");
+                                    "QDateTimeEdit::drop-down {"
+                                    "width: 30px;"
+                                    "margin-right: 5px;"
+                                    "image: url(:/dataFiles/imageFiles/flecheSelect.png);"
+                                    "}");
     QVBoxLayout *layoutDateDeb = new QVBoxLayout();
     layoutDateDeb->addWidget(labelDateDeb);
     layoutDateDeb->addWidget(dateDebTacheEdit);
@@ -161,25 +172,26 @@ QWidget *AppGestioTache::widgetCreation()
     QWidget *widgetDateDeb = new QWidget();
     widgetDateDeb->setLayout(layoutDateDeb);
 
-
-
     QLabel *labelDateFin = new QLabel("Date fin de la tache");
-
+    labelDateFin->setFont(policeTexte);
+    labelDateFin->setStyleSheet("color : #FFFFFF;"
+                                "letter-spacing: 0.1em;");
     QDateTimeEdit *dateFinTacheEdit = new QDateTimeEdit(QDateTime::currentDateTime().addMSecs(60000));
     dateFinTacheEdit->setCalendarPopup(true);
     dateFinTacheEdit->setFixedSize(291, 44);
     dateFinTacheEdit->setStyleSheet("QDateTimeEdit {"
-                                        "border: none;"
-                                        "background-color: #AD9090;"
-                                        "border-radius: 5px;"
-                                        "padding: 5px;"
-                                        "color: white;"
-                                        "}"
+                                    "border: none;"
+                                    "background-color: #AD9090;"
+                                    "border-radius: 5px;"
+                                    "padding: 5px;"
+                                    "color: white;"
+                                    "}"
 
-                                        "QDateTimeEdit::drop-down {"
-                                        "width: 30px;"
-                                        "image: url(:/dataFiles/imageFiles/flecheSelect.png);"
-                                        "}");
+                                    "QDateTimeEdit::drop-down {"
+                                    "width: 30px;"
+                                    "margin-right: 5px;"
+                                    "image: url(:/dataFiles/imageFiles/flecheSelect.png);"
+                                    "}");
     dateFinTacheEdit->setMinimumDateTime(dateDebTacheEdit->dateTime().addMSecs(60000));
     QVBoxLayout *layoutDateFin = new QVBoxLayout();
     layoutDateFin->addWidget(labelDateFin);
@@ -195,11 +207,13 @@ QWidget *AppGestioTache::widgetCreation()
         }
     });
 
-
     QLabel *labelImportanceChoix = new QLabel("Importance tache");
+    labelImportanceChoix->setFont(policeTexte);
+    labelImportanceChoix->setStyleSheet("color : #FFFFFF;"
+                                        "font-weight: 200;"
+                                        "letter-spacing: 0.1em;");
     QComboBox *importanceChoix = new QComboBox();
     importanceChoix->setPlaceholderText("Choisissez l'importance");
-
     importanceChoix->addItem("Peu Important");
     importanceChoix->addItem("Important");
     importanceChoix->addItem("Urgent");
@@ -237,25 +251,33 @@ QWidget *AppGestioTache::widgetCreation()
     QWidget *widgetImportanceChoix = new QWidget();
     widgetImportanceChoix->setLayout(layoutImportanceChoix);
 
-    QPushButton *envoieForm = new QPushButton("Créer");
+    QPushButton *envoieForm = new QPushButton();
+    envoieForm->setText("Créer");
+    envoieForm->setFixedSize(430, 60);
     QString policeBouton = QFontDatabase::applicationFontFamilies(idFont2).at(0);
     envoieForm->setFont(policeBouton);
     envoieForm->setFlat(true);
-    envoieForm->resize(430, 60);
     envoieForm->setCursor(Qt::PointingHandCursor);
-    envoieForm->setStyleSheet(
-                              "background: #3F4346;"
+    envoieForm->setStyleSheet("background: #3F4346;"
+                              "position: absolute;"
                               "border-radius: 15px;"
                               "font-weight: 600;"
-                              "font-size: 36px;"
                               "letter-spacing: 0.2em;"
                               "color : #FFFFFF;"
-                              "margin-top: 66px;");
+                              "font-size : 36px;"
+                              );
+    layoutGauche->addWidget(widgetNom);
+    layoutGauche->addSpacing(40);
+    layoutGauche->addWidget(widgetImportanceChoix);
 
-    layoutForm->addRow(widgetNom, widgetDateDeb);
-    layoutForm->addRow(widgetImportanceChoix, widgetDateFin);
+    layoutDroite->addWidget(widgetDateDeb);
+    layoutDroite->addSpacing(40);
+    layoutDroite->addWidget(widgetDateFin);
 
-    layoutForm->addRow(envoieForm);
+    layoutForm->addLayout(layoutGauche);
+    layoutForm->addSpacing(70);
+    layoutForm->addLayout(layoutDroite);
+
     connect(envoieForm, &QPushButton::clicked, this, [=]()
     {
         if(!nomTacheEdit->text().isEmpty()){
@@ -296,17 +318,19 @@ QWidget *AppGestioTache::widgetCreation()
     QLabel *titreForm = new QLabel("Nouvelle Tache");
     titreForm->setFont(QFont(policeBouton));
     titreForm->setStyleSheet("font-weight: 600;"
-                               "font-size: 48px;"
-                               "line-height: 62px;"
-                               "text-align: center;"
-                               "color: #000000");
-
+                             "font-size: 48px;"
+                             "line-height: 62px;"
+                             "color: #000000");
 
     widgetForm->setLayout(layoutForm);
     mainLayoutForm->addWidget(titreForm);
     mainLayoutForm->setAlignment(titreForm, Qt::AlignCenter);
+    mainLayoutForm->addSpacing(20);
     mainLayoutForm->addWidget(widgetForm);
+    mainLayoutForm->addSpacing(50);
+    mainLayoutForm->addWidget(envoieForm);
     mainLayoutForm->setAlignment(widgetForm, Qt::AlignCenter);
+    mainLayoutForm->setAlignment(envoieForm, Qt::AlignCenter);
 
     mainWidgetForm->setFixedSize(756, 523);
     QGraphicsDropShadowEffect *shadowMainWidgetForm = new QGraphicsDropShadowEffect(mainWidgetForm);
@@ -322,11 +346,10 @@ QWidget *AppGestioTache::widgetCreation()
 
     QLabel *titreWidget = new QLabel("Créer");
     titreWidget->setFont(QFont(policeBouton));
-    titreWidget->setStyleSheet(
-                             "font-size : 64px;"
-                             "font-weight: 600;"
-                             "line-height: 83px;"
-                             "color: #FFFFFF;");
+    titreWidget->setStyleSheet("font-size : 64px;"
+                               "font-weight: 600;"
+                               "line-height: 83px;"
+                               "color: #FFFFFF;");
 
     mainLayout->addWidget(titreWidget);
     mainLayout->setAlignment(titreWidget, Qt::AlignCenter);
@@ -334,8 +357,7 @@ QWidget *AppGestioTache::widgetCreation()
     mainLayout->setAlignment(mainWidgetForm, Qt::AlignCenter);
 
     mainWidget->setLayout(mainLayout);
-
-
+    mainWidget->setContentsMargins(0, 0, 0, 10);
     return mainWidget;
 }
 
@@ -444,14 +466,14 @@ QWidget *AppGestioTache::layoutTeteFenetre()
     accueil->setStyleSheet("background-color : #F8CF7F;"
                            "margin-left : 84 px;"
                            "margin-right : 75px;"
-                             "padding : 4px;"
-                             "height  : 52px;"
-                             "color : #000000;"
-                             "font-style : normal;"
-                             "font-weight : 500;"
-                             "font-size : 40px;"
-                             "line-height  :52px;"
-                             "border-radius : 10px;");
+                           "padding : 4px;"
+                           "height  : 52px;"
+                           "color : #000000;"
+                           "font-style : normal;"
+                           "font-weight : 500;"
+                           "font-size : 40px;"
+                           "line-height  :52px;"
+                           "border-radius : 10px;");
     QGraphicsDropShadowEffect *shadowAccueil = new QGraphicsDropShadowEffect(accueil);
     shadowAccueil->setBlurRadius(20);
     shadowAccueil->setOffset(3);
@@ -465,13 +487,13 @@ QWidget *AppGestioTache::layoutTeteFenetre()
     creer->setCursor(Qt::PointingHandCursor);
     creer->setStyleSheet("background-color : #F8CF7F;"
                          "margin-right : 75px;"
-                             "padding : 4px;"
-                             "height  : 52px;"
-                             "color : #000000;"
-                             "font-weight : 500;"
-                             "font-size : 40px;"
-                             "line-height  :52px;"
-                             "border-radius : 10px;");
+                         "padding : 4px;"
+                         "height  : 52px;"
+                         "color : #000000;"
+                         "font-weight : 500;"
+                         "font-size : 40px;"
+                         "line-height  :52px;"
+                         "border-radius : 10px;");
     QGraphicsDropShadowEffect *shadowCreer = new QGraphicsDropShadowEffect(creer);
     shadowCreer->setBlurRadius(20);
     shadowCreer->setOffset(3);
@@ -485,14 +507,14 @@ QWidget *AppGestioTache::layoutTeteFenetre()
     modifier->setCursor(Qt::PointingHandCursor);
     modifier->setStyleSheet("background-color : #F8CF7F;"
                             "margin-right : 75px;"
-                             "padding : 4px;"
-                             "height  : 52px;"
-                             "color : #000000;"
-                             "font-style : normal;"
-                             "font-weight : 500;"
-                             "font-size : 40px;"
-                             "line-height  :52px;"
-                             "border-radius : 10px;");
+                            "padding : 4px;"
+                            "height  : 52px;"
+                            "color : #000000;"
+                            "font-style : normal;"
+                            "font-weight : 500;"
+                            "font-size : 40px;"
+                            "line-height  :52px;"
+                            "border-radius : 10px;");
     QGraphicsDropShadowEffect *shadowModifier = new QGraphicsDropShadowEffect(modifier);
     shadowModifier->setBlurRadius(20);
     shadowModifier->setOffset(3);
@@ -619,7 +641,7 @@ QWidget *AppGestioTache::afficherTache(const Tache* tache)
     m_tacheGroupe->setFixedSize(QSize(600, 110));
     m_tacheGroupe->setStyleSheet("background-color : #AD9090;"
                                  "border-radius : 20px;"
-                                );
+                                 );
 
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(m_tacheGroupe);
     shadow->setBlurRadius(20);
