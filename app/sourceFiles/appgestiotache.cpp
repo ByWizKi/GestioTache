@@ -144,7 +144,7 @@ QWidget *AppGestioTache::widgetCreation()
     QWidget *widgetNom = new QWidget();
     widgetNom->setLayout(layoutNom);
 
-    QLabel *labelDateDeb = new QLabel("Date début de la tache");
+    QLabel *labelDateDeb = new QLabel("Date de début de la tache");
     labelDateDeb->setFont(policeTexte);
     labelDateDeb->setStyleSheet("color : #FFFFFF;"
                                 "font-weight: 200;"
@@ -364,9 +364,147 @@ QWidget *AppGestioTache::widgetCreation()
 QWidget *AppGestioTache::widgetModification()
 {
     QWidget *modificationWidget = new QWidget();
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    QVBoxLayout *choixTacheLayout = new QVBoxLayout();
+    QLabel * titreWidget = new QLabel("Modifier");
+    mainLayout->addWidget(titreWidget);
+    mainLayout->addLayout(choixTacheLayout);
+
+    QComboBox *listeTacheAEdit = new QComboBox();
+    listeTacheAEdit->addItem("Selectionnez votre tache a modifier ", -1);
+
+    for(int i = m_listTache.length()-1; i >= 0; i--){
+        listeTacheAEdit->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDate(true), i);
+    }
+
+    QPushButton *validerTacheEdit = new QPushButton("Modifier");
+    connect(validerTacheEdit, &QPushButton::clicked, this, [=]()
+    {
+        int tacheAEdit = listeTacheAEdit->currentData().toInt();
+        if (tacheAEdit > -1){
+            QLabel *messageRepButton = new QLabel("Vous allez modifier la tache : "+m_listTache[tacheAEdit]->getNom());
+            choixTacheLayout->addWidget(messageRepButton);
+            QWidget *widgetEdition = widgetModificationBis(m_listTache[tacheAEdit]);
+            mainLayout->addWidget(widgetEdition);
+        }
+        else{
+            QLabel *messageRepButton = new QLabel("Veuillez selectionnez une tache a modifier");
+            choixTacheLayout->addWidget(messageRepButton);
+        }
+    });
+
+    choixTacheLayout->addWidget(listeTacheAEdit);
+    choixTacheLayout->addWidget(validerTacheEdit);
+
+    modificationWidget->setLayout(mainLayout);
+
     modificationWidget->setStyleSheet("background-color : red;");
     return modificationWidget;
 }
+
+QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
+{
+    QWidget *editWidget = new QWidget();
+    QVBoxLayout *mainEditLayout = new QVBoxLayout();
+    QLabel *titreWidget = new QLabel("Tache en cours de modification");
+    mainEditLayout->addWidget(titreWidget);
+
+    QVBoxLayout *gaucheLayout = new QVBoxLayout();
+    QVBoxLayout *droiteLayout = new QVBoxLayout();
+    QHBoxLayout *editLayout = new QHBoxLayout();
+
+    QLabel *labelNom = new QLabel("Nom de la tache");
+    QLineEdit *newNomTache = new QLineEdit();
+    QVBoxLayout *newNomTacheLayout = new QVBoxLayout();
+    QWidget *newNomTacheWidget = new QWidget();
+    newNomTacheLayout->addWidget(labelNom);
+    newNomTacheLayout->addWidget(newNomTache);
+    newNomTacheWidget->setLayout(newNomTacheLayout);
+
+    QLabel *labelImportance = new QLabel("Importance Tache");
+    QComboBox *newImportanceTache = new QComboBox();
+    newImportanceTache->setPlaceholderText("Choisissez l'importance");
+    newImportanceTache->addItem("Peu Important");
+    newImportanceTache->addItem("Important");
+    newImportanceTache->addItem("Urgent");
+    QVBoxLayout *newImportanceTacheLayout = new QVBoxLayout();
+    QWidget *newImportanceTacheWidget = new QWidget();
+    newImportanceTacheLayout->addWidget(labelImportance);
+    newImportanceTacheLayout->addWidget(newImportanceTache);
+    newImportanceTacheWidget->setLayout(newImportanceTacheLayout);
+
+    gaucheLayout->addWidget(newNomTacheWidget);
+    gaucheLayout->addWidget(newImportanceTacheWidget);
+
+    QLabel *labelDateDeb = new QLabel("Date de début de la tache");
+    QDateTimeEdit *newDateDebTache = new QDateTimeEdit();
+    QVBoxLayout *newDateDebTacheLayout = new QVBoxLayout();
+    QWidget *newDateDebTacheWidget = new QWidget();
+    newDateDebTacheLayout->addWidget(labelDateDeb);
+    newDateDebTacheLayout->addWidget(newDateDebTache);
+    newDateDebTacheWidget->setLayout(newDateDebTacheLayout);
+
+
+    QLabel *labelDateFin = new QLabel("Date fin de la tache");
+    QDateTimeEdit *newDateFinTache = new QDateTimeEdit();
+    QVBoxLayout *newDateFinTacheLayout = new QVBoxLayout();
+    QWidget *newDateFinTacheWidget = new QWidget();
+    newDateFinTacheLayout->addWidget(labelDateFin);
+    newDateFinTacheLayout->addWidget(newDateFinTache);
+    newDateFinTacheWidget->setLayout(newDateFinTacheLayout);
+
+    droiteLayout->addWidget(newDateDebTacheWidget);
+    droiteLayout->addWidget(newDateFinTacheWidget);
+
+    editLayout->addLayout(gaucheLayout);
+    editLayout->addLayout(droiteLayout);
+
+    QPushButton *confirmModification = new QPushButton("Valider");
+    connect(confirmModification, &QPushButton::clicked, this, [=]()
+    {
+
+        if(!newNomTache->text().isEmpty()){
+            tache->setNom(newNomTache->text());
+        }
+
+        if(newImportanceTache->currentData().toInt() > 0){
+            switch (newImportanceTache->currentData().toInt()) {
+            case 1:
+                tache->setImportanceText("peuImportant");
+            case 2:
+                tache->setImportanceText("Important");
+            case 3:
+                tache->setImportanceText("Urgent");
+            }
+        }
+
+//        if(newDateDebTache->dateTime() != QDateTime::fromString(tache->getDate(true), "dd/MM/yyyy hh:mm")){
+//            tache->setDate(newDateDebTache->dateTime(), true);
+
+//        }
+
+//        if(newDateFinTache->dateTime() != QDateTime::fromString(tache->getDate(true), "dd/MM/yyyy hh:mm")){
+//            tache->setDate(newDateFinTache->dateTime(), false);
+//        }
+
+        else{
+            QLabel *messageConfirm = new QLabel("Aucun champs sera modifier");
+            mainEditLayout->addWidget(messageConfirm);
+        }
+        tache->sauveTache();
+        m_listTache = chargeTouteTache();
+
+
+    });
+
+    mainEditLayout->addLayout(editLayout);
+    mainEditLayout->addWidget(confirmModification);
+
+    editWidget->setLayout(mainEditLayout);
+
+    return editWidget;
+}
+
 
 QWidget *AppGestioTache::widgetSuppression()
 {

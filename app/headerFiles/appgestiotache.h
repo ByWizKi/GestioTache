@@ -62,6 +62,7 @@ private:
 
     QWidget *m_widgetModification;
     QWidget *widgetModification();
+    QWidget *widgetModificationBis(Tache* tache);
 
     QWidget *m_widgetSuppression;
     QWidget *widgetSuppression();
