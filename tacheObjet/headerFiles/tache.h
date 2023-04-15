@@ -54,7 +54,9 @@ public:
 
   const bool setImportanceText(const QString &newImportance);
 
-  const QString getDate(bool dateDeb = true) const;
+  const QDateTime getDate(bool dateDeb = true) const;
+
+  const QString getDateTexte(bool dateDeb = true) const;
 
   const bool setDate(const QDateTime &newDate, const bool dateDeb = true);
 

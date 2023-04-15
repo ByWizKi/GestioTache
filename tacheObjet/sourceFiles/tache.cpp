@@ -88,7 +88,15 @@ const bool Tache::setImportanceText(const QString &newImportance) {
     return true;
 }
 
-const QString Tache::getDate(bool dateDeb) const {
+const QDateTime Tache::getDate(bool dateDeb) const {
+    if (dateDeb == true) {
+        return this->dateDebutTache;
+    } else {
+        return this->dateFinTache;
+    }
+}
+
+const QString Tache::getDateTexte(bool dateDeb) const {
     if (dateDeb == true) {
         return (this->dateDebutTache).toString("'Date Début Tache : 'dd/MM/yyyy à hh:mm");
     } else {
@@ -171,30 +179,37 @@ const bool Tache::sauveTache() const {
     fichierJSON.write(documentJSON.toJson());
     fichierJSON.close();
 
-    QFile listTache("listTache.txt");
-    if (!listTache.open(QFile::ReadWrite | QIODeviceBase::Append | QIODevice::Text)) {
-        qCritical() << "impossible d'ouvrir le fichier";
-        qCritical() << listTache.errorString();
-    }
+    QFile file("listTache.txt");
+       if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+       {
+           qCritical() << "impossible d'ouvrir le fichier";
+           qCritical() << fichierJSON.errorString();
+       }
 
-    QTextStream in(&listTache);
-    QString id = QString::number(this->getId())+".json";
-    bool trouve = false;
+       // Recherche du mot dans le fichier
+       QString id = QString::number(this->getId())+".json";
+       QTextStream in(&file);
+       bool trouver = false;
+       while (!in.atEnd())
+       {
+           QString ligne = in.readLine();
+           if (ligne.contains(id))
+           {
+               trouver = true;
+               break;
+           }
+       }
 
-    while(!in.atEnd()) {
-        qInfo()<<"yooo";
-        QString ligne = in.readLine();
-        if(ligne.contains(id)) {
-            trouve = true;
-            break;
-        }
-    }
+       // Si le mot n'a pas été trouvé, on l'écrit à la fin du fichier
+       if (!trouver)
+       {
+           QTextStream out(&file);
+           out.seek(file.size()); // On se positionne à la fin du fichier
+           out << id << Qt::endl;
+       }
 
-    if(!trouve) {
-        QTextStream out(&listTache);
-        out << this->getId() << ".json" << "\n";
-    }
-    listTache.close();
+       // Fermeture du fichier
+       file.close();
     return true;
 }
 
@@ -235,14 +250,14 @@ void Tache::testRegression() {
     Q_ASSERT(tache1.getImportanceVal() == importanceTest);
 
     QString dateTest = "le 12/03/2023 à 14:55:00";
-    Q_ASSERT(tache1.getDate() == dateTest);
+    Q_ASSERT(tache1.getDateTexte() == dateTest);
 
     QDate newDateTest{2023, 03, 14};
     QTime newTimeTest{13, 50, 00};
     QDateTime newDate{newDateTest, newTimeTest};
     tache1.setDate(newDate);
-    Q_ASSERT(tache1.getDate() == "le 14/03/2023 à 13:50:00");
-    Q_ASSERT(tache1.getDate() != tache1.getDate(false));
+    Q_ASSERT(tache1.getDateTexte() == "le 14/03/2023 à 13:50:00");
+    Q_ASSERT(tache1.getDateTexte() != tache1.getDateTexte(false));
 
     tache1.sauveTache();
     Tache tache2{"Aller au coiffeur", "Important", "12 03 2023 14 30",

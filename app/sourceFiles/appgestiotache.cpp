@@ -374,7 +374,7 @@ QWidget *AppGestioTache::widgetModification()
     listeTacheAEdit->addItem("Selectionnez votre tache a modifier ", -1);
 
     for(int i = m_listTache.length()-1; i >= 0; i--){
-        listeTacheAEdit->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDate(true), i);
+        listeTacheAEdit->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDateTexte(true), i);
     }
 
     QPushButton *validerTacheEdit = new QPushButton("Modifier");
@@ -437,7 +437,8 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
     gaucheLayout->addWidget(newImportanceTacheWidget);
 
     QLabel *labelDateDeb = new QLabel("Date de début de la tache");
-    QDateTimeEdit *newDateDebTache = new QDateTimeEdit();
+    QDateTimeEdit *newDateDebTache = new QDateTimeEdit(tache->getDate(true));
+    newDateDebTache->setCalendarPopup(true);
     QVBoxLayout *newDateDebTacheLayout = new QVBoxLayout();
     QWidget *newDateDebTacheWidget = new QWidget();
     newDateDebTacheLayout->addWidget(labelDateDeb);
@@ -446,12 +447,20 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
 
 
     QLabel *labelDateFin = new QLabel("Date fin de la tache");
-    QDateTimeEdit *newDateFinTache = new QDateTimeEdit();
+    QDateTimeEdit *newDateFinTache = new QDateTimeEdit(tache->getDate(false));
+    newDateFinTache->setCalendarPopup(true);
     QVBoxLayout *newDateFinTacheLayout = new QVBoxLayout();
     QWidget *newDateFinTacheWidget = new QWidget();
     newDateFinTacheLayout->addWidget(labelDateFin);
     newDateFinTacheLayout->addWidget(newDateFinTache);
     newDateFinTacheWidget->setLayout(newDateFinTacheLayout);
+
+    connect(newDateDebTache, &QDateTimeEdit::dateTimeChanged, this, [newDateDebTache, newDateFinTache](){
+        if (newDateDebTache->dateTime() >= newDateFinTache->dateTime()) {
+            newDateFinTache->setDateTime(newDateDebTache->dateTime().addMSecs(60000));
+            newDateFinTache->setMinimumDateTime(newDateDebTache->dateTime().addMSecs(60000));
+        }
+    });
 
     droiteLayout->addWidget(newDateDebTacheWidget);
     droiteLayout->addWidget(newDateFinTacheWidget);
@@ -462,39 +471,36 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
     QPushButton *confirmModification = new QPushButton("Valider");
     connect(confirmModification, &QPushButton::clicked, this, [=]()
     {
+        bool editionTache = true;
+        if(!newNomTache->text().isEmpty()){tache->setNom(newNomTache->text());}
+        else{editionTache  = false;}
 
-        if(!newNomTache->text().isEmpty()){
-            tache->setNom(newNomTache->text());
+        if(newImportanceTache->currentText() == "Peu Important"){tache->setImportance(peuImportant);}
+        else if (newImportanceTache->currentText()=="Important"){tache->setImportance(Important);}
+        else if(newImportanceTache->currentText()=="Urgent"){tache->setImportance(Urgent);}
+        else{editionTache = false;}
+
+        if(newDateDebTache->dateTime() != tache->getDate(true)){
+            tache->setDate(newDateDebTache->dateTime(), true);
         }
+        else{editionTache  = false;}
 
-        if(newImportanceTache->currentData().toInt() > 0){
-            switch (newImportanceTache->currentData().toInt()) {
-            case 1:
-                tache->setImportanceText("peuImportant");
-            case 2:
-                tache->setImportanceText("Important");
-            case 3:
-                tache->setImportanceText("Urgent");
-            }
+        if(newDateFinTache->dateTime() != tache->getDate(false)){
+            tache->setDate(newDateFinTache->dateTime(), false);
         }
+        else{editionTache  = false;}
 
-//        if(newDateDebTache->dateTime() != QDateTime::fromString(tache->getDate(true), "dd/MM/yyyy hh:mm")){
-//            tache->setDate(newDateDebTache->dateTime(), true);
-
-//        }
-
-//        if(newDateFinTache->dateTime() != QDateTime::fromString(tache->getDate(true), "dd/MM/yyyy hh:mm")){
-//            tache->setDate(newDateFinTache->dateTime(), false);
-//        }
-
-        else{
-            QLabel *messageConfirm = new QLabel("Aucun champs sera modifier");
+        if (editionTache){
+            QLabel *messageConfirm = new QLabel("Tache modifier !");
             mainEditLayout->addWidget(messageConfirm);
         }
+        else{
+            QLabel *messageConfirm = new QLabel("Aucun champs sera modifier !");
+            mainEditLayout->addWidget(messageConfirm);
+        }
+
         tache->sauveTache();
         m_listTache = chargeTouteTache();
-
-
     });
 
     mainEditLayout->addLayout(editLayout);
@@ -504,7 +510,6 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
 
     return editWidget;
 }
-
 
 QWidget *AppGestioTache::widgetSuppression()
 {
@@ -516,7 +521,7 @@ QWidget *AppGestioTache::widgetSuppression()
     listeTache->addItem("Selectionnez votre tache a supprimer ", -1);
 
     for(int i = m_listTache.length()-1; i >= 0; i--){
-        listeTache->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDate(true), i);
+        listeTache->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDateTexte(true), i);
     }
 
     m_mainLayout->addWidget(listeTache);
@@ -711,9 +716,9 @@ QWidget *AppGestioTache::afficherTache(const Tache* tache)
 
     QLabel *m_nomTache = new QLabel(tache->getNom());
     m_nomTache->setFont(QFont(policeTache));
-    QLabel *m_dateDebTache = new QLabel(tache->getDate(true));
+    QLabel *m_dateDebTache = new QLabel(tache->getDateTexte(true));
     m_dateDebTache->setFont(QFont(policeTache));
-    QLabel *m_dateFinTache = new QLabel(tache->getDate(false));
+    QLabel *m_dateFinTache = new QLabel(tache->getDateTexte(false));
     m_dateFinTache->setFont(QFont(policeTache));
     QLabel *m_importance;
 
