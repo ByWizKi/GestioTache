@@ -165,6 +165,7 @@ private:
     /// Creation des polices de l'application
     const QFont fontHeaderWidget = QFont(policeIBMPlexSansMedium, 40);
     const QFont fontTitreWidget = QFont(policeIBMPlexMonoSemiBold, 64);
+    const QFont fontTitreWidget2 = QFont(policeIBMPlexMonoSemiBold, 48);
     const QFont fontTextTache = QFont(policeIBMPlexMonoSemiBold, 13);
     const QFont fontPlaceHolderWidget = QFont(policeIBMPlexMonoRegular, 13);
     const QFont fontBoutonWidget = QFont(policeIBMPlexMonoSemiBold, 36);

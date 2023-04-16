@@ -21,7 +21,7 @@ AppGestioTache::AppGestioTache(QWidget *parent){
 
     this->setStyleSheet("background-color : #3F4346");
 
-    this->setWindowIcon(QIcon(":/dataFiles/imageFiles/logo.png"));
+    this->setWindowIcon(QIcon(":/dataFiles/imageFiles/logo.svg"));
     this->setWindowTitle(tr("GestioTache"));
 
     QScreen *m_ecran = QGuiApplication::primaryScreen();
@@ -37,120 +37,115 @@ AppGestioTache::~AppGestioTache() {}
 QWidget *AppGestioTache::widgetHeaderApp()
 {
     QWidget *headerAppWidget = new QWidget();
-    QHBoxLayout *mainHeaderAppLayout = new QHBoxLayout();
+    QHBoxLayout *mainHeaderAppLayout = new QHBoxLayout(headerAppWidget);
     QHBoxLayout *headerBoutonLayout = new QHBoxLayout();
-    headerAppWidget->setLayout(mainHeaderAppLayout);
+    mainHeaderAppLayout->setAlignment(Qt::AlignCenter);
+    headerBoutonLayout->setAlignment(Qt::AlignCenter);
 
+    QString styleBouton = "QPushButton {"
+                          "border-radius: 0.625em;"
+                          "background-color: #F8CF7F;"
+                          "color: #000000;"
+                          "padding : 0.188em;"
+                          "}";
 
     QPushButton *accueilBoutonWidget = new QPushButton("Accueil");
     accueilBoutonWidget->setFont(fontHeaderWidget);
+    accueilBoutonWidget->setFlat(true);
     accueilBoutonWidget->setCursor(Qt::PointingHandCursor);
-    accueilBoutonWidget->setStyleSheet("");
+    accueilBoutonWidget->setStyleSheet(styleBouton);
     accueilBoutonWidget->setGraphicsEffect(dropShadow(accueilBoutonWidget));
     connect(accueilBoutonWidget, SIGNAL(clicked()), this, SLOT(afficherAccueilSlot()));
 
     QPushButton *creerBoutonWidget = new QPushButton("Créer");
     creerBoutonWidget->setFont(fontHeaderWidget);
     creerBoutonWidget->setCursor(Qt::PointingHandCursor);
-    creerBoutonWidget->setStyleSheet("");
+    creerBoutonWidget->setStyleSheet(styleBouton);
     creerBoutonWidget->setGraphicsEffect(dropShadow(creerBoutonWidget));
     connect(creerBoutonWidget, SIGNAL(clicked()),this, SLOT(afficherCreationSlot()));
 
     QPushButton *modifierBoutonWidget = new QPushButton("Modifier");
     modifierBoutonWidget->setFont(fontHeaderWidget);
     modifierBoutonWidget->setCursor(Qt::PointingHandCursor);
-    modifierBoutonWidget->setStyleSheet("");
+    modifierBoutonWidget->setStyleSheet(styleBouton);
     modifierBoutonWidget->setGraphicsEffect(dropShadow(modifierBoutonWidget));
     connect(modifierBoutonWidget, SIGNAL(clicked()), this, SLOT(afficherModificationSlot()));
 
     QPushButton *supprimerBoutonWidget = new QPushButton("Supprimer");
     supprimerBoutonWidget->setFont(fontHeaderWidget);
     supprimerBoutonWidget->setCursor(Qt::PointingHandCursor);
-    supprimerBoutonWidget->setStyleSheet("");
+    supprimerBoutonWidget->setStyleSheet(styleBouton);
     supprimerBoutonWidget->setGraphicsEffect(dropShadow(supprimerBoutonWidget));
     connect(supprimerBoutonWidget, SIGNAL(clicked()), this, SLOT(afficherSuppressionSlot()));
 
     headerBoutonLayout->addWidget(accueilBoutonWidget);
+    headerBoutonLayout->addSpacing(1.875* fontMetrics().height());
     headerBoutonLayout->addWidget(creerBoutonWidget);
+    headerBoutonLayout->addSpacing(1.875* fontMetrics().height());
     headerBoutonLayout->addWidget(modifierBoutonWidget);
+    headerBoutonLayout->addSpacing(1.875* fontMetrics().height());
     headerBoutonLayout->addWidget(supprimerBoutonWidget);
 
+    QLabel *logoImage1 = new QLabel();
+    logoImage1->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.svg"));
+
+    QLabel *logoImage2 = new QLabel();
+    logoImage2->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.svg"));
 
 
-    return ;
+    mainHeaderAppLayout->addWidget(logoImage1);
+    mainHeaderAppLayout->addSpacing(1.563* fontMetrics().height());
+    mainHeaderAppLayout->addLayout(headerBoutonLayout);
+    mainHeaderAppLayout->addSpacing(1.563* fontMetrics().height());
+    mainHeaderAppLayout->addWidget(logoImage2);
+
+    return headerAppWidget;
 }
 
 QWidget *AppGestioTache::widgetAccueil()
 {
-    QString policeTitre = QFontDatabase::applicationFontFamilies(idFont2).at(0);
+    QWidget *widgetAccueil = new QWidget();
+    QVBoxLayout *mainAccueilLayout = new QVBoxLayout(widgetAccueil);
 
-    QWidget * m_widgetAccueilB = new QWidget();
-    QVBoxLayout *m_mainLayout = new QVBoxLayout();
+    QLabel *titreWidget = new QLabel("Accueil", widgetAccueil);
+    titreWidget->setFont(fontTitreWidget);
+    titreWidget->setStyleSheet("color : #FFFFFF; font-weight : 600;");
+    titreWidget->setAlignment(Qt::AlignCenter);
+    mainAccueilLayout->addWidget(titreWidget);
 
-    QWidget *m_widgetTaches = new QWidget();
-    QVBoxLayout *layoutTache = new QVBoxLayout();
-    m_widgetTaches->setLayout(layoutTache);
+    QWidget *widgetTaches = new QWidget(widgetAccueil);
+    widgetTaches->setFixedSize(756, 523);
+    widgetTaches->setStyleSheet("background : #F8CF7F; border-radius : 3.125em");
+    QVBoxLayout *widgetTachesLayout = new QVBoxLayout(widgetTaches);
 
-    QWidget *widgetConteneur = new QWidget();
-    QVBoxLayout *layoutVertical = new QVBoxLayout();
-    widgetConteneur->setLayout(layoutVertical);
+    QLabel *titreWidgetTaches = new QLabel("Vos Taches", widgetTaches);
+    titreWidgetTaches->setFont(fontTitreWidget2);
+    titreWidgetTaches->setStyleSheet("color : #000000; font-weight : 600");
+    widgetTachesLayout->addWidget(titreWidgetTaches, 0, Qt::AlignCenter | Qt::AlignTop);
 
-    QScrollArea *m_scrollTache = new QScrollArea();
-    m_scrollTache->setFrameStyle(QFrame::NoFrame);
-    m_scrollTache->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    m_scrollTache->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_scrollTache->setWidgetResizable(true);
+    QScrollArea *scrollTacheWidget = new QScrollArea(widgetTaches);
 
-    QLabel *titrePage = new QLabel("Accueil");
-    titrePage->setFont(QFont(policeTitre));
-    titrePage->setStyleSheet("font-size : 64px;"
-                             "font-weight: 600;"
-                             "line-height: 83px;"
-                             "color: #FFFFFF;");
+    scrollTacheWidget->setFrameStyle(QFrame::NoFrame);
+    scrollTacheWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollTacheWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    widgetTachesLayout->addWidget(scrollTacheWidget, 1, Qt::AlignCenter);
 
-    QLabel *titreWidget = new QLabel("Vos Taches");
-    titreWidget->setFont(QFont(policeTitre));
-    titreWidget->setStyleSheet("font-weight: 600;"
-                               "font-size: 48px;"
-                               "line-height: 62px;"
-                               "text-align: center;"
-                               "color: #000000");
-
-
+    QWidget *widgetScroll = new QWidget();
+    QVBoxLayout *layoutScroll = new QVBoxLayout(widgetScroll);
+    layoutScroll->setContentsMargins(5,10,5,10);
     for(int i = m_listTache.length()-1; i >= 0; i--){
-        layoutVertical->addWidget(afficherTache(m_listTache[i]));
+        layoutScroll->addWidget(widgetTache(m_listTache[i]));
+        layoutScroll->addSpacing(3);
     }
-
-    m_scrollTache->setWidget(widgetConteneur);
-    m_scrollTache->setFixedSize(QSize(632, 332));
-
-    layoutTache->addWidget(titreWidget);
-    layoutTache->setAlignment(titreWidget, Qt::AlignCenter | Qt::AlignTop);
-
-    layoutTache->addWidget(m_scrollTache);
-    layoutTache->setAlignment(m_scrollTache, Qt::AlignCenter);
-
-    layoutTache->setContentsMargins(0, 20, 0, 80);
-
-    m_mainLayout->addWidget(titrePage);
-    m_mainLayout->setAlignment(titrePage, Qt::AlignCenter | Qt::AlignTop);
-
-
-    m_mainLayout->addWidget(m_widgetTaches);
-    m_mainLayout->setAlignment(m_widgetTaches, Qt::AlignCenter);
-
-    m_widgetTaches->setFixedSize(QSize(756, 523));
-    m_widgetTaches->setStyleSheet("background-color : #F8CF7F;"
-                                  "border-radius : 50px;");
-
-    m_widgetAccueilB->setFixedSize(QSize(800,644));
-    m_widgetAccueilB->setLayout(m_mainLayout);
-    return m_widgetAccueilB;
+    scrollTacheWidget->setFixedWidth(widgetScroll->size().width()-10);
+    scrollTacheWidget->setWidget(widgetScroll);
+    mainAccueilLayout->addWidget(widgetTaches);
+    return widgetAccueil;
 }
 
 QWidget *AppGestioTache::widgetCreation()
 {
-    QString policeTexte = QFontDatabase::applicationFontFamilies(idFont4).at(0);
+//    QString policeTexte = QFontDatabase::applicationFontFamilies(idFont4).at(0);
 
     QWidget *mainWidget = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -165,7 +160,7 @@ QWidget *AppGestioTache::widgetCreation()
 
 
     QLabel *labelNom = new QLabel("Nom de la tâche");
-    labelNom->setFont(policeTexte);
+//    labelNom->setFont(policeTexte);
     labelNom->setStyleSheet("color : #FFFFFF;"
                             "font-weight: 200;"
                             "letter-spacing: 0.1em;");
@@ -190,7 +185,7 @@ QWidget *AppGestioTache::widgetCreation()
     widgetNom->setLayout(layoutNom);
 
     QLabel *labelDateDeb = new QLabel("Date de début de la tache");
-    labelDateDeb->setFont(policeTexte);
+//    labelDateDeb->setFont(policeTexte);
     labelDateDeb->setStyleSheet("color : #FFFFFF;"
                                 "font-weight: 200;"
                                 "letter-spacing: 0.1em;");
@@ -218,7 +213,7 @@ QWidget *AppGestioTache::widgetCreation()
     widgetDateDeb->setLayout(layoutDateDeb);
 
     QLabel *labelDateFin = new QLabel("Date fin de la tache");
-    labelDateFin->setFont(policeTexte);
+//    labelDateFin->setFont(policeTexte);
     labelDateFin->setStyleSheet("color : #FFFFFF;"
                                 "letter-spacing: 0.1em;");
     QDateTimeEdit *dateFinTacheEdit = new QDateTimeEdit(QDateTime::currentDateTime().addMSecs(60000));
@@ -253,7 +248,7 @@ QWidget *AppGestioTache::widgetCreation()
     });
 
     QLabel *labelImportanceChoix = new QLabel("Importance tache");
-    labelImportanceChoix->setFont(policeTexte);
+//    labelImportanceChoix->setFont(policeTexte);
     labelImportanceChoix->setStyleSheet("color : #FFFFFF;"
                                         "font-weight: 200;"
                                         "letter-spacing: 0.1em;");
@@ -266,7 +261,7 @@ QWidget *AppGestioTache::widgetCreation()
     importanceChoix->setFixedSize(291, 44);
 
     for(int i = 0; i < importanceChoix->count(); i++){
-        importanceChoix->setItemData(i, QFontDatabase::applicationFontFamilies(idFont2).at(0), Qt::FontRole);
+//        importanceChoix->setItemData(i, QFontDatabase::applicationFontFamilies(idFont2).at(0), Qt::FontRole);
     }
 
     importanceChoix->setStyleSheet("QComboBox::drop-down {"
@@ -299,8 +294,8 @@ QWidget *AppGestioTache::widgetCreation()
     QPushButton *envoieForm = new QPushButton();
     envoieForm->setText("Créer");
     envoieForm->setFixedSize(430, 60);
-    QString policeBouton = QFontDatabase::applicationFontFamilies(idFont2).at(0);
-    envoieForm->setFont(policeBouton);
+//    QString policeBouton = QFontDatabase::applicationFontFamilies(idFont2).at(0);
+//    envoieForm->setFont(policeBouton);
     envoieForm->setFlat(true);
     envoieForm->setCursor(Qt::PointingHandCursor);
     envoieForm->setStyleSheet("background: #3F4346;"
@@ -361,7 +356,7 @@ QWidget *AppGestioTache::widgetCreation()
     });
 
     QLabel *titreForm = new QLabel("Nouvelle Tache");
-    titreForm->setFont(QFont(policeBouton));
+//    titreForm->setFont(QFont(policeBouton));
     titreForm->setStyleSheet("font-weight: 600;"
                              "font-size: 48px;"
                              "line-height: 62px;"
@@ -390,7 +385,7 @@ QWidget *AppGestioTache::widgetCreation()
     mainWidgetForm->setLayout(mainLayoutForm);
 
     QLabel *titreWidget = new QLabel("Créer");
-    titreWidget->setFont(QFont(policeBouton));
+//    titreWidget->setFont(QFont(policeBouton));
     titreWidget->setStyleSheet("font-size : 64px;"
                                "font-weight: 600;"
                                "line-height: 83px;"
@@ -620,18 +615,18 @@ QWidget *AppGestioTache::widgetSuppression()
     return m_suppresionWidgetB;
 }
 
-QWidget *AppGestioTache::afficherTache(const Tache* tache)
+QWidget *AppGestioTache::widgetTache(const Tache* tache)
 {
-    QString policeTache = QFontDatabase::applicationFontFamilies(idFont2).at(0);
+
 
     QWidget *m_tacheGroupe = new QWidget();
 
     QLabel *m_nomTache = new QLabel(tache->getNom());
-    m_nomTache->setFont(QFont(policeTache));
+//    m_nomTache->setFont(QFont(policeTache));
     QLabel *m_dateDebTache = new QLabel(tache->getDateTexte(true));
-    m_dateDebTache->setFont(QFont(policeTache));
+//    m_dateDebTache->setFont(QFont(policeTache));
     QLabel *m_dateFinTache = new QLabel(tache->getDateTexte(false));
-    m_dateFinTache->setFont(QFont(policeTache));
+//    m_dateFinTache->setFont(QFont(policeTache));
     QLabel *m_importance;
 
 
@@ -649,7 +644,7 @@ QWidget *AppGestioTache::afficherTache(const Tache* tache)
     else{
         m_importance->setPixmap(QPixmap(":/dataFiles/imageFiles/noneIcon.png").scaled(QSize(70, 70), Qt::IgnoreAspectRatio));
     }
-    m_importance->setFont(QFont(policeTache));
+//    m_importance->setFont(QFont(policeTache));
 
     QVBoxLayout *main_Layout = new QVBoxLayout(m_tacheGroupe);
     QVBoxLayout *label_Laytout = new QVBoxLayout();
@@ -715,8 +710,8 @@ void AppGestioTache::afficherAccueilSlot()
     }
 
     m_widgetCourant = widgetAccueil();
-    layoutPrincipale->addWidget(m_widgetCourant);
-    layoutPrincipale->setAlignment(m_widgetCourant, Qt::AlignCenter);
+    m_layoutPrincipal->addWidget(m_widgetCourant);
+    m_layoutPrincipal->setAlignment(m_widgetCourant, Qt::AlignCenter);
 
 
 }
@@ -728,7 +723,7 @@ void AppGestioTache::afficherCreationSlot()
     }
 
     m_widgetCourant = widgetCreation();
-    layoutPrincipale->addWidget(m_widgetCourant);
+    m_layoutPrincipal->addWidget(m_widgetCourant);
 }
 
 void AppGestioTache::afficherModificationSlot()
@@ -738,7 +733,7 @@ void AppGestioTache::afficherModificationSlot()
     }
 
     m_widgetCourant = widgetModification();
-    layoutPrincipale->addWidget(m_widgetCourant);
+    m_layoutPrincipal->addWidget(m_widgetCourant);
 
 }
 
@@ -749,7 +744,7 @@ void AppGestioTache::afficherSuppressionSlot()
     }
 
     m_widgetCourant = widgetSuppression();
-    layoutPrincipale->addWidget(m_widgetCourant);
+    m_layoutPrincipal->addWidget(m_widgetCourant);
 
 }
 
@@ -796,4 +791,13 @@ void AppGestioTache::creerActionsMenu()
     m_helpAction = new QAction("Aide");
     m_helpAction->setShortcut(QKeySequence("F1"));
     connect(m_helpAction, SIGNAL(triggered()), this, SLOT(afficherAideSlot()));
+}
+
+QGraphicsDropShadowEffect *AppGestioTache::dropShadow(QObject *widget, const int x, const int y, const int flou)
+{
+    QGraphicsDropShadowEffect *dropShadow= new QGraphicsDropShadowEffect(widget);
+    dropShadow->setBlurRadius(flou);
+    dropShadow->setOffset(x, y);
+    dropShadow->setColor(QColor(0, 0, 0, 150));
+    return dropShadow;
 }

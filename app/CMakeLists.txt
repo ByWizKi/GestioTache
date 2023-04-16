@@ -18,13 +18,12 @@ add_executable(GestioTacheApp
 
 qt_add_resources(GestioTacheApp "dataFiles"
     PREFIX "/"
-    FILES dataFiles/imageFiles/logo.png
-        dataFiles/imageFiles/importantIcon.png
-        dataFiles/imageFiles/peuImportantIcon.png
-        dataFiles/imageFiles/urgentIcon.png
-        dataFiles/imageFiles/noneIcon.png
-        dataFiles/imageFiles/flecheSelect.png
-        dataFiles/imageFiles/flecheSelect2.png
+    FILES dataFiles/imageFiles/logo.svg
+        dataFiles/imageFiles/importantIcon.svg
+        dataFiles/imageFiles/peuImportantIcon.svg
+        dataFiles/imageFiles/urgentIcon.svg
+        dataFiles/imageFiles/noneIcon.svg
+        dataFiles/imageFiles/flecheDown.svg
         dataFiles/fontFiles/IBMPlexMono-Medium.ttf
         dataFiles/fontFiles/IBMPlexMono-Regular.ttf
         dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf
