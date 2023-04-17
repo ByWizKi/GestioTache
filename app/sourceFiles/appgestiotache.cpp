@@ -152,6 +152,7 @@ QWidget *AppGestioTache::widgetCreation()
     mainCreationLayout->addWidget(titreWidget, 0, Qt::AlignCenter);
 
     QWidget *widgetCreationTache = new QWidget();
+    widgetCreationTache->setFixedSize(756, 523);
     widgetCreationTache->setStyleSheet("background : #F8CF7F; border-radius : 3.125em;");
     QVBoxLayout *layoutCreationTache = new QVBoxLayout(widgetCreationTache);
     QLabel *titreWidgetTache = new QLabel("Nouvelle Tache", widgetCreationTache);
@@ -166,11 +167,13 @@ QWidget *AppGestioTache::widgetCreation()
     labelNomTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
     layoutNomTache->addWidget(labelNomTache, 0, Qt::AlignLeft);
     QString styleSelection = "background-color : #AD9090; border-radius : 0.313em; color : #FFFFFF;"
-                             "letter-spacing: 0.3em;";
+                             "letter-spacing: 0.3em; padding-left : 0.625em; font-weight : 600;";
     QLineEdit *editNomTache = new QLineEdit();
+    editNomTache->setFont(fontPlaceHolderWidget);
     editNomTache->setFixedSize(291, 45);
     editNomTache->setPlaceholderText("Allez chez marine");
     editNomTache->setStyleSheet("QLineEdit{"+styleSelection+"};");
+    editNomTache->setGraphicsEffect(dropShadow(editNomTache));
     layoutNomTache->addWidget(editNomTache);
 
     QVBoxLayout *layoutImportanceTache = new QVBoxLayout();
@@ -192,6 +195,7 @@ QWidget *AppGestioTache::widgetCreation()
                                  "image: url(:/dataFiles/imageFiles/flecheDown.svg);";
     selectImportanceTache->setStyleSheet("QComboBox {"+styleSelection+"}"
                                          "QComboBox::drop-down {"+styleIconSelection+"}");
+    selectImportanceTache->setGraphicsEffect(dropShadow(selectImportanceTache));
     layoutImportanceTache->addWidget(selectImportanceTache, 0, Qt::AlignLeft);
 
     QVBoxLayout *layoutDateDebTache = new QVBoxLayout();
@@ -199,12 +203,12 @@ QWidget *AppGestioTache::widgetCreation()
     labelDateDebTache->setFont(fontPlaceHolderWidget);
     labelDateDebTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
     layoutDateDebTache->addWidget(labelDateDebTache, 0, Qt::AlignLeft);
-
     QDateTimeEdit *editDateDebTache = new QDateTimeEdit(QDateTime::currentDateTime());
     editDateDebTache->setFixedSize(291, 45);
     editDateDebTache->setCalendarPopup(true);
     editDateDebTache->setStyleSheet("QDateTimeEdit{"+styleSelection+"}"
                                     "QDateTimeEdit::drop-down {"+styleIconSelection+"}");
+    editDateDebTache->setGraphicsEffect(dropShadow(editDateDebTache));
     layoutDateDebTache->addWidget(editDateDebTache, 0, Qt::AlignLeft);
 
     QVBoxLayout *layoutDateFinTache = new QVBoxLayout();
@@ -218,6 +222,7 @@ QWidget *AppGestioTache::widgetCreation()
     editDateFinTache->setCalendarPopup(true);
     editDateFinTache->setStyleSheet("QDateTimeEdit{"+styleSelection+"}"
                                     "QDateTimeEdit::drop-down {"+styleIconSelection+"}");
+    editDateFinTache->setGraphicsEffect(dropShadow(editDateFinTache));
     layoutDateFinTache->addWidget(editDateFinTache, 0, Qt::AlignLeft);
 
     connect(editDateDebTache, &QDateTimeEdit::dateTimeChanged, this, [editDateDebTache, editDateFinTache](){
@@ -256,6 +261,7 @@ QWidget *AppGestioTache::widgetCreation()
                                     "letter-spacing: 0.2em;"
                                     "color : #FFFFFF;"
                                     "font-size : 36px;");
+    boutonEnvoieForm->setGraphicsEffect(dropShadow(boutonEnvoieForm));
     layoutCreationTache->addSpacing(66);
     layoutCreationTache->addWidget(boutonEnvoieForm, 0, Qt::AlignCenter);
     layoutCreationTache->setContentsMargins(40, 20, 40, 20);
