@@ -114,7 +114,7 @@ QWidget *AppGestioTache::widgetAccueil()
 
     QWidget *widgetTaches = new QWidget(widgetAccueil);
     widgetTaches->setFixedSize(756, 523);
-    widgetTaches->setStyleSheet("background : #F8CF7F; border-radius : 3.125em");
+    widgetTaches->setStyleSheet("background : #F8CF7F; border-radius : 3.125em;");
     QVBoxLayout *widgetTachesLayout = new QVBoxLayout(widgetTaches);
 
     QLabel *titreWidgetTaches = new QLabel("Vos Taches", widgetTaches);
@@ -167,7 +167,7 @@ QWidget *AppGestioTache::widgetCreation()
     labelNomTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
     layoutNomTache->addWidget(labelNomTache, 0, Qt::AlignLeft);
     QString styleSelection = "background-color : #AD9090; border-radius : 0.313em; color : #FFFFFF;"
-                             "letter-spacing: 0.3em; padding-left : 0.625em; font-weight : 600;";
+                             "letter-spacing: 0.145em; padding-left : 0.625em; font-weight : 400;";
     QLineEdit *editNomTache = new QLineEdit();
     editNomTache->setFont(fontPlaceHolderWidget);
     editNomTache->setFixedSize(291, 45);
@@ -176,25 +176,25 @@ QWidget *AppGestioTache::widgetCreation()
     editNomTache->setGraphicsEffect(dropShadow(editNomTache));
     layoutNomTache->addWidget(editNomTache);
 
+    QString styleIconSelection = "width : 1.475em; margin-right : 0.323em; "
+                                 "image: url(:/dataFiles/imageFiles/flecheDown.svg);";
+
     QVBoxLayout *layoutImportanceTache = new QVBoxLayout();
     QLabel *labelImportanceTache = new QLabel("Importance tache");
     labelImportanceTache->setFont(fontPlaceHolderWidget);
     labelImportanceTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
     layoutImportanceTache->addWidget(labelImportanceTache, 0, Qt::AlignLeft);
     QComboBox *selectImportanceTache = new QComboBox();
-    selectImportanceTache->setFixedSize(291, 45);
+    selectImportanceTache->setFixedSize(295, 45);
     selectImportanceTache->setPlaceholderText("Choisissez l'importance");
+    selectImportanceTache->setFont(fontPlaceHolderWidget);
     selectImportanceTache->addItem("Peu Important");
     selectImportanceTache->addItem("Important");
     selectImportanceTache->addItem("Urgent");
     selectImportanceTache->setFrame(false);
-    for(int i = 0; i < selectImportanceTache->count(); i++){
-        selectImportanceTache->setItemData(i, fontPlaceHolderWidget, Qt::FontRole);
-    }
-    QString styleIconSelection = "width : 1.475em; margin-right : 0.323em; "
-                                 "image: url(:/dataFiles/imageFiles/flecheDown.svg);";
     selectImportanceTache->setStyleSheet("QComboBox {"+styleSelection+"}"
                                          "QComboBox::drop-down {"+styleIconSelection+"}");
+
     selectImportanceTache->setGraphicsEffect(dropShadow(selectImportanceTache));
     layoutImportanceTache->addWidget(selectImportanceTache, 0, Qt::AlignLeft);
 
@@ -205,6 +205,7 @@ QWidget *AppGestioTache::widgetCreation()
     layoutDateDebTache->addWidget(labelDateDebTache, 0, Qt::AlignLeft);
     QDateTimeEdit *editDateDebTache = new QDateTimeEdit(QDateTime::currentDateTime());
     editDateDebTache->setFixedSize(291, 45);
+    editDateDebTache->setFont(fontPlaceHolderWidget);
     editDateDebTache->setCalendarPopup(true);
     editDateDebTache->setStyleSheet("QDateTimeEdit{"+styleSelection+"}"
                                     "QDateTimeEdit::drop-down {"+styleIconSelection+"}");
@@ -218,6 +219,7 @@ QWidget *AppGestioTache::widgetCreation()
     layoutDateFinTache->addWidget(labelDateFinTache, 0, Qt::AlignLeft);
     QDateTimeEdit *editDateFinTache = new QDateTimeEdit(QDateTime::currentDateTime().addMSecs(60000));
     editDateFinTache->setFixedSize(291, 45);
+    editDateFinTache->setFont(fontPlaceHolderWidget);
     editDateFinTache->setMinimumDateTime(editDateDebTache->dateTime().addMSecs(60000));
     editDateFinTache->setCalendarPopup(true);
     editDateFinTache->setStyleSheet("QDateTimeEdit{"+styleSelection+"}"
@@ -338,48 +340,50 @@ QWidget *AppGestioTache::widgetCreation()
 
 QWidget* AppGestioTache::widgetModification()
 {
-    QWidget* modificationWidget = new QWidget();
-    modificationWidget->setStyleSheet("background-color : red;");
-    QVBoxLayout* mainLayout = new QVBoxLayout(modificationWidget);
-    QWidget* choixTacheWidget = new QWidget();
-    QVBoxLayout* choixTacheLayout = new QVBoxLayout(choixTacheWidget);
+    QWidget *widgetModification = new QWidget();
+    QVBoxLayout *layoutMainModification = new QVBoxLayout(widgetModification);
+    QWidget *widgetChoixTache = new QWidget();
+    widgetChoixTache->setStyleSheet("background : #F8CF7F; border-radius : 3.125em;");
+    QVBoxLayout *layoutChoixTache = new QVBoxLayout(widgetChoixTache);
     QLabel* titreWidget = new QLabel("Modifier");
-    mainLayout->addWidget(titreWidget);
-    mainLayout->addWidget(choixTacheWidget);
+    titreWidget->setFont(fontTitreWidget);
+    titreWidget->setStyleSheet("color : #FFFFFF; font-weight : 600;");
+    layoutMainModification->addWidget(titreWidget, 0, Qt::AlignCenter);
+    layoutMainModification->addWidget(widgetChoixTache, 0, Qt::AlignCenter);
+    QLabel *labelSelectTacheModif = new QLabel("Modification de Tache");
+    labelSelectTacheModif->setFont(fontTitreWidget2);
+    labelSelectTacheModif->setStyleSheet("color : #000000; font-weight : 600;");
+    layoutChoixTache->addWidget(labelSelectTacheModif, 0, Qt::AlignCenter);
 
     QComboBox* listeTacheAEdit = new QComboBox();
     listeTacheAEdit->addItem("Selectionnez votre tache a modifier ", -1);
     listeTacheAEdit->setEditable(false);
-
+    layoutChoixTache->addWidget(listeTacheAEdit, 0, Qt::AlignCenter);
     for (int i = m_listTache.length() - 1; i >= 0; i--) {
         listeTacheAEdit->addItem(m_listTache[i]->getNom() + "\n" + m_listTache[i]->getDateTexte(true), i);
     }
 
     QPushButton* validerTacheEdit = new QPushButton("Modifier");
+    layoutChoixTache->addWidget(validerTacheEdit, 0, Qt::AlignCenter);
     connect(validerTacheEdit, &QPushButton::clicked, this, [=]() {
         int tacheAEdit = listeTacheAEdit->currentData().toInt();
         if (tacheAEdit > -1) {
             QLabel* messageRepButton = new QLabel("Vous allez modifier la tache : " + m_listTache[tacheAEdit]->getNom());
-            choixTacheLayout->addWidget(messageRepButton);
+            layoutChoixTache->addWidget(messageRepButton);
             QWidget* widgetEdition = widgetModificationBis(m_listTache[tacheAEdit]);
-            mainLayout->addWidget(widgetEdition);
+            layoutMainModification->addWidget(widgetEdition);
         }
         else {
-            if (choixTacheLayout->count() > 2) {
-                QWidget* supprMessage = choixTacheLayout->takeAt(choixTacheLayout->count() - 1)->widget();
+            if (layoutChoixTache->count() > 2) {
+                QWidget* supprMessage = layoutChoixTache->takeAt(layoutChoixTache->count() - 1)->widget();
                 delete supprMessage;
             }
             QLabel* messageRepButton = new QLabel("Veuillez selectionnez une tache a modifier");
-            choixTacheLayout->addWidget(messageRepButton);
+            layoutChoixTache->addWidget(messageRepButton);
         }
     });
 
-    choixTacheLayout->addWidget(listeTacheAEdit);
-    choixTacheLayout->addWidget(validerTacheEdit);
-    choixTacheWidget->setLayout(choixTacheLayout);
-
-
-    return modificationWidget;
+    return widgetModification;
 }
 
 QWidget *AppGestioTache::widgetModificationBis(Tache *tache)
