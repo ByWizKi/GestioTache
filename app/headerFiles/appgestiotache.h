@@ -166,11 +166,14 @@ private:
     const QFont fontHeaderWidget = QFont(policeIBMPlexSansMedium, 40);
     const QFont fontTitreWidget = QFont(policeIBMPlexMonoSemiBold, 64);
     const QFont fontTitreWidget2 = QFont(policeIBMPlexMonoSemiBold, 48);
+    const QFont fontTitreWidget3 = QFont(policeIBMPlexMonoSemiBold, 38);
+    const QFont fontTitreWidget4 = QFont(policeIBMPlexMonoSemiBold, 26);
+    const QFont fontTitreWidget5 = QFont(policeIBMPlexMonoSemiBold, 18);
     const QFont fontTextTache = QFont(policeIBMPlexMonoSemiBold, 13);
-    QFont fontPlaceHolderWidget = QFont(policeIBMPlexMonoRegular, 12);
+    const QFont fontPlaceHolderWidget = QFont(policeIBMPlexMonoRegular, 12);
     const QFont fontBoutonWidget = QFont(policeIBMPlexMonoSemiBold, 36);
 
-    // Creation des couleurs de l'application
+    /// Creation des couleurs de l'application
     const QColor couleurFondApp = QColor(63, 67, 70);
     const QColor couleurJauneApp = QColor(248, 207, 127);
     const QColor couleurFondTache = QColor(173, 144, 144);
