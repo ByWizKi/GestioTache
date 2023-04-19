@@ -1,6 +1,6 @@
+#include "../headerFiles/appgestiotache.h"
 #include <QCoreApplication>
 #include <QtWidgets>
-#include "../headerFiles/appgestiotache.h"
 
 int main(int argc, char *argv[]) {
 

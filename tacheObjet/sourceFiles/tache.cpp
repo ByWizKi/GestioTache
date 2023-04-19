@@ -180,33 +180,15 @@ const bool Tache::sauveTache() const {
     fichierJSON.close();
 
     QFile file("listTache.txt");
-       if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
        {
            qCritical() << "impossible d'ouvrir le fichier";
            qCritical() << fichierJSON.errorString();
        }
 
-       // Recherche du mot dans le fichier
-       QString id = QString::number(this->getId())+".json";
-       QTextStream in(&file);
-       bool trouver = false;
-       while (!in.atEnd())
-       {
-           QString ligne = in.readLine();
-           if (ligne.contains(id))
-           {
-               trouver = true;
-               break;
-           }
-       }
-
-       // Si le mot n'a pas été trouvé, on l'écrit à la fin du fichier
-       if (!trouver)
-       {
-           QTextStream out(&file);
-           out.seek(file.size()); // On se positionne à la fin du fichier
-           out << id << Qt::endl;
-       }
+       QTextStream out(&file);
+       out.seek(file.size()); // On se positionne à la fin du fichier
+       out << QString::number(this->getId())+".json" << Qt::endl;
 
        // Fermeture du fichier
        file.close();

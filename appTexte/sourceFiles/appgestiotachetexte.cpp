@@ -173,7 +173,7 @@ void AppGestioTacheTexte::modifierTache() {
         }
 
         if (newDateFin != "ok") {
-          this->listTache[i]->setDateTexte(newDateFin,false);
+          this->listTache[i]->setDateTexte(newDateFin, false);
         }
         sauveTouteTache(this->listTache);
         break;
@@ -268,8 +268,8 @@ bool sauveTouteTache(const QList<Tache *> &tabTache) {
   else {
     for (int i = 0; i < tabTache.length(); i++) {
       tabTache[i]->sauveTache();
-      return true;
     }
+    return true;
   }
   return false;
 }

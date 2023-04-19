@@ -10,11 +10,14 @@ bool sauveTouteTache(const QList<Tache *> &tabTache);
 class AppGestioTacheTexte {
 
 private:
+    /// \brief La liste permet de stocker les taches de l'application.
   QList<Tache *> listTache;
 
 public:
+
   AppGestioTacheTexte();
   ~AppGestioTacheTexte();
+
   void terminal();
   void afficherTouteTache();
   void creerTache();
