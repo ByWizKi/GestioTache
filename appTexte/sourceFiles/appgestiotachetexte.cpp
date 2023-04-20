@@ -247,7 +247,7 @@ QList<Tache *> chargeTouteTache() {
   }
 
   for (int i = 0; i < idTab.length(); i++) {
-    Tache *tache1 = new Tache;
+    Tache *tache1;
     tache1->chargeTache(idTab[i]);
     listTache.append(tache1);
   }

@@ -1,17 +1,14 @@
 #ifndef APPGESTIOTACHE_H
 #define APPGESTIOTACHE_H
 
-#include "../../appTexte/headerFiles/appgestiotachetexte.h"
 #include "../../tacheObjet/headerFiles/tache.h"
 #include <QApplication>
 #include <QComboBox>
 #include <QDateTimeEdit>
-#include <QEvent>
 #include <QFont>
 #include <QFontDatabase>
 #include <QFormLayout>
 #include <QGraphicsDropShadowEffect>
-#include <QGroupBox>
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -25,7 +22,7 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSizePolicy>
-#include <QSpacerItem>
+#include <QTextEdit>
 
 /*
 La classe est la classe principale de l'application GUI!
@@ -33,12 +30,6 @@ Ici, il y a des fonctions membres qui permettent de créer des widgets qu'on
 affiche en fonction de certaines actions, par exemple : si l'utilisateur clique
 sur le bouton "créer", le widget "créer" s'affiche à l'écran. Chaque widget est
 protégé en "protected".
-*/
-
-/*
-La classe contient
-
-
 */
 
 class AppGestioTache : public QMainWindow {
@@ -72,7 +63,9 @@ protected:
   QWidget *m_widgetModification;
   ///
   /// \brief Fonction qui renvoie un widget utilisé dans le widget modification
-  /// de tache. \param tache : Tache à modifier \return Un widget
+  /// de tache.
+  /// \param tache : Tache à modifier
+  /// \return Un widget
   ///
   QWidget *widgetModificationBis(Tache *tache);
   ///
@@ -105,6 +98,11 @@ protected:
   /// \return Le widget de la suppression de tache
   ///
   QWidget *widgetSuppression();
+  ///
+  /// \brief Widget des aides de l'application.
+  /// \return Le widget d'aide
+  ///
+  QWidget *widgetAide();
   ///
   /// \brief Fonction qui permet de faire l'affichage graphique d'une tâche.
   /// \param tache à afficher
@@ -199,23 +197,28 @@ private:
   const QFont fontTitreWidget4 = QFont(policeIBMPlexMonoSemiBold, 26);
   const QFont fontTitreWidget5 = QFont(policeIBMPlexMonoSemiBold, 18);
   const QFont fontTextTache = QFont(policeIBMPlexMonoSemiBold, 13);
+  const QFont fontTextTache2 = QFont(policeIBMPlexMonoSemiBold, 15);
+  const QFont fontTextTache3 = QFont(policeIBMPlexMonoSemiBold, 11);
   const QFont fontPlaceHolderWidget = QFont(policeIBMPlexMonoRegular, 12);
   const QFont fontPlaceHolderWidget2 = QFont(policeIBMPlexMonoMedium, 10);
   const QFont fontBoutonWidget = QFont(policeIBMPlexMonoSemiBold, 36);
 
 private slots:
+  /// Signal qui permet de placer le widget accueil dans la fenetre
   void afficherAccueilSlot();
-
+  /// Signal qui permet de placer le widget creation dans la fenetre
   void afficherCreationSlot();
+  /// Signal qui permet de placer le widget modification dans la fenetre
 
   void afficherModificationSlot();
+  /// Signal qui permet de placer le widget suppression dans la fenetre
 
   void afficherSuppressionSlot();
-
+  /// Signal qui permet de sauvegarder l'application
   void sauvegarderTacheSlot();
-
+  /// Signal qui permet de quitter de l'application
   void quitterApplicationSlot();
-
+  /// Signal qui pernet
   void afficherAideSlot();
 };
 

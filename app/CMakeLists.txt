@@ -24,6 +24,7 @@ qt_add_resources(GestioTacheApp "dataFiles"
         dataFiles/imageFiles/urgentIcon.svg
         dataFiles/imageFiles/noneIcon.svg
         dataFiles/imageFiles/flecheDown.svg
+        dataFiles/imageFiles/nextPreviousIcon.svg
         dataFiles/fontFiles/IBMPlexMono-Medium.ttf
         dataFiles/fontFiles/IBMPlexMono-Regular.ttf
         dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf
