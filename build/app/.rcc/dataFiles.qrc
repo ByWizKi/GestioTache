@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="dataFiles/imageFiles/logo.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/logo.svg</file>
+    <file alias="dataFiles/imageFiles/importantIcon.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/importantIcon.svg</file>
+    <file alias="dataFiles/imageFiles/peuImportantIcon.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/peuImportantIcon.svg</file>
+    <file alias="dataFiles/imageFiles/urgentIcon.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/urgentIcon.svg</file>
+    <file alias="dataFiles/imageFiles/noneIcon.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/noneIcon.svg</file>
+    <file alias="dataFiles/imageFiles/flecheDown.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/flecheDown.svg</file>
+    <file alias="dataFiles/imageFiles/nextPreviousIcon.svg">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/imageFiles/nextPreviousIcon.svg</file>
+    <file alias="dataFiles/fontFiles/IBMPlexMono-Medium.ttf">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/fontFiles/IBMPlexMono-Medium.ttf</file>
+    <file alias="dataFiles/fontFiles/IBMPlexMono-Regular.ttf">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/fontFiles/IBMPlexMono-Regular.ttf</file>
+    <file alias="dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf</file>
+    <file alias="dataFiles/fontFiles/IBMPlexSans-Medium.ttf">/home/enzoadmin/Desktop/GestioTache/app/dataFiles/fontFiles/IBMPlexSans-Medium.ttf</file>
+  </qresource>
+</RCC>
+
