@@ -34,7 +34,6 @@ target_link_libraries(GestioTacheApp PRIVATE tache GestioTacheAppTexte Qt6::Widg
 
 install(TARGETS GestioTacheApp DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 
-
 set_target_properties(GestioTacheApp PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON)

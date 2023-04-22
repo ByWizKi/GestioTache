@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"app/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 35,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/home/enzoadmin/Desktop/GestioTache/bin",
+			"paths" : 
+			[
+				"/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
+			],
+			"targetId" : "GestioTacheApp::@5f5a17c01335469806cb",
+			"targetIndex" : 0,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	}
+}
