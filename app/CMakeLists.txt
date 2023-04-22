@@ -32,6 +32,17 @@ qt_add_resources(GestioTacheApp "dataFiles"
 
 target_link_libraries(GestioTacheApp PRIVATE tache GestioTacheAppTexte Qt6::Widgets)
 
+install(TARGETS GestioTacheApp DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+
+
 set_target_properties(GestioTacheApp PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON)
+
+if (WIN32)
+    set(EXE_ICON "${CMAKE_SOURCE_DIR}/app/dataFiles/imageFiles/logo.svg")
+    set_target_properties(GestioTacheApp PROPERTIES LINK_FLAGS "/ICON:\"${EXE_ICON}\"")
+elseif (APPLE)
+    set(EXE_ICON "${CMAKE_SOURCE_DIR}/app/dataFiles/imageFiles/logo.svg")
+    set_target_properties(GestioTacheApp PROPERTIES MACOSX_BUNDLE_ICON_FILE "${EXE_ICON}")
+endif (WIN32)

@@ -18,8 +18,11 @@ set(DOXYGEN_INPUT "${CMAKE_SOURCE_DIR}/src")
 
 doxygen_add_docs(
   doxygen
+  ${CMAKE_SOURCE_DIR}/doc
 )
 qt_standard_project_setup()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 add_subdirectory(app)
 add_subdirectory(appTexte)

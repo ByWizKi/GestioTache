@@ -72,6 +72,48 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 
 #############################################
+# Utility command for list_install_components
+
+build list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build CMakeFiles/install.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build install: phony CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build CMakeFiles/install/local.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build install/local: phony CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build CMakeFiles/install/strip.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build install/strip: phony CMakeFiles/install/strip.util
+
+
+#############################################
 # Custom command for CMakeFiles/doxygen
 
 build CMakeFiles/doxygen | ${cmake_ninja_workdir}CMakeFiles/doxygen: CUSTOM_COMMAND Doxyfile.doxygen
@@ -130,15 +172,15 @@ build app/CMakeFiles/GestioTacheApp.dir/.rcc/qrc_dataFiles.cpp.o: CXX_COMPILER__
 
 
 #############################################
-# Link the executable app/GestioTacheApp
+# Link the executable /home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp
 
-build app/GestioTacheApp: CXX_EXECUTABLE_LINKER__GestioTacheApp_Debug app/CMakeFiles/GestioTacheApp.dir/GestioTacheApp_autogen/mocs_compilation.cpp.o app/CMakeFiles/GestioTacheApp.dir/sourceFiles/main.cpp.o app/CMakeFiles/GestioTacheApp.dir/sourceFiles/appgestiotache.cpp.o app/CMakeFiles/GestioTacheApp.dir/.rcc/qrc_dataFiles.cpp.o | appTexte/libGestioTacheAppTexte.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0 tacheObjet/libtache.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0 /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || app/GestioTacheApp_autogen app/GestioTacheApp_autogen_timestamp_deps appTexte/libGestioTacheAppTexte.so tacheObjet/libtache.so
+build /home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp: CXX_EXECUTABLE_LINKER__GestioTacheApp_Debug app/CMakeFiles/GestioTacheApp.dir/GestioTacheApp_autogen/mocs_compilation.cpp.o app/CMakeFiles/GestioTacheApp.dir/sourceFiles/main.cpp.o app/CMakeFiles/GestioTacheApp.dir/sourceFiles/appgestiotache.cpp.o app/CMakeFiles/GestioTacheApp.dir/.rcc/qrc_dataFiles.cpp.o | appTexte/libGestioTacheAppTexte.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0 tacheObjet/libtache.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0 /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || app/GestioTacheApp_autogen app/GestioTacheApp_autogen_timestamp_deps appTexte/libGestioTacheAppTexte.so tacheObjet/libtache.so
   FLAGS = -DQT_QML_DEBUG -g
-  LINK_LIBRARIES = -Wl,-rpath,/home/enzoadmin/Desktop/GestioTache/build/appTexte:/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib:/home/enzoadmin/Desktop/GestioTache/build/tacheObjet  appTexte/libGestioTacheAppTexte.so  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0  tacheObjet/libtache.so  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so
+  LINK_LIBRARIES = -Wl,-rpath,/home/enzoadmin/Desktop/GestioTache/build/appTexte:/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib:/home/enzoadmin/Desktop/GestioTache/build/tacheObjet:  appTexte/libGestioTacheAppTexte.so  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0  tacheObjet/libtache.so  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0  /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so
   OBJECT_DIR = app/CMakeFiles/GestioTacheApp.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = app/GestioTacheApp
+  TARGET_FILE = /home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp
   TARGET_PDB = GestioTacheApp.dbg
 
 
@@ -170,6 +212,48 @@ build app/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
   restat = 1
 
 build app/rebuild_cache: phony app/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build app/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build app/CMakeFiles/install.util: CUSTOM_COMMAND app/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/app && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build app/install: phony app/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build app/CMakeFiles/install/local.util: CUSTOM_COMMAND app/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/app && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build app/install/local: phony app/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build app/CMakeFiles/install/strip.util: CUSTOM_COMMAND app/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/app && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build app/install/strip: phony app/CMakeFiles/install/strip.util
 
 
 #############################################
@@ -206,7 +290,7 @@ build app/GestioTacheApp_autogen/timestamp app/GestioTacheApp_autogen/mocs_compi
 #############################################
 # Phony custom command for app/CMakeFiles/GestioTacheApp_autogen_timestamp_deps
 
-build app/CMakeFiles/GestioTacheApp_autogen_timestamp_deps | ${cmake_ninja_workdir}app/CMakeFiles/GestioTacheApp_autogen_timestamp_deps: phony /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/uic /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/moc /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0 appTexte/libGestioTacheAppTexte.so tacheObjet/libtache.so || appTexte/GestioTacheAppTexte_autogen appTexte/GestioTacheAppTexte_autogen_timestamp_deps appTexte/libGestioTacheAppTexte.so tacheObjet/libtache.so tacheObjet/tache_autogen tacheObjet/tache_autogen_timestamp_deps
+build app/CMakeFiles/GestioTacheApp_autogen_timestamp_deps | ${cmake_ninja_workdir}app/CMakeFiles/GestioTacheApp_autogen_timestamp_deps: phony tacheObjet/libtache.so appTexte/libGestioTacheAppTexte.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/uic /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/moc /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0 || appTexte/GestioTacheAppTexte_autogen appTexte/GestioTacheAppTexte_autogen_timestamp_deps appTexte/libGestioTacheAppTexte.so tacheObjet/libtache.so tacheObjet/tache_autogen tacheObjet/tache_autogen_timestamp_deps
 
 
 #############################################
@@ -289,6 +373,48 @@ build appTexte/rebuild_cache: phony appTexte/CMakeFiles/rebuild_cache.util
 
 
 #############################################
+# Utility command for list_install_components
+
+build appTexte/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build appTexte/CMakeFiles/install.util: CUSTOM_COMMAND appTexte/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/appTexte && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build appTexte/install: phony appTexte/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build appTexte/CMakeFiles/install/local.util: CUSTOM_COMMAND appTexte/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/appTexte && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build appTexte/install/local: phony appTexte/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build appTexte/CMakeFiles/install/strip.util: CUSTOM_COMMAND appTexte/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/appTexte && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build appTexte/install/strip: phony appTexte/CMakeFiles/install/strip.util
+
+
+#############################################
 # Utility command for GestioTacheAppTexte_autogen_timestamp_deps
 
 build appTexte/GestioTacheAppTexte_autogen_timestamp_deps: phony appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps tacheObjet/libtache.so
@@ -313,7 +439,7 @@ build appTexte/GestioTacheAppTexte_autogen/timestamp appTexte/GestioTacheAppText
 #############################################
 # Phony custom command for appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps
 
-build appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps | ${cmake_ninja_workdir}appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps: phony /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/uic /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/moc /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0 tacheObjet/libtache.so || tacheObjet/libtache.so tacheObjet/tache_autogen tacheObjet/tache_autogen_timestamp_deps
+build appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps | ${cmake_ninja_workdir}appTexte/CMakeFiles/GestioTacheAppTexte_autogen_timestamp_deps: phony tacheObjet/libtache.so /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/uic /home/enzoadmin/Application/Qt/6.6.0/gcc_64/./libexec/moc /home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0 || tacheObjet/libtache.so tacheObjet/tache_autogen tacheObjet/tache_autogen_timestamp_deps
 
 
 #############################################
@@ -396,6 +522,48 @@ build tacheObjet/rebuild_cache: phony tacheObjet/CMakeFiles/rebuild_cache.util
 
 
 #############################################
+# Utility command for list_install_components
+
+build tacheObjet/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build tacheObjet/CMakeFiles/install.util: CUSTOM_COMMAND tacheObjet/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/tacheObjet && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build tacheObjet/install: phony tacheObjet/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build tacheObjet/CMakeFiles/install/local.util: CUSTOM_COMMAND tacheObjet/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/tacheObjet && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build tacheObjet/install/local: phony tacheObjet/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build tacheObjet/CMakeFiles/install/strip.util: CUSTOM_COMMAND tacheObjet/all
+  COMMAND = cd /home/enzoadmin/Desktop/GestioTache/build/tacheObjet && /home/enzoadmin/Application/Qt/Tools/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build tacheObjet/install/strip: phony tacheObjet/CMakeFiles/install/strip.util
+
+
+#############################################
 # Utility command for tache_autogen_timestamp_deps
 
 build tacheObjet/tache_autogen_timestamp_deps: phony tacheObjet/CMakeFiles/tache_autogen_timestamp_deps
@@ -431,7 +599,7 @@ build tacheObjet/CMakeFiles/tache_autogen | ${cmake_ninja_workdir}tacheObjet/CMa
 # =============================================================================
 # Target aliases.
 
-build GestioTacheApp: phony app/GestioTacheApp
+build GestioTacheApp: phony /home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp
 
 build GestioTacheAppTexte: phony appTexte/libGestioTacheAppTexte.so
 
@@ -470,7 +638,7 @@ build all: phony app/all appTexte/all tacheObjet/all
 #############################################
 # Folder: /home/enzoadmin/Desktop/GestioTache/build/app
 
-build app/all: phony app/GestioTacheApp
+build app/all: phony /home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp
 
 # =============================================================================
 

@@ -42,3 +42,31 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
+         RPATH "\$ORIGIN:\$ORIGIN/../lib")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  file(INSTALL DESTINATION "/home/enzoadmin/Desktop/GestioTache/bin" TYPE EXECUTABLE FILES "/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+  if(EXISTS "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
+         OLD_RPATH "/home/enzoadmin/Desktop/GestioTache/build/appTexte:/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib:/home/enzoadmin/Desktop/GestioTache/build/tacheObjet:"
+         NEW_RPATH "\$ORIGIN:\$ORIGIN/../lib")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+    endif()
+  endif()
+endif()
+
