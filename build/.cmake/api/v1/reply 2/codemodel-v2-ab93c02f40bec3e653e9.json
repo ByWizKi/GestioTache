@@ -1,0 +1,217 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "app",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-app-Release-cf3b11a45f134ed9ebcc.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "app",
+					"targetIndexes" : 
+					[
+						0,
+						4,
+						5,
+						6
+					]
+				},
+				{
+					"build" : "appTexte",
+					"jsonFile" : "directory-appTexte-Release-0c5ef6a38eeadb5e0c63.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "appTexte",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"build" : "tacheObjet",
+					"jsonFile" : "directory-tacheObjet-Release-ed856ddeb374020da99a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "tacheObjet",
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						2,
+						3
+					],
+					"name" : "GestioTache",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						7,
+						8,
+						9,
+						10
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "GestioTacheApp",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "GestioTacheApp::@5f5a17c01335469806cb",
+					"jsonFile" : "target-GestioTacheApp-Release-b880e6507555011e0302.json",
+					"name" : "GestioTacheApp",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "GestioTacheAppTexte::@03119eade194a5c7ea9c",
+					"jsonFile" : "target-GestioTacheAppTexte-Release-218e7a3cf76edb8893da.json",
+					"name" : "GestioTacheAppTexte",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "GestioTacheAppTexte_autogen::@03119eade194a5c7ea9c",
+					"jsonFile" : "target-GestioTacheAppTexte_autogen-Release-bb3e9381f3c6d5837dac.json",
+					"name" : "GestioTacheAppTexte_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "GestioTacheAppTexte_autogen_timestamp_deps::@03119eade194a5c7ea9c",
+					"jsonFile" : "target-GestioTacheAppTexte_autogen_timestamp_deps-Release-12c1ad9614824af1e090.json",
+					"name" : "GestioTacheAppTexte_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "GestioTacheApp_autogen::@5f5a17c01335469806cb",
+					"jsonFile" : "target-GestioTacheApp_autogen-Release-e21348bae4cdbed6d4ed.json",
+					"name" : "GestioTacheApp_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "GestioTacheApp_autogen_timestamp_deps::@5f5a17c01335469806cb",
+					"jsonFile" : "target-GestioTacheApp_autogen_timestamp_deps-Release-cd617452bd4fc4c21b5a.json",
+					"name" : "GestioTacheApp_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "GestioTacheApp_other_files::@5f5a17c01335469806cb",
+					"jsonFile" : "target-GestioTacheApp_other_files-Release-b32458f4eacab3ecec57.json",
+					"name" : "GestioTacheApp_other_files",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "doxygen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-doxygen-Release-ee551b4a16a22ac048fc.json",
+					"name" : "doxygen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "tache::@4fcf5a6bed12f2da414a",
+					"jsonFile" : "target-tache-Release-46ff1ddbb5d0413ea106.json",
+					"name" : "tache",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "tache_autogen::@4fcf5a6bed12f2da414a",
+					"jsonFile" : "target-tache_autogen-Release-af29de766a8281be2a9a.json",
+					"name" : "tache_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "tache_autogen_timestamp_deps::@4fcf5a6bed12f2da414a",
+					"jsonFile" : "target-tache_autogen_timestamp_deps-Release-6316c87e998848d764e9.json",
+					"name" : "tache_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build",
+		"source" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

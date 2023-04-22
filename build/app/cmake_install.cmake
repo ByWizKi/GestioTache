@@ -1,4 +1,4 @@
-# Install script for directory: /home/enzoadmin/Desktop/GestioTache/app
+# Install script for directory: /Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/app
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -27,11 +27,6 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   endif()
 endif()
 
-# Install shared libraries without execute permission?
-if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "1")
-endif()
-
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
@@ -43,30 +38,22 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
-    file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
-         RPATH "\$ORIGIN:\$ORIGIN/../lib")
-  endif()
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
+   "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/home/enzoadmin/Desktop/GestioTache/bin" TYPE EXECUTABLE FILES "/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
-  if(EXISTS "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
-    file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
-         OLD_RPATH "/home/enzoadmin/Desktop/GestioTache/build/appTexte:/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib:/home/enzoadmin/Desktop/GestioTache/build/tacheObjet:"
-         NEW_RPATH "\$ORIGIN:\$ORIGIN/../lib")
-    if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp")
-    endif()
+  file(INSTALL DESTINATION "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin" TYPE DIRECTORY FILES "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app" USE_SOURCE_PERMISSIONS)
+  if(EXISTS "$ENV{DESTDIR}/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app/Contents/MacOS/GestioTacheApp" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app/Contents/MacOS/GestioTacheApp")
+    execute_process(COMMAND /usr/bin/install_name_tool
+      -delete_rpath "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build/appTexte"
+      -delete_rpath "/Applications/6.4.2/macos/lib"
+      -delete_rpath "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build/tacheObjet"
+      "$ENV{DESTDIR}/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app/Contents/MacOS/GestioTacheApp")
   endif()
 endif()
 
