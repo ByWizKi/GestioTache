@@ -1,51 +1,89 @@
 #include "../headerFiles/appgestiotache.h"
 #include "../../appTexte/headerFiles/appgestiotachetexte.h"
+
+// Constructeur de la classe AppGestioTache, qui hérite de la classe QWidget
 AppGestioTache::AppGestioTache(QWidget *parent) {
 
+  // Appel de la fonction chargeTouteTache() qui va retourner une liste de
+  // tâches
   m_listTache = chargeTouteTache();
+
+  // Création des actions pour le menu
   creerActionsMenu();
+
+  // Création du menu
   creerMenu();
 
+  // Création d'un widget central qui va servir de conteneur pour les autres
+  // widgets
   m_widgetCentral = new QWidget(this);
+
+  // Définition du widget central
   this->setCentralWidget(m_widgetCentral);
 
+  // Création d'un layout vertical principal qui va servir de conteneur pour les
+  // autres layouts
   m_layoutPrincipal = new QVBoxLayout();
+
+  // Définition du layout principal
   m_widgetCentral->setLayout(m_layoutPrincipal);
 
+  // Création d'un widget pour l'en-tête de l'application
   m_headerWidget = widgetHeaderApp();
+
+  // Ajout du widget de l'en-tête dans le layout principal
   m_layoutPrincipal->addWidget(m_headerWidget);
 
+  // Création d'un widget pour la page d'accueil
   m_widgetCourant = widgetAccueil();
+
+  // Ajout du widget de la page d'accueil dans le layout principal
   m_layoutPrincipal->addWidget(m_widgetCourant);
+
+  // Définition de l'alignement du widget de la page d'accueil
   m_layoutPrincipal->setAlignment(m_widgetCourant, Qt::AlignCenter);
 
+  // Définition de la couleur de fond de l'application
   this->setStyleSheet("background-color : #3F4346");
 
+  // Définition de l'icône de l'application
   this->setWindowIcon(QIcon(":/dataFiles/imageFiles/logo.svg"));
+
+  // Définition du titre de l'application
   this->setWindowTitle(tr("GestioTache"));
 
-
+  // Définition de la taille minimale de l'application
   this->setMinimumSize(1280, 832);
+
+  // Définition de la taille maximale de l'application
   this->setMaximumSize(1280, 832);
+
+  // Affichage de l'application
   this->show();
 }
 
 AppGestioTache::~AppGestioTache() {
-//  delete m_widgetCentral;
-//  delete m_widgetCourant;
-//  delete m_layoutPrincipal;
+  delete m_widgetCentral;
+  delete m_widgetCourant;
+  delete m_layoutPrincipal;
   delete m_menuSauve;
   delete m_menuQuitter;
   delete m_menuAide;
 }
 
 QWidget *AppGestioTache::widgetHeaderApp() {
+  // Crée un widget pour l'en-tête de l'application
   QWidget *headerAppWidget = new QWidget();
+  // Crée un layout horizontal pour l'en-tête de l'application
   QHBoxLayout *mainHeaderAppLayout = new QHBoxLayout(headerAppWidget);
+  // Crée un layout horizontal pour les boutons de l'en-tête
   QHBoxLayout *headerBoutonLayout = new QHBoxLayout();
+  // Aligne le layout principal au centre
   mainHeaderAppLayout->setAlignment(Qt::AlignCenter);
+  // Aligne le layout des boutons au centre
   headerBoutonLayout->setAlignment(Qt::AlignCenter);
 
+  // Définit un style pour les boutons
   QString styleBouton = "QPushButton {"
                         "border-radius: 0.625em;"
                         "background-color: #F8CF7F;"
@@ -53,57 +91,101 @@ QWidget *AppGestioTache::widgetHeaderApp() {
                         "padding : 0.188em;"
                         "}";
 
+  // Crée un bouton pour afficher l'accueil
   QPushButton *accueilBoutonWidget = new QPushButton("Accueil");
+  // Définit la police pour le bouton
   accueilBoutonWidget->setFont(fontHeaderWidget);
+  // Définit le bouton comme plat (sans bordure)
   accueilBoutonWidget->setFlat(true);
+  // Définit le curseur de la souris comme une main pointée
   accueilBoutonWidget->setCursor(Qt::PointingHandCursor);
+  // Applique le style défini précédemment au bouton
   accueilBoutonWidget->setStyleSheet(styleBouton);
+  // Ajoute un effet de flou sur le bouton
   accueilBoutonWidget->setGraphicsEffect(dropShadow(accueilBoutonWidget));
+  // Connecte le signal "clicked" du bouton à un slot pour afficher l'accueil
   connect(accueilBoutonWidget, SIGNAL(clicked()), this,
           SLOT(afficherAccueilSlot()));
 
+  // Crée un bouton pour créer une tâche
   QPushButton *creerBoutonWidget = new QPushButton("Créer");
+  // Définit la police pour le bouton
   creerBoutonWidget->setFont(fontHeaderWidget);
+  // Définit le curseur de la souris comme une main pointée
   creerBoutonWidget->setCursor(Qt::PointingHandCursor);
+  // Applique le style défini précédemment au bouton
   creerBoutonWidget->setStyleSheet(styleBouton);
+  // Ajoute un effet de flou sur le bouton
   creerBoutonWidget->setGraphicsEffect(dropShadow(creerBoutonWidget));
+  // Connecte le signal "clicked" du bouton à un slot pour afficher l'écran de
+  // création de tâche
   connect(creerBoutonWidget, SIGNAL(clicked()), this,
           SLOT(afficherCreationSlot()));
 
+  // Crée un bouton pour modifier une tâche existante
   QPushButton *modifierBoutonWidget = new QPushButton("Modifier");
+  // Définit la police pour le bouton
   modifierBoutonWidget->setFont(fontHeaderWidget);
+  // Définit le curseur de la souris comme une main pointée
   modifierBoutonWidget->setCursor(Qt::PointingHandCursor);
+  // Applique la feuille de style spécifiée pour le bouton Modifier
   modifierBoutonWidget->setStyleSheet(styleBouton);
+  // Ajoute un effet de flou d'ombre sur le bouton Modifier
   modifierBoutonWidget->setGraphicsEffect(dropShadow(modifierBoutonWidget));
+  // Connecte le clic sur le bouton Modifier à la fonction
+  // afficherModificationSlot()
   connect(modifierBoutonWidget, SIGNAL(clicked()), this,
           SLOT(afficherModificationSlot()));
 
+  // Crée un nouveau bouton Supprimer avec le texte "Supprimer"
   QPushButton *supprimerBoutonWidget = new QPushButton("Supprimer");
+  // Définit la police pour le bouton Supprimer
   supprimerBoutonWidget->setFont(fontHeaderWidget);
+  // Définit le curseur de la souris en forme de main pour le bouton Supprimer
   supprimerBoutonWidget->setCursor(Qt::PointingHandCursor);
+  // Applique la feuille de style spécifiée pour le bouton Supprimer
   supprimerBoutonWidget->setStyleSheet(styleBouton);
+  // Ajoute un effet de flou d'ombre sur le bouton Supprimer
   supprimerBoutonWidget->setGraphicsEffect(dropShadow(supprimerBoutonWidget));
+  // Connecte le clic sur le bouton Supprimer à la fonction
+  // afficherSuppressionSlot()
   connect(supprimerBoutonWidget, SIGNAL(clicked()), this,
           SLOT(afficherSuppressionSlot()));
 
+  // Ajoute le bouton Accueil au layout du header
   headerBoutonLayout->addWidget(accueilBoutonWidget);
+  // Ajoute un espacement entre les boutons dans le layout du header
   headerBoutonLayout->addSpacing(1.875 * fontMetrics().height());
+  // Ajoute le bouton Créer au layout du header
   headerBoutonLayout->addWidget(creerBoutonWidget);
+  // Ajoute un espacement entre les boutons dans le layout du header
   headerBoutonLayout->addSpacing(1.875 * fontMetrics().height());
+  // Ajoute le bouton Modifier au layout du header
   headerBoutonLayout->addWidget(modifierBoutonWidget);
+  // Ajoute un espacement entre les boutons dans le layout du header
   headerBoutonLayout->addSpacing(1.875 * fontMetrics().height());
+  // Ajoute le bouton Supprimer au layout du header
   headerBoutonLayout->addWidget(supprimerBoutonWidget);
 
+  // Crée un nouveau QLabel avec le logo de l'application
   QLabel *logoImage1 = new QLabel();
   logoImage1->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.svg"));
 
+  // Crée un nouveau QLabel avec le logo de l'application
   QLabel *logoImage2 = new QLabel();
   logoImage2->setPixmap(QPixmap(":/dataFiles/imageFiles/logo.svg"));
 
+  // Ajoute le logo 1 au layout principal du header
   mainHeaderAppLayout->addWidget(logoImage1);
+  // Ajoute un espacement entre le logo 1 et les boutons dans le layout
+  // principal du header
   mainHeaderAppLayout->addSpacing(1.563 * fontMetrics().height());
+  // Ajoute le layout des boutons au layout principal du header
   mainHeaderAppLayout->addLayout(headerBoutonLayout);
+  // Ajoute un espacement entre les boutons et le logo 2 dans le layout
+  // principal du header
   mainHeaderAppLayout->addSpacing(1.563 * fontMetrics().height());
+  // Ajoute le logo 2 au layout principal du header
   mainHeaderAppLayout->addWidget(logoImage2);
 
   return headerAppWidget;
@@ -152,50 +234,88 @@ QWidget *AppGestioTache::widgetAccueil() {
 
 QWidget *AppGestioTache::widgetCreation() {
 
+  // Création du widget principal
   QWidget *widgetCreation = new QWidget();
+
+  // Création du layout principal du widget
   QVBoxLayout *mainCreationLayout = new QVBoxLayout(widgetCreation);
+
+  // Création du titre du widget
   QLabel *titreWidget = new QLabel("Créer", widgetCreation);
   titreWidget->setFont(fontTitreWidget);
   titreWidget->setStyleSheet("color : #FFFFFF; font-weight : 600;");
+
+  // Ajout du titre au layout principal
   mainCreationLayout->addWidget(titreWidget, 0, Qt::AlignCenter);
 
+  // Création du widget de création de tâche
   QWidget *widgetCreationTache = new QWidget();
+
+  // Définition de la taille et du style du widget de création de tâche
   widgetCreationTache->setFixedSize(756, 500);
   widgetCreationTache->setStyleSheet(
       "background : #F8CF7F; border-radius : 3.125em;");
   widgetCreationTache->setGraphicsEffect(dropShadow(widgetCreationTache));
+
+  // Création du layout pour le widget de création de tâche
   QVBoxLayout *layoutCreationTache = new QVBoxLayout(widgetCreationTache);
+
+  // Création du titre du widget de création de tâche
   QLabel *titreWidgetTache = new QLabel("Nouvelle Tâche", widgetCreationTache);
   titreWidgetTache->setFont(fontTitreWidget2);
   titreWidgetTache->setStyleSheet("color : #000000; font-weight : 600;");
+
+  // Ajout du titre au layout du widget de création de tâche
   layoutCreationTache->addWidget(titreWidgetTache, 0, Qt::AlignCenter);
+
+  // Ajout d'un espacement entre le titre et le reste du layout
   layoutCreationTache->addSpacing(66);
 
+  // Création du layout pour le champ de nom de tâche
   QVBoxLayout *layoutNomTache = new QVBoxLayout();
+
+  // Création de l'étiquette pour le champ de nom de tâche
   QLabel *labelNomTache = new QLabel("Nom Tache");
   labelNomTache->setFont(fontPlaceHolderWidget);
   labelNomTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
+
+  // Ajout de l'étiquette au layout du champ de nom de tâche
   layoutNomTache->addWidget(labelNomTache, 0, Qt::AlignLeft);
+
+  // Définition du style pour le champ de nom de tâche
   QString styleSelection =
       "background-color : #AD9090; border-radius : 0.313em; color : #FFFFFF;"
       "letter-spacing: 0.145em; padding-left : 0.625em; font-weight : 400;";
+
+  // Création du champ de nom de tâche
   QLineEdit *editNomTache = new QLineEdit();
   editNomTache->setFont(fontPlaceHolderWidget);
   editNomTache->setFixedSize(291, 45);
   editNomTache->setPlaceholderText("Allez chez marine");
   editNomTache->setStyleSheet("QLineEdit{" + styleSelection + "};");
   editNomTache->setGraphicsEffect(dropShadow(editNomTache));
+
+  // Ajout du champ de nom de tâche au layout du champ de nom de tâche
   layoutNomTache->addWidget(editNomTache);
 
+  // Styles pour les éléments de la liste déroulante et l'icône
   QString styleIconSelection =
       "width : 1.475em; margin-right : 0.323em; "
       "image: url(:/dataFiles/imageFiles/flecheDown.svg);";
+
+  // Layout pour l'élément "Importance de la tache"
   QVBoxLayout *layoutImportanceTache = new QVBoxLayout();
+
+  // Label pour l'élément "Importance de la tache"
   QLabel *labelImportanceTache = new QLabel("Importance tache");
   labelImportanceTache->setFont(fontPlaceHolderWidget);
   labelImportanceTache->setStyleSheet(
       "color : #FFFFFF; letter-spacing : 0.04em;");
+
+  // Ajout du label dans le layout
   layoutImportanceTache->addWidget(labelImportanceTache, 0, Qt::AlignLeft);
+
+  // Création de la liste déroulante pour l'importance de la tache
   QComboBox *selectImportanceTache = new QComboBox();
   selectImportanceTache->setFixedSize(295, 45);
   selectImportanceTache->setPlaceholderText("Choisissez l'importance");
@@ -205,18 +325,32 @@ QWidget *AppGestioTache::widgetCreation() {
   selectImportanceTache->addItem("Urgent");
   selectImportanceTache->setFrame(false);
   selectImportanceTache->setCursor(Qt::PointingHandCursor);
+
+  // Ajout des styles pour la liste déroulante et l'icône
   selectImportanceTache->setStyleSheet("QComboBox {" + styleSelection +
                                        "}"
                                        "QComboBox::drop-down {" +
                                        styleIconSelection + "}");
+
+  // Ajout d'un effet d'ombre pour la liste déroulante
   selectImportanceTache->setGraphicsEffect(dropShadow(selectImportanceTache));
+
+  // Ajout de la liste déroulante dans le layout
   layoutImportanceTache->addWidget(selectImportanceTache, 0, Qt::AlignLeft);
 
+  // Layout pour l'élément "Date de début de la tache"
   QVBoxLayout *layoutDateDebTache = new QVBoxLayout();
+
+  // Label pour l'élément "Date de début de la tache"
   QLabel *labelDateDebTache = new QLabel("Date de début de la tache");
   labelDateDebTache->setFont(fontPlaceHolderWidget);
   labelDateDebTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
+
+  // Ajout du label dans le layout
   layoutDateDebTache->addWidget(labelDateDebTache, 0, Qt::AlignLeft);
+
+  // Création de l'élément de sélection de date pour la date de début de la
+  // tache
   QDateTimeEdit *editDateDebTache =
       new QDateTimeEdit(QDateTime::currentDateTime());
   editDateDebTache->setFixedSize(291, 45);
@@ -229,42 +363,81 @@ QWidget *AppGestioTache::widgetCreation() {
   editDateDebTache->setGraphicsEffect(dropShadow(editDateDebTache));
   layoutDateDebTache->addWidget(editDateDebTache, 0, Qt::AlignLeft);
 
+  // Crée un nouveau layout vertical pour la boîte de dialogue de la date de fin
+  // de la tâche
   QVBoxLayout *layoutDateFinTache = new QVBoxLayout();
+
+  // Crée un nouveau label pour la boîte de dialogue de la date de fin de la
+  // tâche avec le texte "Date fin de la tache"
   QLabel *labelDateFinTache = new QLabel("Date fin de la tache");
+
+  // Modifie la police du texte du label
   labelDateFinTache->setFont(fontPlaceHolderWidget);
+
+  // Modifie la feuille de style du label pour changer la couleur et
+  // l'espacement de lettre
   labelDateFinTache->setStyleSheet("color : #FFFFFF; letter-spacing : 0.04em;");
+
+  // Ajoute le label au layout vertical créé précédemment avec un alignement à
+  // gauche
   layoutDateFinTache->addWidget(labelDateFinTache, 0, Qt::AlignLeft);
+
+  // Crée un nouveau QDateTimeEdit initialisé à la date et heure courantes plus
+  // 1 minute
   QDateTimeEdit *editDateFinTache =
       new QDateTimeEdit(QDateTime::currentDateTime().addMSecs(60000));
+
+  // Définit la taille fixe de l'éditeur de date et heure
   editDateFinTache->setFixedSize(291, 45);
+
+  // Modifie la police du texte de l'éditeur de date et heure
   editDateFinTache->setFont(fontPlaceHolderWidget);
+
+  // Définit la date et l'heure minimales sélectionnables pour l'éditeur de date
+  // et heure en ajoutant 1 minute à la date et heure de début de la tâche
+  // (editDateDebTache)
   editDateFinTache->setMinimumDateTime(
       editDateDebTache->dateTime().addMSecs(60000));
+
+  // Active le popup du calendrier pour la sélection de la date
   editDateFinTache->setCalendarPopup(true);
+
+  // Modifie la feuille de style de l'éditeur de date et heure pour
+  // personnaliser son apparence
   editDateFinTache->setStyleSheet("QDateTimeEdit{" + styleSelection +
                                   "}"
                                   "QDateTimeEdit::drop-down {" +
                                   styleIconSelection + "}");
+
+  // Ajoute un effet d'ombre portée à l'éditeur de date et heure
   editDateFinTache->setGraphicsEffect(dropShadow(editDateFinTache));
+
+  // Ajoute l'éditeur de date et heure au layout vertical créé précédemment avec
+  // un alignement à gauche
   layoutDateFinTache->addWidget(editDateFinTache, 0, Qt::AlignLeft);
 
-  /// Lorsque la date de début de la tâche change, nous mettons à jour la
-  /// sélection des dates
+  // Connexion du signal dateTimeChanged de l'objet editDateDebTache au slot
+  // lambda Cette connexion permet d'exécuter le code contenu dans la fonction
+  // lambda chaque fois que la date/heure de l'objet editDateDebTache est
+  // modifiée
   connect(editDateDebTache, &QDateTimeEdit::dateTimeChanged, this,
           [editDateDebTache, editDateFinTache]() {
-            /// Si la date de début est supérieure ou égale à la date de fin
+            // Si la date/heure de l'objet editDateDebTache est supérieure ou
+            // égale à celle de l'objet editDateFinTache
             if (editDateDebTache->dateTime() >= editDateFinTache->dateTime()) {
-              /// Nous décalons la date de fin d'une minute après la date de
-              /// début
+              // On ajoute 1 minute à la date/heure de l'objet editDateDebTache
+              // et on la fixe comme date/heure de l'objet editDateFinTache
               editDateFinTache->setDateTime(
                   editDateDebTache->dateTime().addMSecs(60000));
-              /// Nous définissons la date minimale de la date de fin à une
-              /// minute après la date de début
+              // On fixe la date/heure minimum de l'objet editDateFinTache à
+              // celle de l'objet editDateDebTache + 1 minute
               editDateFinTache->setMinimumDateTime(
                   editDateDebTache->dateTime().addMSecs(60000));
             } else {
-              /// Sinon, nous définissons simplement la date minimale de la date
-              /// de fin à la date de début + une minute
+              // Si la date/heure de l'objet editDateDebTache est inférieure à
+              // celle de l'objet editDateFinTache On fixe la date/heure minimum
+              // de l'objet editDateFinTache à celle de l'objet editDateDebTache
+              // + 1 minute
               editDateFinTache->setMinimumDateTime(
                   editDateDebTache->dateTime().addMSecs(60000));
             }
@@ -303,59 +476,48 @@ QWidget *AppGestioTache::widgetCreation() {
   layoutCreationTache->setContentsMargins(40, 20, 40, 20);
 
   connect(boutonEnvoieForm, &QPushButton::clicked, this, [=]() {
-    // Vérification que le champ nom de tâche n'est pas vide
     if (!editNomTache->text().isEmpty()) {
-      // Vérification de l'importance sélectionnée
       if (selectImportanceTache->currentText() == "Peu Important") {
-        // Création d'une nouvelle tâche peu importante
         Tache newTache{aleatoireId(), editNomTache->text(), peuImportant,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
         newTache.sauveTache();
-        // Suppression du message précédent si présent
         if (layoutCreationTache->count() > 5) {
           QWidget *supprMessage =
               layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                   ->widget();
           delete supprMessage;
         }
-        // Ajout d'un message de confirmation de création de tâche
         QLabel *confirmationNewTache = new QLabel("*Votre Tache a ete creer !");
         confirmationNewTache->setFont(fontPlaceHolderWidget);
         confirmationNewTache->setStyleSheet(
             "color : #3F4346; font-weight : 600;");
         layoutCreationTache->addWidget(confirmationNewTache, 0,
                                        Qt::AlignCenter);
-        // Réinitialisation des champs de saisie
         selectImportanceTache->setCurrentIndex(-1);
         editNomTache->clear();
         editDateDebTache->setDateTime(QDateTime::currentDateTime());
       } else if (selectImportanceTache->currentText() == "Important") {
-        // Création d'une nouvelle tâche importante
         Tache newTache{aleatoireId(), editNomTache->text(), Important,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
         newTache.sauveTache();
-        // Suppression du message précédent si présent
         if (layoutCreationTache->count() > 5) {
           QWidget *supprMessage =
               layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                   ->widget();
           delete supprMessage;
         }
-        // Ajout d'un message de confirmation de création de tâche
         QLabel *confirmationNewTache = new QLabel("*Votre Tache a ete creer !");
         confirmationNewTache->setFont(fontPlaceHolderWidget);
         confirmationNewTache->setStyleSheet(
             "color : #3F4346; font-weight : 600;");
         layoutCreationTache->addWidget(confirmationNewTache, 0,
                                        Qt::AlignCenter);
-        // Réinitialisation des champs de saisie
         selectImportanceTache->setCurrentIndex(-1);
         editNomTache->clear();
         editDateDebTache->setDateTime(QDateTime::currentDateTime());
       } else if (selectImportanceTache->currentText() == "Urgent") {
-        // Création d'une nouvelle tâche urgente
         Tache newTache{aleatoireId(), editNomTache->text(), Urgent,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
@@ -927,7 +1089,8 @@ QWidget *AppGestioTache::widgetAide() {
       "Pour créer une nouvelle tâche, procédez comme suit :\n"
       "Cliquez sur le bouton jaune 'Créer' situé dans la fenêtre 'Créer'.\n"
       "Remplissez les champs obligatoires.\n"
-      "Cliquez sur le bouton 'Créer' pour valider la tâche que vous venez de créer.";
+      "Cliquez sur le bouton 'Créer' pour valider la tâche que vous venez de "
+      "créer.";
   QLabel *paraSectionB = new QLabel();
   paraSectionB->setText(textSectionB);
   paraSectionB->setFont(fontTextTache3);
@@ -939,7 +1102,7 @@ QWidget *AppGestioTache::widgetAide() {
   layoutAide1->addWidget(widgetSectionC, 0, Qt::AlignLeft);
   QVBoxLayout *layoutSectionC = new QVBoxLayout(widgetSectionC);
   QLabel *labelSectionC = new QLabel("Modifier une tache :");
-                          labelSectionC->setFont(fontTitreWidget4);
+  labelSectionC->setFont(fontTitreWidget4);
   labelSectionC->setStyleSheet("color : #000000; font-weight : 600;");
   layoutSectionC->addWidget(labelSectionC, 0, Qt::AlignLeft);
   QString textSectionC =
@@ -951,13 +1114,13 @@ QWidget *AppGestioTache::widgetAide() {
   QLabel *paraSectionC = new QLabel();
   paraSectionC->setText(textSectionC);
   paraSectionC->setFont(fontTextTache3);
-  paraSectionC->setStyleSheet(
-      "color: #000000; font-weight : 600;");
+  paraSectionC->setStyleSheet("color: #000000; font-weight : 600;");
   layoutSectionC->addWidget(paraSectionC, 0, Qt::AlignLeft);
 
   QPushButton *boutonNext = new QPushButton();
-  boutonNext->setIcon(QPixmap(":/dataFiles/imageFiles/nextPreviousIcon.svg").transformed(QTransform().rotate(180)));
-  boutonNext->setIconSize(QSize(53,43));
+  boutonNext->setIcon(QPixmap(":/dataFiles/imageFiles/nextPreviousIcon.svg")
+                          .transformed(QTransform().rotate(180)));
+  boutonNext->setIconSize(QSize(53, 43));
   boutonNext->setCursor(Qt::PointingHandCursor);
   layoutAide1->addWidget(boutonNext, 0, Qt::AlignCenter);
 
@@ -995,7 +1158,7 @@ QWidget *AppGestioTache::widgetAide() {
   layoutAide2->addWidget(widgetSectionE, 0, Qt::AlignLeft);
   QVBoxLayout *layoutSectionE = new QVBoxLayout(widgetSectionE);
   QLabel *labelSectionE = new QLabel("Faire une sauvegarde :");
-                          labelSectionE->setFont(fontTitreWidget4);
+  labelSectionE->setFont(fontTitreWidget4);
   labelSectionE->setStyleSheet("color : #000000; font-weight : 600;");
   layoutSectionE->addWidget(labelSectionE, 0, Qt::AlignLeft);
   QString textSectionE =
@@ -1018,10 +1181,9 @@ QWidget *AppGestioTache::widgetAide() {
   labelSectionF->setFont(fontTitreWidget4);
   labelSectionF->setStyleSheet("color : #000000; font-weight : 600;");
   layoutSectionF->addWidget(labelSectionF, 0, Qt::AlignLeft);
-  QString textSectionF =
-      "Pour quitter GestioTache, procédez comme suit :\n"
-      "Cliquez sur le bouton 'Quitter' situé dans le menu.\n"
-      "Ou faites Ctrl + Q.";
+  QString textSectionF = "Pour quitter GestioTache, procédez comme suit :\n"
+                         "Cliquez sur le bouton 'Quitter' situé dans le menu.\n"
+                         "Ou faites Ctrl + Q.";
   QLabel *paraSectionF = new QLabel();
   paraSectionF->setText(textSectionF);
   paraSectionF->setFont(fontTextTache);
@@ -1032,22 +1194,23 @@ QWidget *AppGestioTache::widgetAide() {
   layoutSectionF->addWidget(paraSectionF, 0, Qt::AlignLeft);
 
   QPushButton *boutonPrevious = new QPushButton();
-  boutonPrevious->setIcon(QPixmap(":/dataFiles/imageFiles/nextPreviousIcon.svg"));
+  boutonPrevious->setIcon(
+      QPixmap(":/dataFiles/imageFiles/nextPreviousIcon.svg"));
   boutonPrevious->setCursor(Qt::PointingHandCursor);
   boutonPrevious->setFocusPolicy(Qt::ClickFocus);
-  boutonPrevious->setIconSize(QSize(53,43));
+  boutonPrevious->setIconSize(QSize(53, 43));
   layoutAide2->addWidget(boutonPrevious, 0, Qt::AlignCenter);
   layoutAide->addWidget(widgetAide2, 0, Qt::AlignCenter);
   widgetAide2->hide();
 
-  connect(boutonNext, &QPushButton::clicked, this, [=](){
-      widgetAide1->hide();
-      widgetAide2->show();
+  connect(boutonNext, &QPushButton::clicked, this, [=]() {
+    widgetAide1->hide();
+    widgetAide2->show();
   });
 
-  connect(boutonPrevious, &QPushButton::clicked, this, [=](){
-      widgetAide2->hide();
-      widgetAide1->show();
+  connect(boutonPrevious, &QPushButton::clicked, this, [=]() {
+    widgetAide2->hide();
+    widgetAide1->show();
   });
 
   return widgetAide;
