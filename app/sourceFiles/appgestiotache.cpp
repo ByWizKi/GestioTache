@@ -443,23 +443,34 @@ QWidget *AppGestioTache::widgetCreation() {
             }
           });
 
+  // Création d'un layout vertical pour la première partie de la tâche
   QVBoxLayout *layoutTache1 = new QVBoxLayout();
-  layoutTache1->addLayout(layoutNomTache);
-  layoutTache1->addSpacing(75);
-  layoutTache1->addLayout(layoutImportanceTache);
+  layoutTache1->addLayout(
+      layoutNomTache);          // Ajout du layout pour le nom de la tâche
+  layoutTache1->addSpacing(75); // Ajout d'un espace vertical
+  layoutTache1->addLayout(
+      layoutImportanceTache); // Ajout du layout pour l'importance de la tâche
 
+  // Création d'un layout vertical pour la deuxième partie de la tâche
   QVBoxLayout *layoutTache2 = new QVBoxLayout();
-  layoutTache2->addLayout(layoutDateDebTache);
-  layoutTache2->addSpacing(75);
-  layoutTache2->addLayout(layoutDateFinTache);
+  layoutTache2->addLayout(
+      layoutDateDebTache); // Ajout du layout pour la date de début de la tâche
+  layoutTache2->addSpacing(75); // Ajout d'un espace vertical
+  layoutTache2->addLayout(
+      layoutDateFinTache); // Ajout du layout pour la date de fin de la tâche
 
+  // Création d'un layout horizontal pour la tâche entière
   QHBoxLayout *layoutTache3 = new QHBoxLayout();
-  layoutTache3->addLayout(layoutTache1);
-  layoutTache3->addSpacing(77);
-  layoutTache3->addLayout(layoutTache2);
+  layoutTache3->addLayout(
+      layoutTache1); // Ajout du layout pour la première partie de la tâche
+  layoutTache3->addSpacing(77); // Ajout d'un espace horizontal
+  layoutTache3->addLayout(
+      layoutTache2); // Ajout du layout pour la deuxième partie de la tâche
 
-  layoutCreationTache->addLayout(layoutTache3);
+  layoutCreationTache->addLayout(
+      layoutTache3); // Ajout du layout horizontal pour la tâche entière
 
+  // Création d'un bouton pour envoyer le formulaire de création de tâche
   QPushButton *boutonEnvoieForm = new QPushButton("Créer");
   boutonEnvoieForm->setFont(fontTitreWidget3);
   boutonEnvoieForm->setFixedSize(430, 60);
@@ -470,10 +481,14 @@ QWidget *AppGestioTache::widgetCreation() {
       "letter-spacing: 0.2em;"
       "color : #FFFFFF;"
       "font-size : 36px;");
-  boutonEnvoieForm->setGraphicsEffect(dropShadow(boutonEnvoieForm));
-  layoutCreationTache->addSpacing(66);
-  layoutCreationTache->addWidget(boutonEnvoieForm, 0, Qt::AlignCenter);
-  layoutCreationTache->setContentsMargins(40, 20, 40, 20);
+  boutonEnvoieForm->setGraphicsEffect(
+      dropShadow(boutonEnvoieForm)); // Ajout d'un effet d'ombre au bouton
+
+  layoutCreationTache->addSpacing(66); // Ajout d'un espace vertical
+  layoutCreationTache->addWidget(boutonEnvoieForm, 0,
+                                 Qt::AlignCenter); // Ajout du bouton au layout
+  layoutCreationTache->setContentsMargins(
+      40, 20, 40, 20); // Définition des marges du layout
 
   connect(boutonEnvoieForm, &QPushButton::clicked, this, [=]() {
     if (!editNomTache->text().isEmpty()) {
