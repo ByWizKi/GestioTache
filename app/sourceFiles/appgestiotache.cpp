@@ -192,41 +192,72 @@ QWidget *AppGestioTache::widgetHeaderApp() {
 }
 
 QWidget *AppGestioTache::widgetAccueil() {
+  // Création d'un nouveau widget de base pour l'accueil
   QWidget *widgetAccueil = new QWidget();
+
+  // Création d'un layout vertical pour le widget d'accueil
   QVBoxLayout *mainAccueilLayout = new QVBoxLayout(widgetAccueil);
 
+  // Ajout d'un label pour le titre de la page d'accueil
   QLabel *titreWidget = new QLabel("Accueil", widgetAccueil);
+
+  // Paramétrage de la police et de la couleur du titre
   titreWidget->setFont(fontTitreWidget);
   titreWidget->setStyleSheet("color : #FFFFFF; font-weight : 600;");
+
+  // Ajout du label titreWidget au layout mainAccueilLayout, centré
   mainAccueilLayout->addWidget(titreWidget, 0, Qt::AlignCenter);
 
+  // Création d'un nouveau widget pour afficher les tâches
   QWidget *widgetTaches = new QWidget(widgetAccueil);
+
+  // Définition de la taille et de l'apparence du widget des tâches
   widgetTaches->setFixedSize(756, 500);
   widgetTaches->setStyleSheet("background : #F8CF7F; border-radius : 3.125em;");
   widgetTaches->setGraphicsEffect(dropShadow(widgetTaches));
+
+  // Création d'un layout vertical pour le widget des tâches
   QVBoxLayout *widgetTachesLayout = new QVBoxLayout(widgetTaches);
 
+  // Ajout d'un label pour le titre de la section des tâches
   QLabel *titreWidgetTaches = new QLabel("Vos Taches", widgetTaches);
+
+  // Paramétrage de la police et de la couleur du titre des tâches
   titreWidgetTaches->setFont(fontTitreWidget2);
   titreWidgetTaches->setStyleSheet("color : #000000; font-weight : 600");
+
+  // Ajout du label titreWidgetTaches au layout widgetTachesLayout, centré en
+  // haut
   widgetTachesLayout->addWidget(titreWidgetTaches, 0,
                                 Qt::AlignCenter | Qt::AlignTop);
 
+  // Création d'une zone de défilement pour les tâches
   QScrollArea *scrollTacheWidget = new QScrollArea(widgetTaches);
 
+  // Configuration de la zone de défilement
   scrollTacheWidget->setFrameStyle(QFrame::NoFrame);
   scrollTacheWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   scrollTacheWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  // Ajout de la zone de défilement au layout widgetTachesLayout, centré
   widgetTachesLayout->addWidget(scrollTacheWidget, 1, Qt::AlignCenter);
 
+  // Création d'un nouveau widget pour la zone de défilement
   QWidget *widgetScroll = new QWidget();
+
+  // Création d'un layout vertical pour le widget de la zone de défilement
   QVBoxLayout *layoutScroll = new QVBoxLayout(widgetScroll);
+
+  // Paramétrage des marges intérieures du layout de la zone de défilement
   layoutScroll->setContentsMargins(5, 10, 5, 10);
+
+  // Ajout des widgets de tâches dans la zone de défilement
   for (int i = m_listTache.length() - 1; i >= 0; i--) {
     layoutScroll->addWidget(widgetTache(m_listTache[i]));
     layoutScroll->addSpacing(3);
   }
 
+  // Ajout du widget de la zone de défilement dans la zone de défilement
   scrollTacheWidget->setWidget(widgetScroll);
   mainAccueilLayout->addWidget(widgetTaches);
   return widgetAccueil;

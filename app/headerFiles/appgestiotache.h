@@ -168,7 +168,7 @@ private:
   ///
   void creerActionsMenu();
 
-  /// Chargement des polices importer
+  //Chargement des polices importer
   const QString policeIBMPlexMonoRegular =
       QFontDatabase::applicationFontFamilies(
           QFontDatabase::addApplicationFont(
@@ -189,7 +189,8 @@ private:
           QFontDatabase::addApplicationFont(
               ":/dataFiles/fontFiles/IBMPlexSans-Medium.ttf"))
           .at(0);
-  /// Creation des polices de l'application
+
+  //Creation des polices de l'application
   const QFont fontHeaderWidget = QFont(policeIBMPlexSansMedium, 40);
   const QFont fontTitreWidget = QFont(policeIBMPlexMonoSemiBold, 64);
   const QFont fontTitreWidget2 = QFont(policeIBMPlexMonoSemiBold, 48);
@@ -206,18 +207,22 @@ private:
 private slots:
   /// Signal qui permet de placer le widget accueil dans la fenetre
   void afficherAccueilSlot();
+
   /// Signal qui permet de placer le widget creation dans la fenetre
   void afficherCreationSlot();
+
   /// Signal qui permet de placer le widget modification dans la fenetre
-
   void afficherModificationSlot();
-  /// Signal qui permet de placer le widget suppression dans la fenetre
 
+  /// Signal qui permet de placer le widget suppression dans la fenetre
   void afficherSuppressionSlot();
+
   /// Signal qui permet de sauvegarder l'application
   void sauvegarderTacheSlot();
+
   /// Signal qui permet de quitter de l'application
   void quitterApplicationSlot();
+
   /// Signal qui pernet
   void afficherAideSlot();
 };
