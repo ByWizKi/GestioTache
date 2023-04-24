@@ -13,14 +13,13 @@ find_package(Doxygen REQUIRED)
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_GENERATE_MAN NO)
 set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/doc")
-#set(DOXYGEN_EXAMPLE_PATH "${CMAKE_SOURCE_DIR}/example")
 
 doxygen_add_docs(
   doxygen
   ${CMAKE_SOURCE_DIR}/app/sourceFiles/appgestiotache.cpp
   ${CMAKE_SOURCE_DIR}/app/headerFiles/appgestiotache.h
   ${CMAKE_SOURCE_DIR}/appTexte/sourceFiles/appgestiotachetexte.cpp
-  ${CMAKE_SOURCE_DIR}/appTexte/headerFiles/appgestiotachetexte.cpp
+  ${CMAKE_SOURCE_DIR}/appTexte/headerFiles/appgestiotachetexte.h
   ${CMAKE_SOURCE_DIR}/tacheObjet/sourceFiles/tache.cpp
   ${CMAKE_SOURCE_DIR}/tacheObjet/headerFiles/tache.h
 )

@@ -1,0 +1,48 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"app/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 35,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin",
+			"paths" : 
+			[
+				{
+					"from" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app",
+					"to" : "GestioTacheApp.app/Contents/MacOS/GestioTacheApp"
+				}
+			],
+			"targetId" : "GestioTacheApp::@5f5a17c01335469806cb",
+			"targetIndex" : 0,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	}
+}

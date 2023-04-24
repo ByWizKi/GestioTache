@@ -130,8 +130,7 @@ const bool Tache::setDateTexte(const QString &newDate, const bool dateDeb) {
     oldDate = this->dateFinTache;
     this->dateFinTache = QDateTime::fromString(newDate, "dd/MM/yyyy:hh:mm");
   }
-
-  // Q_ASSERT(this->dateDebutTache != this->dateFinTache);
+   Q_ASSERT(this->dateDebutTache != this->dateFinTache);
   return true;
 }
 
@@ -187,7 +186,7 @@ const bool Tache::sauveTache() const {
   }
 
   QTextStream stream(&file);
-  stream.seek(0); /// On se positionne au debut du fichier
+  stream.seek(0); // On se positionne au debut du fichier
   bool trouve = false;
   while (!stream.atEnd()) {
     QString line = stream.readLine();
@@ -196,7 +195,7 @@ const bool Tache::sauveTache() const {
   }
   if (!trouve) {
     QTextStream stream(&file);
-    stream.seek(file.size()); /// On se positionne à la fin du fichier
+    stream.seek(file.size()); // On se positionne à la fin du fichier
     stream << QString::number(this->getId()) + ".json" << Qt::endl;
   }
   file.close();
@@ -213,6 +212,7 @@ void Tache::afficherTache() {
 }
 
 void Tache::testRegression() {
+
   QDate dateDeb{2023, 03, 12};
   QTime timeDeb{14, 55, 00};
   QDateTime dateTimeDeb{dateDeb, timeDeb};

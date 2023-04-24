@@ -1,7 +1,11 @@
 #include "../headerFiles/appgestiotachetexte.h"
-AppGestioTacheTexte::AppGestioTacheTexte() {}
+AppGestioTacheTexte::AppGestioTacheTexte(){
+    qInfo() << "AppGestioTacheTexte en marche";
+}
 
-AppGestioTacheTexte::~AppGestioTacheTexte() {}
+AppGestioTacheTexte::~AppGestioTacheTexte() {
+    qInfo() << "AppGestioTacheTexte terminer";
+}
 
 void AppGestioTacheTexte::terminal() {
   bool enMarche = true;

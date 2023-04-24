@@ -18,6 +18,8 @@ enum Importance { NILL = 0, peuImportant = 1, Important = 2, Urgent = 3 };
 
 int aleatoireId();
 
+
+
 class Tache {
 
 private:
@@ -71,8 +73,6 @@ public:
   void afficherTache();
 
   void testRegression();
-
-signals:
 };
 
 #endif // TACHE_H
