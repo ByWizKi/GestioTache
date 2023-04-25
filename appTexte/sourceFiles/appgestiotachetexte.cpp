@@ -226,38 +226,34 @@ void AppGestioTacheTexte::aideTerminal() {
           << "pour effectuer votre action.";
 }
 
-QList<Tache *> chargeTouteTache() {
+QList<Tache*> chargeTouteTache() {
 
   QVector<QString> idTab;
   QFile fichier("listTache.txt");
   if (fichier.open(QIODevice::ReadOnly)) {
     QTextStream flux(&fichier);
     while (!flux.atEnd()) {
-
       QString buf = flux.readLine();
       idTab.append(buf);
       buf = "";
     }
-  }
-
-  else {
-    qInfo() << "Aucune Tache est enregistrer !";
+  } else {
+    qInfo() << "Aucune tâche est enregistrée !";
   }
   fichier.close();
 
-  QList<Tache *> listTache;
-  if (idTab.length() == 0 || idTab[0] == "") {
+  QList<Tache*> listTache;
+  if (idTab.isEmpty()) {
     return listTache;
   }
-
-  for (int i = 0; i < idTab.length(); i++) {
-    Tache *tache1 = new Tache;
-    tache1->chargeTache(idTab[i]);
+  for (const QString& id : idTab) {
+    Tache* tache1 = new Tache;
+    tache1->chargeTache(id);
     listTache.append(tache1);
   }
-
   return listTache;
 }
+
 
 bool sauveTouteTache(const QList<Tache *> &tabTache) {
 

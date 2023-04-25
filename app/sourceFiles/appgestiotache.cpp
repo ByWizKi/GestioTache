@@ -63,12 +63,22 @@ AppGestioTache::AppGestioTache(QWidget *parent) {
 }
 
 AppGestioTache::~AppGestioTache() {
+
+  int i = 0;
+  while (!m_listTache.empty()) {
+    Tache *supprTache = m_listTache[i];
+    m_listTache.remove(i);
+    delete supprTache;
+    i += 1;
+  }
+
   delete m_widgetCentral;
   delete m_widgetCourant;
   delete m_layoutPrincipal;
   delete m_menuSauve;
   delete m_menuQuitter;
   delete m_menuAide;
+  qInfo() << "Application detruite";
 }
 
 QWidget *AppGestioTache::widgetHeaderApp() {
@@ -474,23 +484,44 @@ QWidget *AppGestioTache::widgetCreation() {
             }
           });
 
+  // Création d'un layout vertical pour les éléments de la première colonne du
+  // formulaire de création de tâche
   QVBoxLayout *layoutTache1 = new QVBoxLayout();
-  layoutTache1->addLayout(layoutNomTache);
-  layoutTache1->addSpacing(75);
-  layoutTache1->addLayout(layoutImportanceTache);
+  layoutTache1->addLayout(layoutNomTache); // Ajout du layout pour le champ de
+                                           // saisie du nom de la tâche
+  layoutTache1->addSpacing(
+      75); // Ajout d'un espacement vertical de 75 pixels entre les éléments
+  layoutTache1->addLayout(
+      layoutImportanceTache); // Ajout du layout pour le champ de saisie de
+                              // l'importance de la tâche
 
+  // Création d'un layout vertical pour les éléments de la deuxième colonne du
+  // formulaire de création de tâche
   QVBoxLayout *layoutTache2 = new QVBoxLayout();
-  layoutTache2->addLayout(layoutDateDebTache);
-  layoutTache2->addSpacing(75);
-  layoutTache2->addLayout(layoutDateFinTache);
+  layoutTache2->addLayout(
+      layoutDateDebTache); // Ajout du layout pour le champ de saisie de la date
+                           // de début de la tâche
+  layoutTache2->addSpacing(
+      75); // Ajout d'un espacement vertical de 75 pixels entre les éléments
+  layoutTache2->addLayout(
+      layoutDateFinTache); // Ajout du layout pour le champ de saisie de la date
+                           // de fin de la tâche
 
+  // Création d'un layout horizontal pour regrouper les deux colonnes du
+  // formulaire de création de tâche
   QHBoxLayout *layoutTache3 = new QHBoxLayout();
-  layoutTache3->addLayout(layoutTache1);
-  layoutTache3->addSpacing(77);
-  layoutTache3->addLayout(layoutTache2);
+  layoutTache3->addLayout(
+      layoutTache1); // Ajout du layout de la première colonne
+  layoutTache3->addSpacing(
+      77); // Ajout d'un espacement horizontal de 77 pixels entre les colonnes
+  layoutTache3->addLayout(
+      layoutTache2); // Ajout du layout de la deuxième colonne
 
-  layoutCreationTache->addLayout(layoutTache3);
+  layoutCreationTache->addLayout(
+      layoutTache3); // Ajout du layout horizontal regroupant les deux colonnes
+                     // au layout principal
 
+  // Création d'un bouton pour soumettre le formulaire de création de tâche
   QPushButton *boutonEnvoieForm = new QPushButton("Créer");
   boutonEnvoieForm->setFont(fontTitreWidget3);
   boutonEnvoieForm->setFixedSize(430, 60);
@@ -501,134 +532,218 @@ QWidget *AppGestioTache::widgetCreation() {
       "letter-spacing: 0.2em;"
       "color : #FFFFFF;"
       "font-size : 36px;");
-  boutonEnvoieForm->setGraphicsEffect(dropShadow(boutonEnvoieForm));
-  layoutCreationTache->addSpacing(66);
-  layoutCreationTache->addWidget(boutonEnvoieForm, 0, Qt::AlignCenter);
-  layoutCreationTache->setContentsMargins(40, 20, 40, 20);
+  boutonEnvoieForm->setGraphicsEffect(
+      dropShadow(boutonEnvoieForm)); // Ajout d'un effet d'ombre au bouton
 
+  layoutCreationTache->addSpacing(
+      66); // Ajout d'un espacement vertical de 66 pixels entre le formulaire et
+           // le bouton
+  layoutCreationTache->addWidget(
+      boutonEnvoieForm, 0,
+      Qt::AlignCenter); // Ajout du bouton au layout principal, centré
+                        // horizontalement
+  layoutCreationTache->setContentsMargins(
+      40, 20, 40, 20); // Définition des marges du layout principal
+
+  // Connexion du bouton "Créer" à la fonction lambda pour créer une nouvelle
+  // tâche
   connect(boutonEnvoieForm, &QPushButton::clicked, this, [=]() {
+    // Vérifie que le champ "Nom de la Tâche" n'est pas vide
     if (!editNomTache->text().isEmpty()) {
+      // Vérifie le niveau d'importance sélectionné par l'utilisateur
       if (selectImportanceTache->currentText() == "Peu Important") {
+        // Crée une nouvelle tâche avec un ID aléatoire et les informations
+        // fournies par l'utilisateur
         Tache newTache{aleatoireId(), editNomTache->text(), peuImportant,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
+        // Sauvegarde la tâche dans un fichier
         newTache.sauveTache();
+        // Supprime le message de confirmation s'il y en a déjà un affiché
         if (layoutCreationTache->count() > 5) {
           QWidget *supprMessage =
               layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                   ->widget();
           delete supprMessage;
         }
+        // Affiche un message de confirmation pour l'utilisateur
         QLabel *confirmationNewTache = new QLabel("*Votre Tache a ete creer !");
         confirmationNewTache->setFont(fontPlaceHolderWidget);
         confirmationNewTache->setStyleSheet(
             "color : #3F4346; font-weight : 600;");
         layoutCreationTache->addWidget(confirmationNewTache, 0,
                                        Qt::AlignCenter);
+        // Réinitialise les champs et la liste déroulante d'importance
         selectImportanceTache->setCurrentIndex(-1);
         editNomTache->clear();
         editDateDebTache->setDateTime(QDateTime::currentDateTime());
-      } else if (selectImportanceTache->currentText() == "Important") {
+
+      } // Si l'importance de la tâche est "Important"
+      else if (selectImportanceTache->currentText() == "Important") {
+        // On crée une nouvelle tâche et on la sauvegarde
         Tache newTache{aleatoireId(), editNomTache->text(), Important,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
         newTache.sauveTache();
+        // Si le layout contient plus de 5 éléments
         if (layoutCreationTache->count() > 5) {
+          // On supprime le dernier message affiché
           QWidget *supprMessage =
               layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                   ->widget();
           delete supprMessage;
         }
+        // On affiche un message de confirmation de la création de la tâche
         QLabel *confirmationNewTache = new QLabel("*Votre Tache a ete creer !");
         confirmationNewTache->setFont(fontPlaceHolderWidget);
         confirmationNewTache->setStyleSheet(
             "color : #3F4346; font-weight : 600;");
         layoutCreationTache->addWidget(confirmationNewTache, 0,
                                        Qt::AlignCenter);
+        // On remet la liste déroulante à son état initial et on vide les champs
+        // d'entrée
         selectImportanceTache->setCurrentIndex(-1);
         editNomTache->clear();
         editDateDebTache->setDateTime(QDateTime::currentDateTime());
-      } else if (selectImportanceTache->currentText() == "Urgent") {
+      } // Si l'utilisateur a sélectionné "Urgent" dans la liste déroulante des
+        // priorités
+      else if (selectImportanceTache->currentText() == "Urgent") {
+        // Créer une nouvelle tâche avec un ID aléatoire, le nom et les dates
+        // sélectionnés par l'utilisateur, et la priorité "Urgent"
         Tache newTache{aleatoireId(), editNomTache->text(), Urgent,
                        editDateDebTache->dateTime(),
                        editDateFinTache->dateTime()};
+        // Enregistrer la tâche dans un fichier
         newTache.sauveTache();
+        // Si le layout contient plus de 5 éléments (messages), supprimer le
+        // dernier élément
         if (layoutCreationTache->count() > 5) {
           QWidget *supprMessage =
               layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                   ->widget();
           delete supprMessage;
         }
+        // Créer un label pour confirmer la création de la tâche
         QLabel *confirmationNewTache = new QLabel("*Votre Tache a ete creer !");
         confirmationNewTache->setFont(fontPlaceHolderWidget);
         confirmationNewTache->setStyleSheet(
             "color : #3F4346; font-weight : 600;");
+        // Ajouter le label au layout et centrer horizontalement
         layoutCreationTache->addWidget(confirmationNewTache, 0,
                                        Qt::AlignCenter);
-        selectImportanceTache->setCurrentIndex(-1);
-        editNomTache->clear();
-        editDateDebTache->setDateTime(QDateTime::currentDateTime());
-      } else {
-        if (layoutCreationTache->count() > 5) {
-          QWidget *supprMessage =
-              layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
-                  ->widget();
-          delete supprMessage;
-        }
-        QLabel *messageRepButton =
-            new QLabel("*Veuillez saisir une importance !");
-        messageRepButton->setFont(fontPlaceHolderWidget);
-        messageRepButton->setStyleSheet("color : #AD4242; font-weight : 600;");
-        layoutCreationTache->addWidget(messageRepButton, 0, Qt::AlignCenter);
+        // Réinitialiser la liste déroulante des priorités, le champ de saisie
+        // du nom de la tâche, et le champ de sélection de la date de début
+        // (mettre la date et l'heure actuelles)
         selectImportanceTache->setCurrentIndex(-1);
         editNomTache->clear();
         editDateDebTache->setDateTime(QDateTime::currentDateTime());
       }
+
+      // Si l'importance de la tâche n'est pas sélectionnée dans le ComboBox
+      else {
+        // Si le layout de création de la tâche contient plus de 5 widgets
+        // enfants
+        if (layoutCreationTache->count() > 5) {
+          // On récupère le dernier widget enfant et on le supprime de la vue
+          QWidget *supprMessage =
+              layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
+                  ->widget();
+          delete supprMessage;
+        }
+        // On crée un nouveau widget QLabel pour afficher un message d'erreur à
+        // l'utilisateur
+        QLabel *messageRepButton =
+            new QLabel("*Veuillez saisir une importance !");
+        messageRepButton->setFont(fontPlaceHolderWidget);
+        messageRepButton->setStyleSheet("color : #AD4242; font-weight : 600;");
+        // On ajoute le widget au layout
+        layoutCreationTache->addWidget(messageRepButton, 0, Qt::AlignCenter);
+        // On réinitialise le ComboBox et les champs de saisie
+        selectImportanceTache->setCurrentIndex(-1);
+        editNomTache->clear();
+        editDateDebTache->setDateTime(QDateTime::currentDateTime());
+      }
+      // On charge toutes les tâches sauvegardées
       m_listTache = chargeTouteTache();
+      // On sauvegarde toutes les tâches, y compris la nouvelle si elle a été
+      // créée
       sauveTouteTache(m_listTache);
 
-    } else {
+    } // Si l'importance de la tache n'a pas été sélectionnée
+    else {
+      // Supprime le dernier message affiché s'il y en a plus de 5 dans la liste
       if (layoutCreationTache->count() > 5) {
         QWidget *supprMessage =
             layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                 ->widget();
         delete supprMessage;
       }
+      // Affiche un message d'erreur demandant de saisir les informations de la
+      // tache
       QLabel *messageRepButton =
           new QLabel("*Veuillez saisir les informations de votre tache");
       messageRepButton->setFont(fontPlaceHolderWidget);
       messageRepButton->setStyleSheet("color : #AD4242; font-weight : 600;");
       layoutCreationTache->addWidget(messageRepButton, 0, Qt::AlignCenter);
+      // Remet l'indice de l'importance de la tache à -1
       selectImportanceTache->setCurrentIndex(-1);
+      // Vide le champ de nom de la tache
       editNomTache->clear();
+      // Remet la date de début de la tache à la date et heure actuelles
       editDateDebTache->setDateTime(QDateTime::currentDateTime());
     }
   });
+  // Charge toutes les taches existantes et les enregistre dans la liste
+  // m_listTache
+  m_listTache = chargeTouteTache();
 
+  // Sauvegarde toutes les taches de la liste m_listTache
+  sauveTouteTache(m_listTache);
+
+  // Ajoute le widget de création de tache au layout principal
   mainCreationLayout->addWidget(widgetCreationTache, 0, Qt::AlignCenter);
-
   return widgetCreation;
 }
 
 QWidget *AppGestioTache::widgetModification() {
+  // Création d'un widget pour la modification de tâches
   QWidget *widgetModification = new QWidget();
+
+  // Ajout d'un layout vertical principal pour le widget de modification
   QVBoxLayout *layoutMainModification = new QVBoxLayout(widgetModification);
+
+  // Création d'un widget pour le choix de la tâche à modifier
   QWidget *widgetChoixTache = new QWidget();
+
+  // Définition de la taille et de l'effet graphique du widget de choix de tâche
   widgetChoixTache->setFixedSize(756, 500);
   widgetChoixTache->setGraphicsEffect(dropShadow(widgetChoixTache));
   widgetChoixTache->setStyleSheet(
       "background : #F8CF7F; border-radius : 3.125em;");
+
+  // Ajout d'un layout vertical pour le widget de choix de tâche
   QVBoxLayout *layoutChoixTache = new QVBoxLayout(widgetChoixTache);
+
+  // Création d'un label pour le titre du widget de modification
   QLabel *titreWidget = new QLabel("Modifier");
   titreWidget->setFont(fontTitreWidget);
   titreWidget->setStyleSheet("color : #FFFFFF; font-weight : 600;");
+
+  // Ajout du label de titre au layout principal de modification
   layoutMainModification->addWidget(titreWidget, 0, Qt::AlignCenter);
+
+  // Ajout du widget de choix de tâche au layout principal de modification
   layoutMainModification->addWidget(widgetChoixTache, 0, Qt::AlignCenter);
+
+  // Création d'un label pour le titre de la section de modification de tâche
   QLabel *labelTacheModif = new QLabel("Modification de tâche");
   labelTacheModif->setFont(fontTitreWidget3);
   labelTacheModif->setStyleSheet("color : #000000; font-weight : 600;");
+
+  // Ajout du label de titre au layout de choix de tâche
   layoutChoixTache->addWidget(labelTacheModif, 0, Qt::AlignCenter);
 
+  // Définition des styles pour la sélection
   QString styleSelection =
       "background-color : #AD9090; border-radius : 1.25em; color : #FFFFFF;"
       "letter-spacing: 0.185em; padding-left : 1.355em; font-weight : 600;";
@@ -636,72 +751,142 @@ QWidget *AppGestioTache::widgetModification() {
       "width : 2.5em; margin-right : 0.423em; "
       "image: url(:/dataFiles/imageFiles/flecheDown.svg);";
 
+  // Création d'un widget pour la sélection
   QWidget *widgetSelection = new QWidget();
   widgetSelection->setFixedSize(536, 338);
   widgetSelection->setStyleSheet(
       "background: #3F4346; border-radius : 1.25em;");
   widgetSelection->setGraphicsEffect(dropShadow(widgetSelection));
   layoutChoixTache->addWidget(widgetSelection, 0, Qt::AlignCenter);
+
+  // Création d'un layout pour la sélection
   QVBoxLayout *layoutSelection = new QVBoxLayout(widgetSelection);
+
+  // Création d'un widget pour la sélection de tâches à modifier
   QWidget *widgetSelectTacheModif = new QWidget();
   layoutSelection->addWidget(widgetSelectTacheModif, 0, Qt::AlignCenter);
+
+  // Création d'un layout pour la sélection de tâches à modifier
   QVBoxLayout *layoutSelectTacheModif = new QVBoxLayout(widgetSelectTacheModif);
+
+  // Création d'un label pour la sélection de tâches à modifier
   QLabel *labelSelectTacheModif = new QLabel("*Tache a modifié");
   labelSelectTacheModif->setFont(fontPlaceHolderWidget);
   labelSelectTacheModif->setStyleSheet(
       "color: #FFFFFF; letter-spacing: 0.185em; font-weight: 400;");
   layoutSelectTacheModif->addWidget(labelSelectTacheModif, 0, Qt::AlignLeft);
+  // Création d'une liste déroulante de sélection de tâche pour la modification
   QComboBox *selectTacheModif = new QComboBox();
+
+  // Ajout d'un élément de texte "Sélectionner votre tâche a modifié" sans
+  // valeur
   selectTacheModif->addItem("Sélectionner votre tâche a modifié", -1);
+
+  // Définition de la police du texte dans la liste déroulante
   selectTacheModif->setFont(fontPlaceHolderWidget2);
+
+  // Modification du curseur de la souris lorsqu'elle survole la liste
+  // déroulante
   selectTacheModif->setCursor(Qt::PointingHandCursor);
+
+  // Empêcher l'édition de la liste déroulante par l'utilisateur
   selectTacheModif->setEditable(false);
+
+  // Définition de la taille fixe de la liste déroulante
   selectTacheModif->setFixedSize(425, 80);
+
+  // Définition du style de la liste déroulante
   selectTacheModif->setStyleSheet("QComboBox {" + styleSelection +
                                   "}"
                                   "QComboBox::drop-down {" +
                                   styleIconSelection + "}");
+
+  // Ajout d'un effet d'ombre portée sur la liste déroulante
   selectTacheModif->setGraphicsEffect(dropShadow(selectTacheModif));
-  layoutSelectTacheModif->addWidget(selectTacheModif, 0, Qt::AlignLeft);
+
+  // Ajout des éléments de la liste déroulante, récupérés depuis une liste de
+  // tâches
   for (int i = m_listTache.length() - 1; i >= 0; i--) {
     selectTacheModif->addItem(m_listTache[i]->getNom() + "\n" +
                                   m_listTache[i]->getDateTexte(true),
                               i);
   }
+  // Ajout de la liste déroulante au layout de la fenêtre de modification de
+  // tâche
+  layoutSelectTacheModif->addWidget(selectTacheModif, 0, Qt::AlignLeft);
 
+  // Création d'un bouton "Valider"
   QPushButton *boutonTacheModif = new QPushButton("Valider");
+
+  // Définition du curseur en forme de main pour le bouton
   boutonTacheModif->setCursor(Qt::PointingHandCursor);
+
+  // Le bouton ne doit pas avoir de bordure
   boutonTacheModif->setFlat(true);
+
+  // Définition de la police d'écriture pour le bouton
   boutonTacheModif->setFont(fontTitreWidget4);
+
+  // Définition de la taille du bouton
   boutonTacheModif->setFixedSize(335, 70);
+
+  // Définition du style pour le bouton
   boutonTacheModif->setStyleSheet(
       "background: #F8CF7F; border-radius: 0.938em; font-weight: 600;"
       "color : #000000;");
+
+  // Ajout d'un effet d'ombre portée au bouton
   boutonTacheModif->setGraphicsEffect(dropShadow(boutonTacheModif));
+
+  // Ajout du bouton à la boîte de layout "layoutSelection"
   layoutSelection->addWidget(boutonTacheModif, 0, Qt::AlignCenter);
 
+  // Création d'un label pour afficher un message d'erreur
   QLabel *messageErreur =
       new QLabel("*Veuillez selectionnez une tache a modifier");
+
+  // Définition de la police d'écriture pour le label
   messageErreur->setFont(fontPlaceHolderWidget);
+
+  // Définition du style pour le label
   messageErreur->setStyleSheet("color : #AD4242; font-weight : 600;");
 
+  // Vérifie si le bouton "boutonTacheModif" a été cliqué
   connect(boutonTacheModif, &QPushButton::clicked, this, [=]() {
+    // On récupère l'indice de la tâche sélectionnée dans la combobox.
     int tacheAEdit = selectTacheModif->currentData().toInt();
 
+    // Si une tâche est sélectionnée.
     if (tacheAEdit != -1) {
+
+      // On crée un widget pour l'édition de la tâche sélectionnée.
       QWidget *widgetEdition = widgetModificationBis(m_listTache[tacheAEdit]);
+
+      // On crée un label pour afficher le nom de la tâche en cours d'édition.
       QLabel *labelTacheModif = new QLabel("Vous modifier la tache : " +
                                            m_listTache[tacheAEdit]->getNom());
+
+      // On définit la police et la couleur du texte du label.
       labelTacheModif->setFont(fontTitreWidget5);
       labelTacheModif->setStyleSheet("color : #000000; font-weight : 600;");
 
+      // On centre le label dans le layout.
       layoutSelection->setAlignment(labelTacheModif,
                                     Qt::AlignCenter | Qt::AlignTop);
+
+      // On définit la taille et le style du widget d'édition.
       widgetSelection->setFixedSize(440, 110);
       widgetSelection->setStyleSheet(
           "background: #3F4346; border-radius : 1.25em;");
+
+      // On supprime le label précédemment utilisé dans le layout.
       layoutSelectTacheModif->removeWidget(labelSelectTacheModif);
+
+      // On définit les marges du layout.
       layoutSelectTacheModif->setContentsMargins(1, 1, 1, 1);
+
+      // On définit le style de la combobox permettant de sélectionner une
+      // tâche.
       QString styleSelection2 = "background-color : #AD9090; border-radius : "
                                 "0.625em; color : #FFFFFF;"
                                 "padding-left : 0.855em; font-weight : 500;";
@@ -714,18 +899,27 @@ QWidget *AppGestioTache::widgetModification() {
                                       "}"
                                       "QComboBox::drop-down {" +
                                       styleIconSelection2 + "}");
+
+      // On définit la taille et le style du bouton permettant de valider
+      // l'édition.
       boutonTacheModif->setFixedSize(170, 30);
       boutonTacheModif->setFont(fontTextTache);
       boutonTacheModif->setStyleSheet(
           "color: #000000; font-weight: 600; text-align: center;"
-          "background: #F8CF7F; border-radius : 0.625em;");
+          "background: #F8CFF7F; border-radius : 0.625em;");
 
+      // Vérification du nombre d'éléments dans le layoutChoixTache
       if (layoutChoixTache->count() == 3) {
+        // Si le layout contient 3 éléments, alors il faut supprimer le message
+        // d'erreur du layout et le détruire
         layoutChoixTache->removeWidget(messageErreur);
         messageErreur->deleteLater();
       }
 
       if (layoutChoixTache->count() == 4) {
+        // Si le layout contient 4 éléments, il faut supprimer le label et le
+        // widget avant l'ajout du widget d'édition. Récupération des deux
+        // widgets à supprimer.
         QWidget *supprLabel =
             layoutChoixTache->takeAt(layoutChoixTache->count() - 2)->widget();
         delete supprLabel;
@@ -733,13 +927,19 @@ QWidget *AppGestioTache::widgetModification() {
             layoutChoixTache->takeAt(layoutChoixTache->count() - 1)->widget();
         delete supprWidget;
       }
+
+      // Ajout des éléments pour l'édition de la tâche sélectionnée.
       layoutChoixTache->addWidget(labelTacheModif, 0, Qt::AlignCenter);
       layoutChoixTache->addWidget(widgetEdition, 0, Qt::AlignCenter);
     } else {
+      // Si aucune tâche n'est sélectionnée, on vérifie si le layout contient
+      // 3 ou 6 éléments, puis on supprime le message d'erreur du layout et on
+      // le détruit
       if (layoutChoixTache->count() == 3 || layoutChoixTache->count() == 6) {
         layoutChoixTache->removeWidget(messageErreur);
         messageErreur->deleteLater();
       }
+      // Ajout du message d'erreur au layout
       layoutChoixTache->addWidget(messageErreur, 0, Qt::AlignCenter);
     }
   });
@@ -929,6 +1129,7 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache) {
         labelRep->setFont(fontPlaceHolderWidget2);
         labelRep->setStyleSheet("color : #FFFFFF; font-weight : 400;");
         layoutMainEdit->addWidget(labelRep, 0, Qt::AlignCenter);
+        layoutMainEdit->setContentsMargins(0, 0, 0, 0);
         tache->sauveTache();
         m_listTache = chargeTouteTache();
       } else {
@@ -941,6 +1142,7 @@ QWidget *AppGestioTache::widgetModificationBis(Tache *tache) {
         labelRep->setFont(fontPlaceHolderWidget2);
         labelRep->setStyleSheet("color : #AD4242; font-weight : 400;");
         layoutMainEdit->addWidget(labelRep, 0, Qt::AlignCenter);
+        layoutMainEdit->setContentsMargins(0, 0, 0, 0);
       }
     }
   });
@@ -1035,7 +1237,9 @@ QWidget *AppGestioTache::widgetSuppression() {
                              ".json");
         tacheASuprFile.remove();
         tacheASuprFile.close();
+        Tache *ptTacheASupr = m_listTache[tacheASupr];
         m_listTache.remove(tacheASupr);
+        delete ptTacheASupr;
         sauveTouteTache(m_listTache);
 
         choixTache->clear();
@@ -1138,7 +1342,8 @@ QWidget *AppGestioTache::widgetAide() {
   layoutSectionC->addWidget(labelSectionC, 0, Qt::AlignLeft);
   QString textSectionC =
       "Pour modifier une tâche, procédez comme suit :\n"
-      "Cliquez sur le bouton jaune 'Modifier' dans la fenêtre correspondante.\n"
+      "Cliquez sur le bouton jaune 'Modifier' dans la fenêtre "
+      "correspondante.\n"
       "Sélectionnez la tâche que vous souhaitez modifier.\n"
       "Remplissez les champs que vous voulez changer.\n"
       "Cliquez sur le bouton 'Modifier' pour enregistrer les modifications.";
@@ -1338,6 +1543,7 @@ void AppGestioTache::sauvegarderTacheSlot() { sauveTouteTache(m_listTache); }
 
 void AppGestioTache::quitterApplicationSlot() {
   sauveTouteTache(m_listTache);
+  this->~AppGestioTache();
   this->close();
 }
 
