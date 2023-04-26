@@ -27,13 +27,10 @@
 		{
 			"backtrace" : 1,
 			"component" : "Unspecified",
-			"destination" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin",
+			"destination" : "/home/enzoadmin/Desktop/GestioTache/bin",
 			"paths" : 
 			[
-				{
-					"from" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app",
-					"to" : "GestioTacheApp.app/Contents/MacOS/GestioTacheApp"
-				}
+				"/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
 			],
 			"targetId" : "GestioTacheApp::@5f5a17c01335469806cb",
 			"targetIndex" : 0,

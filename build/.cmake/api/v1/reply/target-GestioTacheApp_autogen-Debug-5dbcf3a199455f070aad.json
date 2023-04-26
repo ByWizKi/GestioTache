@@ -5,7 +5,7 @@
 		"commands" : [],
 		"files" : 
 		[
-			"tacheObjet/CMakeLists.txt"
+			"app/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -17,16 +17,20 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "tache_autogen_timestamp_deps::@4fcf5a6bed12f2da414a"
+			"id" : "GestioTacheApp_autogen_timestamp_deps::@5f5a17c01335469806cb"
 		}
 	],
-	"id" : "tache_autogen::@4fcf5a6bed12f2da414a",
+	"folder" : 
+	{
+		"name" : "QtInternalTargets"
+	},
+	"id" : "GestioTacheApp_autogen::@5f5a17c01335469806cb",
 	"isGeneratorProvided" : true,
-	"name" : "tache_autogen",
+	"name" : "GestioTacheApp_autogen",
 	"paths" : 
 	{
-		"build" : "tacheObjet",
-		"source" : "tacheObjet"
+		"build" : "app",
+		"source" : "app"
 	},
 	"sourceGroups" : 
 	[
@@ -51,19 +55,19 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/tacheObjet/CMakeFiles/tache_autogen",
+			"path" : "build/app/CMakeFiles/GestioTacheApp_autogen",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/tacheObjet/CMakeFiles/tache_autogen.rule",
+			"path" : "build/app/CMakeFiles/GestioTacheApp_autogen.rule",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/tacheObjet/tache_autogen/timestamp.rule",
+			"path" : "build/app/GestioTacheApp_autogen/timestamp.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin/GestioTacheApp.app/Contents/MacOS/GestioTacheApp"
+			"path" : "/home/enzoadmin/Desktop/GestioTache/bin/GestioTacheApp"
 		}
 	],
 	"backtrace" : 1,
@@ -16,7 +16,9 @@
 			"set_target_properties",
 			"include",
 			"find_package",
+			"set_property",
 			"find_dependency",
+			"_qt_internal_find_third_party_dependencies",
 			"_qt_internal_find_qt_dependencies",
 			"target_sources",
 			"__qt_propagate_generated_resource",
@@ -27,18 +29,18 @@
 		"files" : 
 		[
 			"app/CMakeLists.txt",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6/Qt6Config.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6/Qt6Config.cmake",
 			"CMakeLists.txt",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Core/Qt6CoreTargets.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Core/Qt6CoreConfig.cmake",
-			"/Applications/Tools/CMake/CMake.app/Contents/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake"
+			"/home/enzoadmin/Application/Qt/Tools/CMake/share/cmake-3.24/Modules/FindOpenGL.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6/FindWrapOpenGL.cmake",
+			"/home/enzoadmin/Application/Qt/Tools/CMake/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Gui/Qt6GuiDependencies.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake"
 		],
 		"nodes" : 
 		[
@@ -99,7 +101,7 @@
 			{
 				"command" : 3,
 				"file" : 1,
-				"line" : 62,
+				"line" : 61,
 				"parent" : 10
 			},
 			{
@@ -109,19 +111,19 @@
 				"parent" : 8
 			},
 			{
-				"file" : 9,
+				"file" : 11,
 				"parent" : 12
 			},
 			{
-				"command" : 7,
-				"file" : 9,
+				"command" : 9,
+				"file" : 11,
 				"line" : 39,
 				"parent" : 13
 			},
 			{
-				"command" : 6,
+				"command" : 7,
 				"file" : 8,
-				"line" : 108,
+				"line" : 111,
 				"parent" : 14
 			},
 			{
@@ -131,30 +133,30 @@
 				"parent" : 15
 			},
 			{
-				"file" : 6,
+				"file" : 10,
 				"parent" : 16
 			},
 			{
 				"command" : 4,
-				"file" : 6,
-				"line" : 52,
+				"file" : 10,
+				"line" : 40,
 				"parent" : 17
 			},
 			{
-				"file" : 5,
+				"file" : 9,
 				"parent" : 18
 			},
 			{
-				"command" : 3,
-				"file" : 5,
-				"line" : 62,
+				"command" : 8,
+				"file" : 9,
+				"line" : 30,
 				"parent" : 19
 			},
 			{
-				"command" : 6,
+				"command" : 7,
 				"file" : 8,
-				"line" : 108,
-				"parent" : 14
+				"line" : 36,
+				"parent" : 20
 			},
 			{
 				"command" : 5,
@@ -163,54 +165,60 @@
 				"parent" : 21
 			},
 			{
-				"file" : 11,
+				"file" : 6,
 				"parent" : 22
 			},
 			{
-				"command" : 4,
-				"file" : 11,
-				"line" : 52,
+				"command" : 5,
+				"file" : 6,
+				"line" : 13,
 				"parent" : 23
 			},
 			{
-				"file" : 10,
+				"file" : 5,
 				"parent" : 24
 			},
 			{
-				"command" : 3,
-				"file" : 10,
-				"line" : 62,
+				"command" : 6,
+				"file" : 5,
+				"line" : 512,
 				"parent" : 25
 			},
 			{
-				"command" : 12,
+				"command" : 3,
+				"file" : 5,
+				"line" : 510,
+				"parent" : 25
+			},
+			{
+				"command" : 14,
 				"file" : 0,
 				"line" : 19,
 				"parent" : 0
 			},
 			{
+				"command" : 13,
+				"file" : 12,
+				"line" : 374,
+				"parent" : 28
+			},
+			{
+				"command" : 12,
+				"file" : 12,
+				"line" : 322,
+				"parent" : 29
+			},
+			{
 				"command" : 11,
 				"file" : 12,
-				"line" : 394,
-				"parent" : 27
+				"line" : 2085,
+				"parent" : 30
 			},
 			{
 				"command" : 10,
 				"file" : 12,
-				"line" : 342,
-				"parent" : 28
-			},
-			{
-				"command" : 9,
-				"file" : 12,
-				"line" : 1810,
-				"parent" : 29
-			},
-			{
-				"command" : 8,
-				"file" : 12,
-				"line" : 1574,
-				"parent" : 30
+				"line" : 1732,
+				"parent" : 31
 			}
 		]
 	},
@@ -220,7 +228,11 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk"
+					"fragment" : "-g"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fPIC"
 				},
 				{
 					"fragment" : "-std=gnu++17"
@@ -238,10 +250,6 @@
 				},
 				{
 					"backtrace" : 3,
-					"define" : "QT_NO_DEBUG"
-				},
-				{
-					"backtrace" : 3,
 					"define" : "QT_WIDGETS_LIB"
 				}
 			],
@@ -249,47 +257,32 @@
 			[
 				{
 					"backtrace" : 0,
-					"path" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build/app/GestioTacheApp_autogen/include"
+					"path" : "/home/enzoadmin/Desktop/GestioTache/build/app/GestioTacheApp_autogen/include"
 				},
 				{
 					"backtrace" : 3,
 					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtWidgets.framework/Headers"
+					"path" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/include/QtWidgets"
 				},
 				{
 					"backtrace" : 3,
 					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtWidgets.framework"
+					"path" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/include"
 				},
 				{
 					"backtrace" : 3,
 					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtCore.framework/Headers"
+					"path" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/include/QtCore"
 				},
 				{
 					"backtrace" : 3,
 					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtCore.framework"
+					"path" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/mkspecs/linux-g++"
 				},
 				{
 					"backtrace" : 3,
 					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/mkspecs/macx-clang"
-				},
-				{
-					"backtrace" : 3,
-					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/include"
-				},
-				{
-					"backtrace" : 3,
-					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtGui.framework/Headers"
-				},
-				{
-					"backtrace" : 3,
-					"isSystem" : true,
-					"path" : "/Applications/6.4.2/macos/lib/QtGui.framework"
+					"path" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/include/QtGui"
 				}
 			],
 			"language" : "CXX",
@@ -315,14 +308,14 @@
 	[
 		{
 			"backtrace" : 3,
+			"id" : "GestioTacheAppTexte::@03119eade194a5c7ea9c"
+		},
+		{
+			"backtrace" : 3,
 			"id" : "tache::@4fcf5a6bed12f2da414a"
 		},
 		{
 			"id" : "GestioTacheApp_autogen_timestamp_deps::@5f5a17c01335469806cb"
-		},
-		{
-			"backtrace" : 3,
-			"id" : "GestioTacheAppTexte::@03119eade194a5c7ea9c"
 		},
 		{
 			"backtrace" : 0,
@@ -336,7 +329,7 @@
 		[
 			{
 				"backtrace" : 2,
-				"path" : "/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/bin"
+				"path" : "/home/enzoadmin/Desktop/GestioTache/bin"
 			}
 		],
 		"prefix" : 
@@ -349,7 +342,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-O3 -DNDEBUG",
+				"fragment" : "-g",
 				"role" : "flags"
 			},
 			{
@@ -357,69 +350,42 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-F/Applications/6.4.2/macos/lib",
-				"role" : "frameworkPath"
-			},
-			{
-				"fragment" : "-Wl,-rpath,/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build/appTexte -Wl,-rpath,/Applications/6.4.2/macos/lib -Wl,-rpath,/Users/enzoadmin/Documents/CoursLyon/ConceptionApp/GestioTache/build/tacheObjet",
+				"fragment" : "-Wl,-rpath,/home/enzoadmin/Desktop/GestioTache/build/appTexte:/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib:/home/enzoadmin/Desktop/GestioTache/build/tacheObjet:",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "appTexte/libGestioTacheAppTexte.dylib",
+				"fragment" : "appTexte/libGestioTacheAppTexte.so",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "/Applications/6.4.2/macos/lib/QtWidgets.framework/Versions/A/QtWidgets",
+				"fragment" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Widgets.so.6.6.0",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "tacheObjet/libtache.dylib",
+				"fragment" : "tacheObjet/libtache.so",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 11,
-				"fragment" : "/Applications/6.4.2/macos/lib/QtGui.framework/Versions/A/QtGui",
+				"fragment" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Gui.so.6.6.0",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 11,
-				"fragment" : "/Applications/6.4.2/macos/lib/QtCore.framework/Versions/A/QtCore",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 20,
-				"fragment" : "-framework IOKit",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 20,
-				"fragment" : "-framework DiskArbitration",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-Xlinker -framework -Xlinker OpenGL",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-Xlinker -framework -Xlinker AGL",
+				"fragment" : "/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/libQt6Core.so.6.6.0",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 26,
-				"fragment" : "-framework AppKit",
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libGLX.so",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 26,
-				"fragment" : "-framework ImageIO",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 26,
-				"fragment" : "-framework Metal",
+				"backtrace" : 27,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libOpenGL.so",
 				"role" : "libraries"
 			}
 		],
@@ -494,7 +460,7 @@
 			"sourceGroupIndex" : 1
 		},
 		{
-			"backtrace" : 31,
+			"backtrace" : 32,
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
 			"path" : "build/app/.rcc/qrc_dataFiles.cpp",

@@ -9,7 +9,7 @@
 		],
 		"files" : 
 		[
-			"/Applications/Tools/CMake/CMake.app/Contents/share/cmake-3.24/Modules/FindDoxygen.cmake",
+			"/home/enzoadmin/Application/Qt/Tools/CMake/share/cmake-3.24/Modules/FindDoxygen.cmake",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
@@ -46,7 +46,7 @@
 			[
 				0,
 				2,
-				3
+				4
 			]
 		},
 		{
@@ -54,21 +54,22 @@
 			"sourceIndexes" : 
 			[
 				1,
-				4
+				3,
+				5
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				5
+				6
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				6
+				7
 			]
 		}
 	],
@@ -88,6 +89,11 @@
 			"backtrace" : 2,
 			"path" : "appTexte/sourceFiles/appgestiotachetexte.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "appTexte/headerFiles/appgestiotachetexte.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 2,

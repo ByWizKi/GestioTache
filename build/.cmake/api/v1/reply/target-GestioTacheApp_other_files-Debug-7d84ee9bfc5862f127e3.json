@@ -13,7 +13,7 @@
 		],
 		"files" : 
 		[
-			"/Applications/6.4.2/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake",
+			"/home/enzoadmin/Application/Qt/6.6.0/gcc_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake",
 			"app/CMakeLists.txt"
 		],
 		"nodes" : 
@@ -30,146 +30,158 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 394,
+				"line" : 374,
 				"parent" : 1
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 342,
+				"line" : 322,
 				"parent" : 2
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1914,
 				"parent" : 3
 			},
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 1584,
+				"line" : 1749,
 				"parent" : 4
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 6
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 8
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 10
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 12
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 14
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 16
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 18
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 20
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 22
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 1727,
+				"line" : 1967,
 				"parent" : 3
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 1594,
+				"line" : 1759,
 				"parent" : 24
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 1967,
+				"parent" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 1759,
+				"parent" : 26
 			}
 		]
 	},
@@ -196,7 +208,8 @@
 				7,
 				8,
 				9,
-				10
+				10,
+				11
 			]
 		}
 	],
@@ -204,56 +217,61 @@
 	[
 		{
 			"backtrace" : 5,
-			"path" : "app/dataFiles/imageFiles/logo.svg",
+			"path" : "build/app/.rcc/dataFiles.qrc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 7,
-			"path" : "app/dataFiles/imageFiles/importantIcon.svg",
+			"path" : "app/dataFiles/imageFiles/logo.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 9,
-			"path" : "app/dataFiles/imageFiles/peuImportantIcon.svg",
+			"path" : "app/dataFiles/imageFiles/importantIcon.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 11,
-			"path" : "app/dataFiles/imageFiles/urgentIcon.svg",
+			"path" : "app/dataFiles/imageFiles/peuImportantIcon.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 13,
-			"path" : "app/dataFiles/imageFiles/noneIcon.svg",
+			"path" : "app/dataFiles/imageFiles/urgentIcon.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 15,
-			"path" : "app/dataFiles/imageFiles/flecheDown.svg",
+			"path" : "app/dataFiles/imageFiles/noneIcon.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 17,
-			"path" : "app/dataFiles/imageFiles/nextPreviousIcon.svg",
+			"path" : "app/dataFiles/imageFiles/flecheDown.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 19,
-			"path" : "app/dataFiles/fontFiles/IBMPlexMono-Medium.ttf",
+			"path" : "app/dataFiles/imageFiles/nextPreviousIcon.svg",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 21,
-			"path" : "app/dataFiles/fontFiles/IBMPlexMono-Regular.ttf",
+			"path" : "app/dataFiles/fontFiles/IBMPlexMono-Medium.ttf",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 23,
-			"path" : "app/dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf",
+			"path" : "app/dataFiles/fontFiles/IBMPlexMono-Regular.ttf",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 25,
+			"path" : "app/dataFiles/fontFiles/IBMPlexMono-SemiBold.ttf",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 27,
 			"path" : "app/dataFiles/fontFiles/IBMPlexSans-Medium.ttf",
 			"sourceGroupIndex" : 0
 		}
