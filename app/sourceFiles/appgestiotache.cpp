@@ -70,9 +70,6 @@ AppGestioTache::~AppGestioTache() {
       delete tacheASupr;
   }
 
-  delete m_widgetCentral;
-  delete m_widgetCourant;
-  delete m_layoutPrincipal;
   delete m_menuSauve;
   delete m_menuQuitter;
   delete m_menuAide;
