@@ -69,7 +69,6 @@ AppGestioTache::~AppGestioTache() {
       m_listTache.remove(i);
       delete tacheASupr;
   }
-
   delete m_menuSauve;
   delete m_menuQuitter;
   delete m_menuAide;
