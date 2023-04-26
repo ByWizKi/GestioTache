@@ -39,7 +39,7 @@ doxygen_add_docs(
 
 qt_standard_project_setup()
 
-set(GestioTache PROPERTIES CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 add_subdirectory(app)
 add_subdirectory(appTexte)
