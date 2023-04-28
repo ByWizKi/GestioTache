@@ -326,7 +326,7 @@ QWidget *AppGestioTache::widgetCreation() {
   QLineEdit *editNomTache = new QLineEdit();
   editNomTache->setFont(fontPlaceHolderWidget);
   editNomTache->setFixedSize(291, 45);
-  editNomTache->setPlaceholderText("Allez chez marine");
+  editNomTache->setPlaceholderText("Aller chez marine");
   editNomTache->setStyleSheet("QLineEdit{" + styleSelection + "};");
   editNomTache->setGraphicsEffect(dropShadow(editNomTache));
 
@@ -550,7 +550,7 @@ QWidget *AppGestioTache::widgetCreation() {
             // Sauvegarde la tâche dans un fichier
             newTache.sauveTache();
             // Supprime le message de confirmation s'il y en a déjà un affiché
-            if (layoutCreationTache->count() > 6) {
+            if (layoutCreationTache->count() > 5) {
                 QWidget *supprMessage =
                     layoutCreationTache->takeAt(layoutCreationTache->count() - 1)
                         ->widget();
