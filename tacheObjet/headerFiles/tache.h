@@ -1,4 +1,4 @@
-+/**
+/**
 
 @file tache.h
 @brief Définition de la classe Tache pour la gestion de tâches

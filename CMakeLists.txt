@@ -12,7 +12,7 @@ set(CMAKE_AUTOUIC ON)
 if(WIN32)
     set(CMAKE_PREFIX_PATH "ADD PATH" CACHE PATH "Qt path on Windows")
 elseif(UNIX)
-    set(CMAKE_PREFIX_PATH "/home/enzoadmin/Application/Qt/6.6.0/gcc_64" CACHE PATH "Qt path on Linux")
+    set(CMAKE_PREFIX_PATH "/Applications/6.4.2/macos" CACHE PATH "Qt path on Linux")
 endif()
 
 find_package(Qt6Core REQUIRED)
