@@ -41,3 +41,5 @@ Le dossier "doc" contient la documentation relative au projet.
 Le dossier "bin" contient l'exécutable ainsi que les fichiers qui stockent les tâches.
 
 Le dossier "build" contient les fichiers compilés dans chaque dossier. Par exemple, le fichier "tache.o" se trouve dans le dossier "tacheObjet/...".
+
+![Texte alternatif](doc/Autre/GestioTache.pdf "Image")
